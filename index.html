@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Anu Zochrim – We Remember</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- React -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Babel (lets us write React easily) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Hebrew date library -->
+    <script src="https://unpkg.com/@hebcal/core"></script>
+
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        background: #f9fafb;
+        margin: 0;
+        padding: 20px;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      input {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+        margin-bottom: 20px;
+      }
+      .card {
+        background: white;
+        padding: 16px;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const victims = [
+        {
+          name_en: "Yonatan Steinberg",
+          name_he: "יונתן שטיינברג",
+          death: "2023-10-07",
+          category: "IDF Soldier"
+        },
+        {
+          name_en: "Shani Louk",
+          name_he: "שני לוק",
+          death: "2023-10-07",
+          category: "Civilian"
+        }
+      ];
+
+      function App() {
+        const [query, setQuery] = React.useState("");
+        const [results, setResults] = React.useState([]);
+
+        function search() {
+          const date = new Date(query);
+          if (isNaN(date)) return setResults([]);
+
+          const hd = new Hebcal.HDate(date);
+          const hebrew = hd.renderGematriya();
+
+          const matches = victims.filter(v => {
+            const vDate = new Hebcal.HDate(new Date(v.death));
+            return vDate.renderGematriya() === hebrew;
+          });
+
+          setResults(matches);
+        }
+
+        return (
+          <div>
+            <h1>Anu Zochrim – אנו זוכרים</h1>
+            <p>Search by Gregorian date to dedicate learning or a simcha.</p>
+
+            <input
+              placeholder="YYYY-MM-DD"
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+              onBlur={search}
+            />
+
+            {results.map((v, i) => (
+              <div key={i} className="card">
+                <strong>{v.name_en}</strong> ({v.name_he})<br />
+                {v.category}
+              </div>
+            ))}
+
+            {query && results.length === 0 && (
+              <p>No names found for this date.</p>
+            )}
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>
