@@ -10,11 +10,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- React -->
+  <!-- React + Babel -->
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script src="https://unpkg.com/@hebcal/core"></script>
 
   <style>
     body {
@@ -24,7 +23,7 @@
       background: #ffffff;
     }
 
-    h1, h2, h3, nav a, button, select {
+    h1, h2, h3, nav a {
       font-family: "Poppins", sans-serif;
     }
 
@@ -56,7 +55,7 @@
     .hero {
       position: relative;
       height: 520px;
-      background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Flag_of_Israel.svg/1920px-Flag_of_Israel.svg.png");
+      background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Israel.svg/1920px-Flag_of_Israel.svg.png");
       background-size: cover;
       background-position: center;
     }
@@ -77,17 +76,12 @@
       color: white;
     }
 
-    .hero-content h2 {
-      font-size: 2.2rem;
-      margin-bottom: 12px;
+    main {
+      max-width: 900px;
+      margin: auto;
+      padding: 64px 24px;
     }
 
-    .hero-content p {
-      font-size: 1.05rem;
-      max-width: 700px;
-    }
-
-    /* FEATURED IMAGE */
     .featured {
       max-width: 900px;
       margin: 56px auto 0;
@@ -105,19 +99,7 @@
       margin-top: 8px;
     }
 
-    main {
-      max-width: 900px;
-      margin: auto;
-      padding: 64px 24px;
-    }
-
-    .section {
-      margin-top: 72px;
-      border-top: 1px solid #e5e7eb;
-      padding-top: 40px;
-    }
-
-    select, input {
+    input {
       width: 100%;
       padding: 12px;
       font-size: 1rem;
@@ -125,25 +107,10 @@
       border: 1px solid #cbd5f5;
     }
 
-    .filters {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
     .card {
       border: 1px solid #e5e7eb;
       padding: 16px;
       margin-bottom: 12px;
-    }
-
-    .name {
-      font-weight: 600;
-    }
-
-    .meta {
-      font-size: 0.95rem;
-      color: #475569;
     }
 
     footer {
@@ -153,18 +120,6 @@
       color: #e5e7eb;
       text-align: center;
       font-size: 0.9rem;
-    }
-
-    @media (max-width: 768px) {
-      .hero {
-        height: 420px;
-      }
-      .hero-content {
-        padding-top: 170px;
-      }
-      .filters {
-        grid-template-columns: 1fr;
-      }
     }
   </style>
 </head>
@@ -180,36 +135,20 @@
         residence: "Kibbutz Shomria",
         death_location: "Southern Israel",
         category: "IDF Soldier"
-      },
-      {
-        name_en: "Shani Louk",
-        name_he: "שני לוק",
-        residence: "Tel Aviv",
-        death_location: "Nova Festival",
-        category: "Civilian"
       }
     ];
 
     function App() {
-      const [category, setCategory] = React.useState("All");
       const [results, setResults] = React.useState([]);
 
       function runSearch(value) {
-        if (!value) {
-          setResults([]);
-          return;
-        }
-
-        let matches = victims.filter(v =>
-          v.name_en.toLowerCase().includes(value.toLowerCase()) ||
-          v.name_he.includes(value)
+        if (!value) return setResults([]);
+        setResults(
+          victims.filter(v =>
+            v.name_en.toLowerCase().includes(value.toLowerCase()) ||
+            v.name_he.includes(value)
+          )
         );
-
-        if (category !== "All") {
-          matches = matches.filter(v => v.category === category);
-        }
-
-        setResults(matches);
       }
 
       return (
@@ -217,7 +156,7 @@
           <div className="hero">
             <div className="top-bar">
               <a href="index.html" className="logo">
-                <img src="https://via.placeholder.com/140x42?text=LOGO" alt="Anu Zochrim logo" />
+                <img src="https://via.placeholder.com/140x42?text=LOGO" alt="Logo" />
               </a>
               <nav>
                 <a href="about.html">About</a>
@@ -241,8 +180,34 @@
               alt="Kibbutz Be’eri, October 2023"
             />
             <div className="caption">
-              Kibbutz Be’eri, days after the October 7 attack. Photograph by Micah Brickman.
+              Kibbutz Be’eri, days after the October 7 attack. Photograph by Micah Brickman (Wikimedia Commons).
             </div>
           </div>
 
           <main>
+            <h3>Search the Memorial</h3>
+
+            <input
+              placeholder="Enter a name (English or Hebrew)"
+              onChange={e => runSearch(e.target.value)}
+            />
+
+            {results.map((v, i) => (
+              <div key={i} className="card">
+                <strong>{v.name_en} ({v.name_he})</strong><br />
+                {v.category} · {v.residence}
+              </div>
+            ))}
+          </main>
+
+          <footer>
+            Anu Zochrim · אנו זוכרים · A public memorial initiative
+          </footer>
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
