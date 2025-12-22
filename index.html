@@ -8,9 +8,9 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- React + Babel -->
+  <!-- React -->
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -18,13 +18,13 @@
   <style>
     body {
       margin: 0;
-      font-family: "Lora", serif;
-      color: #0f172a;
       background: #ffffff;
+      color: #0f172a;
+      font-family: "Poppins", sans-serif;
     }
 
-    h1, h2, h3, nav a {
-      font-family: "Poppins", sans-serif;
+    h1, h2, h3 {
+      font-family: "Noto Serif", serif;
     }
 
     /* TOP BAR */
@@ -38,6 +38,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      background: rgba(15, 23, 42, 0.6);
     }
 
     .logo img {
@@ -55,7 +56,7 @@
     .hero {
       position: relative;
       height: 520px;
-      background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Israel.svg/1920px-Flag_of_Israel.svg.png");
+      background-image: url("https://upload.wikimedia.org/wikipedia/commons/6/64/Photographs_from_Kibbutz_Be%27eri%2C_a_few_days_after_the_Be%27eri_massacre_carried_out_in_the_kibbutz_by_Hamas_on_October_7%2C_2023_by_photographer_Micah_Brickman_%282%29.jpg");
       background-size: cover;
       background-position: center;
     }
@@ -64,7 +65,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: rgba(15, 23, 42, 0.35);
+      background: rgba(15, 23, 42, 0.45);
     }
 
     .hero-content {
@@ -72,25 +73,25 @@
       z-index: 2;
       max-width: 900px;
       margin: auto;
-      padding: 220px 24px 0;
+      padding: 260px 24px 0;
       color: white;
+    }
+
+    .hero-content h2 {
+      font-size: 2.3rem;
+      margin-bottom: 12px;
+    }
+
+    .hero-content p {
+      font-size: 1.05rem;
+      max-width: 700px;
+      line-height: 1.7;
     }
 
     main {
       max-width: 900px;
       margin: auto;
-      padding: 64px 24px;
-    }
-
-    .featured {
-      max-width: 900px;
-      margin: 56px auto 0;
-      padding: 0 24px;
-    }
-
-    .featured img {
-      width: 100%;
-      border: 1px solid #e5e7eb;
+      padding: 72px 24px;
     }
 
     .caption {
@@ -101,9 +102,9 @@
 
     input {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       font-size: 1rem;
-      margin-bottom: 16px;
+      margin: 24px 0;
       border: 1px solid #cbd5f5;
     }
 
@@ -121,6 +122,15 @@
       text-align: center;
       font-size: 0.9rem;
     }
+
+    @media (max-width: 768px) {
+      .hero {
+        height: 420px;
+      }
+      .hero-content {
+        padding-top: 200px;
+      }
+    }
   </style>
 </head>
 
@@ -133,8 +143,13 @@
         name_en: "Yonatan Steinberg",
         name_he: "יונתן שטיינברג",
         residence: "Kibbutz Shomria",
-        death_location: "Southern Israel",
         category: "IDF Soldier"
+      },
+      {
+        name_en: "Shani Louk",
+        name_he: "שני לוק",
+        residence: "Tel Aviv",
+        category: "Civilian"
       }
     ];
 
@@ -142,10 +157,15 @@
       const [results, setResults] = React.useState([]);
 
       function runSearch(value) {
-        if (!value) return setResults([]);
+        if (!value) {
+          setResults([]);
+          return;
+        }
+
+        const q = value.toLowerCase();
         setResults(
           victims.filter(v =>
-            v.name_en.toLowerCase().includes(value.toLowerCase()) ||
+            v.name_en.toLowerCase().includes(q) ||
             v.name_he.includes(value)
           )
         );
@@ -156,7 +176,7 @@
           <div className="hero">
             <div className="top-bar">
               <a href="index.html" className="logo">
-                <img src="https://via.placeholder.com/140x42?text=LOGO" alt="Logo" />
+                <img src="https://via.placeholder.com/140x42?text=LOGO" alt="Anu Zochrim logo" />
               </a>
               <nav>
                 <a href="about.html">About</a>
@@ -174,17 +194,11 @@
             </div>
           </div>
 
-          <div className="featured">
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Photographs_from_Kibbutz_Be%27eri%2C_a_few_days_after_the_Be%27eri_massacre_carried_out_in_the_kibbutz_by_Hamas_on_October_7%2C_2023_by_photographer_Micah_Brickman_%281%29_%28cropped%29.jpg"
-              alt="Kibbutz Be’eri, October 2023"
-            />
+          <main>
             <div className="caption">
               Kibbutz Be’eri, days after the October 7 attack. Photograph by Micah Brickman (Wikimedia Commons).
             </div>
-          </div>
 
-          <main>
             <h3>Search the Memorial</h3>
 
             <input
