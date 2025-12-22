@@ -20,200 +20,61 @@
         font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
         background: #f9fafb;
         margin: 0;
-        padding: 24px;
+        padding: 0;
         color: #111827;
       }
 
-      h1 {
-        font-size: 2rem;
-        margin-bottom: 4px;
+      .container {
+        max-width: 900px;
+        margin: auto;
+        padding: 32px 24px;
       }
 
-      h2 {
-        font-size: 1rem;
+      .hero {
+        text-align: center;
+        padding: 60px 20px 40px;
+      }
+
+      .hero h1 {
+        font-size: 2.6rem;
+        margin-bottom: 8px;
+      }
+
+      .hero h2 {
+        font-size: 1.1rem;
         font-weight: normal;
         color: #6b7280;
-        margin-bottom: 20px;
+      }
+
+      .hero p {
+        max-width: 650px;
+        margin: 24px auto 0;
+        color: #374151;
+        font-size: 1.05rem;
+      }
+
+      .search-box {
+        background: white;
+        border-radius: 22px;
+        padding: 28px;
+        box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+      }
+
+      label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
       }
 
       select, input {
         width: 100%;
         padding: 14px;
         font-size: 1rem;
-        margin-bottom: 16px;
-        border-radius: 10px;
+        margin-bottom: 20px;
+        border-radius: 12px;
         border: 1px solid #d1d5db;
       }
 
       .card {
         background: white;
-        padding: 16px;
-        border-radius: 14px;
-        margin-bottom: 12px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-      }
-
-      .name {
-        font-size: 1.1rem;
-        font-weight: 600;
-      }
-
-      .hebrew {
-        color: #4b5563;
-      }
-
-      .meta {
-        font-size: 0.9rem;
-        color: #6b7280;
-        margin-top: 4px;
-      }
-    </style>
-  </head>
-
-  <body>
-    <div id="root"></div>
-
-    <script type="text/babel">
-      // SAMPLE DATA — replace later
-      const victims = [
-        {
-          name_en: "Yonatan Steinberg",
-          name_he: "יונתן שטיינברג",
-          death: "2023-10-07",
-          category: "IDF Soldier"
-        },
-        {
-          name_en: "Shani Louk",
-          name_he: "שני לוק",
-          death: "2023-10-07",
-          category: "Civilian"
-        }
-      ];
-
-      function App() {
-        const [mode, setMode] = React.useState("gregorian");
-        const [input, setInput] = React.useState("");
-        const [results, setResults] = React.useState([]);
-        const [hebrewDate, setHebrewDate] = React.useState("");
-
-        function search(value, selectedMode) {
-          setInput(value);
-          setResults([]);
-          setHebrewDate("");
-
-          if (!value) return;
-
-          // SEARCH BY NAME
-          if (selectedMode === "name") {
-            const q = value.toLowerCase();
-            setResults(
-              victims.filter(v =>
-                v.name_en.toLowerCase().includes(q) ||
-                v.name_he.includes(value)
-              )
-            );
-            return;
-          }
-
-          // SEARCH BY GREGORIAN DATE
-          if (selectedMode === "gregorian") {
-            const date = new Date(value);
-            if (isNaN(date)) return;
-
-            const hd = new Hebcal.HDate(date);
-            setHebrewDate(hd.renderGematriya());
-
-            const day = hd.getDate();
-            const month = hd.getMonth();
-
-            setResults(
-              victims.filter(v => {
-                const vHd = new Hebcal.HDate(new Date(v.death));
-                return vHd.getDate() === day && vHd.getMonth() === month;
-              })
-            );
-            return;
-          }
-
-          // SEARCH BY HEBREW DATE (e.g. "כ״ב תשרי")
-          if (selectedMode === "hebrew") {
-            setResults(
-              victims.filter(v => {
-                const vHd = new Hebcal.HDate(new Date(v.death));
-                const vHeb = vHd.renderGematriya();
-                return vHeb.includes(value.trim());
-              })
-            );
-          }
-        }
-
-        return (
-          <div>
-            <h1>Anu Zochrim</h1>
-            <h2>אנו זוכרים — We Remember</h2>
-
-            <select
-              value={mode}
-              onChange={e => {
-                setMode(e.target.value);
-                setInput("");
-                setResults([]);
-                setHebrewDate("");
-              }}
-            >
-              <option value="gregorian">Search by English (Gregorian) date</option>
-              <option value="hebrew">Search by Hebrew date</option>
-              <option value="name">Search by name</option>
-            </select>
-
-            {mode === "gregorian" && (
-              <input
-                type="date"
-                value={input}
-                onChange={e => search(e.target.value, mode)}
-              />
-            )}
-
-            {mode === "hebrew" && (
-              <input
-                type="text"
-                placeholder="לדוגמה: כ״ב תשרי"
-                value={input}
-                onChange={e => search(e.target.value, mode)}
-              />
-            )}
-
-            {mode === "name" && (
-              <input
-                type="text"
-                placeholder="Enter name (English or Hebrew)"
-                value={input}
-                onChange={e => search(e.target.value, mode)}
-              />
-            )}
-
-            {hebrewDate && (
-              <p><strong>Hebrew date:</strong> {hebrewDate}</p>
-            )}
-
-            {input && results.length === 0 && (
-              <p>No results found.</p>
-            )}
-
-            {results.map((v, i) => (
-              <div key={i} className="card">
-                <div className="name">
-                  {v.name_en}
-                  <span className="hebrew"> ({v.name_he})</span>
-                </div>
-                <div className="meta">{v.category}</div>
-              </div>
-            ))}
-          </div>
-        );
-      }
-
-      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
-    </script>
-  </body>
-</html>
+        padding
