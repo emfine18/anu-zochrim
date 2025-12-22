@@ -1,23 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Donate – Anu Zochrim</title>
-  <link href="https://fonts.googleapis.com/css2?family=Lora&family=Poppins&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    body { font-family: Lora, serif; padding: 40px; }
-    h1 { font-family: Poppins, sans-serif; }
-    button { padding: 12px 20px; font-size: 1rem; }
+    body {
+      margin: 0;
+      font-family: "Lora", serif;
+      color: #0f172a;
+      background: linear-gradient(180deg, #e6f0ff 0%, #ffffff 50%);
+    }
+
+    h1, h2, h3, nav a, button {
+      font-family: "Poppins", sans-serif;
+    }
+
+    header {
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 18px 24px;
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: #0f172a;
+      font-weight: 500;
+    }
+
+    main {
+      max-width: 900px;
+      margin: auto;
+      padding: 64px 24px;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: #334155;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background: #1d4ed8;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    footer {
+      margin-top: 80px;
+      padding: 32px 24px;
+      background: #0f172a;
+      color: #e5e7eb;
+      text-align: center;
+      font-size: 0.9rem;
+    }
   </style>
 </head>
+
 <body>
-  <h1>Support This Project</h1>
-  <p>
-    Your support helps maintain and expand this memorial so that the names and
-    memories of those killed are preserved with dignity and accuracy.
-  </p>
-  <button>Donate (coming soon)</button>
-  <br/><br/>
-  <a href="index.html">← Back to Home</a>
+  <header>
+    <div class="header-inner">
+      <div>
+        <h1>Anu Zochrim</h1>
+        <div>אנו זוכרים — We Remember</div>
+      </div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="donate.html">Donate</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <h2>Support This Project</h2>
+
+    <p>
+      Anu Zochrim is maintained as a public memorial resource. Contributions help
+      support ongoing development, data accuracy, hosting, and long-term
+      preservation.
+    </p>
+
+    <p>
+      Your support ensures that this memorial remains accessible, respectful,
+      and sustainable.
+    </p>
+
+    <button disabled>
+      Donate (coming soon)
+    </button>
+  </main>
+
+  <footer>
+    Anu Zochrim · אנו זוכרים · A public memorial initiative
+  </footer>
 </body>
 </html>
