@@ -1,23 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>About – Anu Zochrim</title>
-  <link href="https://fonts.googleapis.com/css2?family=Lora&family=Poppins&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    body { font-family: Lora, serif; padding: 40px; }
-    h1 { font-family: Poppins, sans-serif; }
+    body {
+      margin: 0;
+      font-family: "Lora", serif;
+      color: #0f172a;
+      background: linear-gradient(180deg, #e6f0ff 0%, #ffffff 50%);
+    }
+
+    h1, h2, h3, nav a {
+      font-family: "Poppins", sans-serif;
+    }
+
+    header {
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 18px 24px;
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: #0f172a;
+      font-weight: 500;
+    }
+
+    main {
+      max-width: 900px;
+      margin: auto;
+      padding: 64px 24px;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: #334155;
+      margin-bottom: 20px;
+    }
+
+    footer {
+      margin-top: 80px;
+      padding: 32px 24px;
+      background: #0f172a;
+      color: #e5e7eb;
+      text-align: center;
+      font-size: 0.9rem;
+    }
   </style>
 </head>
+
 <body>
-  <h1>About Anu Zochrim</h1>
-  <p>
-    Anu Zochrim is a memorial initiative dedicated to preserving the names and
-    memories of Israelis and Jews murdered on October 7 and in the war that followed.
-  </p>
-  <p>
-    The project exists to ensure that remembrance is accessible, accurate, and dignified.
-  </p>
-  <a href="index.html">← Back to Home</a>
+  <header>
+    <div class="header-inner">
+      <div>
+        <h1>Anu Zochrim</h1>
+        <div>אנו זוכרים — We Remember</div>
+      </div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="donate.html">Donate</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <h2>About Anu Zochrim</h2>
+
+    <p>
+      Anu Zochrim is a public memorial initiative dedicated to honoring the
+      memory of Israelis and Jews who were murdered on October 7 and in the war
+      that followed.
+    </p>
+
+    <p>
+      The project was created to serve as a central, accessible resource for
+      remembrance — ensuring that names are preserved with accuracy, dignity,
+      and respect.
+    </p>
+
+    <p>
+      Jewish memory is not passive. It is expressed through learning, prayer,
+      and acts of meaning. By allowing users to search by date, name, or place,
+      Anu Zochrim enables moments of life to be intentionally dedicated in the
+      memory of those who were killed.
+    </p>
+
+    <p>
+      Anu Zochrim is non-political and non-commercial in purpose. Its sole
+      mission is remembrance.
+    </p>
+  </main>
+
+  <footer>
+    Anu Zochrim · אנו זוכרים · A public memorial initiative
+  </footer>
 </body>
 </html>
