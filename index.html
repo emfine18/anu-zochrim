@@ -5,6 +5,11 @@
     <title>Anu Zochrim – We Remember</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- Google Fonts: Poppins + Lora -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <!-- React -->
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
@@ -18,48 +23,90 @@
     <style>
       body {
         margin: 0;
-        font-family: Arial, Helvetica, sans-serif;
         background: #ffffff;
         color: #1f2937;
+        font-family: "Lora", Georgia, serif;
+      }
+
+      h1, h2, h3, h4,
+      header, nav, button,
+      label, select {
+        font-family: "Poppins", Arial, sans-serif;
       }
 
       header {
         border-bottom: 1px solid #e5e7eb;
-        padding: 24px;
+        padding: 20px 24px;
       }
 
       .header-inner {
         max-width: 1100px;
         margin: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
 
-      h1 {
-        font-size: 2rem;
-        margin: 0;
+      .nav a {
+        margin-left: 20px;
+        text-decoration: none;
+        color: #1f2937;
+        font-weight: 500;
       }
 
       .subtitle {
-        font-size: 1rem;
-        color: #374151;
-        margin-top: 4px;
+        font-size: 0.95rem;
+        color: #4b5563;
+      }
+
+      .hero {
+        background-image: url("https://images.unsplash.com/photo-1549880338-65ddcdfd017b");
+        background-size: cover;
+        background-position: center;
+        padding: 90px 24px;
+      }
+
+      .hero-overlay {
+        max-width: 900px;
+        margin: auto;
+        background: rgba(255,255,255,0.92);
+        padding: 40px;
+      }
+
+      .hero h2 {
+        margin-top: 0;
+        font-size: 2rem;
       }
 
       main {
         max-width: 900px;
         margin: auto;
-        padding: 48px 24px;
-      }
-
-      h2 {
-        font-size: 1.4rem;
-        margin-bottom: 12px;
+        padding: 56px 24px;
       }
 
       p {
         font-size: 1rem;
-        line-height: 1.7;
+        line-height: 1.75;
         color: #374151;
-        max-width: 720px;
+      }
+
+      .images {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin: 48px 0;
+      }
+
+      .images img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+      }
+
+      .section {
+        border-top: 1px solid #e5e7eb;
+        margin-top: 72px;
+        padding-top: 40px;
       }
 
       button {
@@ -69,22 +116,7 @@
         padding: 12px 20px;
         font-size: 1rem;
         cursor: pointer;
-      }
-
-      button:hover {
-        background: #1e40af;
-      }
-
-      .section {
-        margin-top: 64px;
-        border-top: 1px solid #e5e7eb;
-        padding-top: 40px;
-      }
-
-      label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 8px;
+        margin-top: 20px;
       }
 
       select, input {
@@ -109,17 +141,18 @@
       }
 
       .name {
-        font-weight: bold;
-        font-size: 1.05rem;
+        font-weight: 600;
       }
 
       .meta {
         font-size: 0.95rem;
         color: #4b5563;
-        margin-top: 6px;
       }
 
-      @media (max-width: 640px) {
+      @media (max-width: 768px) {
+        .images {
+          grid-template-columns: 1fr;
+        }
         .filters {
           grid-template-columns: 1fr;
         }
@@ -131,7 +164,6 @@
     <div id="root"></div>
 
     <script type="text/babel">
-      // SAMPLE DATA (NO YEAR LANGUAGE ANYWHERE)
       const victims = [
         {
           name_en: "Yonatan Steinberg",
@@ -154,8 +186,8 @@
       function App() {
         const searchRef = React.useRef(null);
 
-        const [searchMode, setSearchMode] = React.useState("englishDate");
-        const [filterCategory, setFilterCategory] = React.useState("All");
+        const [mode, setMode] = React.useState("englishDate");
+        const [category, setCategory] = React.useState("All");
         const [input, setInput] = React.useState("");
         const [results, setResults] = React.useState([]);
         const [hebrewDate, setHebrewDate] = React.useState("");
@@ -164,21 +196,15 @@
           searchRef.current.scrollIntoView({ behavior: "smooth" });
         }
 
-        function applyCategoryFilter(list) {
-          if (filterCategory === "All") return list;
-          return list.filter(v => v.category === filterCategory);
-        }
-
-        function runSearch(value, mode) {
+        function runSearch(value, m) {
           setInput(value);
           setResults([]);
           setHebrewDate("");
-
           if (!value) return;
 
           let matches = [];
 
-          if (mode === "name") {
+          if (m === "name") {
             const q = value.toLowerCase();
             matches = victims.filter(v =>
               v.name_en.toLowerCase().includes(q) ||
@@ -186,86 +212,100 @@
             );
           }
 
-          if (mode === "deathLocation") {
+          if (m === "deathLocation") {
             const q = value.toLowerCase();
             matches = victims.filter(v =>
               v.death_location.toLowerCase().includes(q)
             );
           }
 
-          if (mode === "residence") {
+          if (m === "residence") {
             const q = value.toLowerCase();
             matches = victims.filter(v =>
               v.residence.toLowerCase().includes(q)
             );
           }
 
-          if (mode === "englishDate") {
+          if (m === "englishDate") {
             const date = new Date(value);
             if (isNaN(date)) return;
-
             const hd = new Hebcal.HDate(date);
             setHebrewDate(hd.renderGematriya());
 
-            const day = hd.getDate();
-            const month = hd.getMonth();
-
             matches = victims.filter(v => {
               const vHd = new Hebcal.HDate(new Date(v.death));
-              return vHd.getDate() === day && vHd.getMonth() === month;
+              return vHd.getDate() === hd.getDate() &&
+                     vHd.getMonth() === hd.getMonth();
             });
           }
 
-          if (mode === "hebrewDate") {
+          if (m === "hebrewDate") {
             matches = victims.filter(v => {
               const vHd = new Hebcal.HDate(new Date(v.death));
               return vHd.renderGematriya().includes(value.trim());
             });
           }
 
-          setResults(applyCategoryFilter(matches));
+          if (category !== "All") {
+            matches = matches.filter(v => v.category === category);
+          }
+
+          setResults(matches);
         }
 
         return (
           <>
             <header>
               <div className="header-inner">
-                <h1>Anu Zochrim</h1>
-                <div className="subtitle">אנו זוכרים — We Remember</div>
+                <div>
+                  <h1>Anu Zochrim</h1>
+                  <div className="subtitle">אנו זוכרים — We Remember</div>
+                </div>
+                <nav className="nav">
+                  <a href="#">About</a>
+                  <a href="#">Donate</a>
+                </nav>
               </div>
             </header>
 
+            <div className="hero">
+              <div className="hero-overlay">
+                <h2>A National Commitment to Memory</h2>
+                <p>
+                  Anu Zochrim is a public memorial initiative dedicated to honoring
+                  the memory of Israelis and Jews murdered on October 7 and in the
+                  war that followed.
+                </p>
+                <p>
+                  The project serves as a central resource for remembrance,
+                  ensuring that the names and lives of civilians, soldiers,
+                  first responders, and hostages are preserved with accuracy,
+                  dignity, and respect.
+                </p>
+                <button onClick={scrollToSearch}>
+                  Search the memorial
+                </button>
+              </div>
+            </div>
+
             <main>
-              <h2>About this site</h2>
               <p>
-                Anu Zochrim is a public memorial project dedicated to remembering
-                Israelis and Jews killed on October 7th and in the war that
-                followed.
-              </p>
-              <p>
-                The site allows users to search by date, name, or place, and to
-                dedicate learning, prayer, or moments of joy in their memory.
+                By enabling users to search by date, name, or place, Anu Zochrim
+                allows learning, prayer, and moments of joy to be intentionally
+                dedicated in memory of those who were killed.
               </p>
 
-              <button onClick={scrollToSearch}>
-                Search names and dates
-              </button>
+              <div className="images">
+                <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" />
+                <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d" />
+                <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf1592" />
+              </div>
 
               <div className="section" ref={searchRef}>
-                <h2>Search</h2>
-
-                <label>Select how you would like to search</label>
+                <h3>Search the Memorial</h3>
 
                 <div className="filters">
-                  <select
-                    value={searchMode}
-                    onChange={e => {
-                      setSearchMode(e.target.value);
-                      setInput("");
-                      setResults([]);
-                      setHebrewDate("");
-                    }}
-                  >
+                  <select onChange={e => setMode(e.target.value)}>
                     <option value="englishDate">By English date (month & day)</option>
                     <option value="hebrewDate">By Hebrew date</option>
                     <option value="name">By name</option>
@@ -273,50 +313,22 @@
                     <option value="residence">By place of residence</option>
                   </select>
 
-                  <select
-                    value={filterCategory}
-                    onChange={e => setFilterCategory(e.target.value)}
-                  >
-                    <option value="All">All categories</option>
-                    <option value="IDF Soldier">IDF Soldier</option>
-                    <option value="Civilian">Civilian</option>
-                    <option value="Hostage">Hostage</option>
-                    <option value="Police / Border Patrol">Police / Border Patrol</option>
+                  <select onChange={e => setCategory(e.target.value)}>
+                    <option>All</option>
+                    <option>IDF Soldier</option>
+                    <option>Civilian</option>
+                    <option>Hostage</option>
+                    <option>Police / Border Patrol</option>
                   </select>
                 </div>
 
-                {searchMode === "englishDate" && (
-                  <input
-                    type="date"
-                    onChange={e => runSearch(e.target.value, searchMode)}
-                  />
-                )}
+                <input
+                  type={mode === "englishDate" ? "date" : "text"}
+                  placeholder="Enter search value"
+                  onChange={e => runSearch(e.target.value, mode)}
+                />
 
-                {searchMode === "hebrewDate" && (
-                  <input
-                    type="text"
-                    placeholder="לדוגמה: כ״ב תשרי"
-                    onChange={e => runSearch(e.target.value, searchMode)}
-                  />
-                )}
-
-                {(searchMode === "name" ||
-                  searchMode === "deathLocation" ||
-                  searchMode === "residence") && (
-                  <input
-                    type="text"
-                    placeholder="Start typing…"
-                    onChange={e => runSearch(e.target.value, searchMode)}
-                  />
-                )}
-
-                {hebrewDate && (
-                  <p><strong>Hebrew date:</strong> {hebrewDate}</p>
-                )}
-
-                {input && results.length === 0 && (
-                  <p>No results found.</p>
-                )}
+                {hebrewDate && <p><strong>Hebrew date:</strong> {hebrewDate}</p>}
 
                 {results.map((v, i) => (
                   <div key={i} className="card">
