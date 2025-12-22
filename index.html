@@ -77,4 +77,241 @@
 
       .card {
         background: white;
-        padding
+        padding: 18px;
+        border-radius: 18px;
+        margin-bottom: 14px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+      }
+
+      .name {
+        font-size: 1.2rem;
+        font-weight: 600;
+      }
+
+      .hebrew {
+        color: #4b5563;
+      }
+
+      .meta {
+        font-size: 0.95rem;
+        color: #6b7280;
+        margin-top: 6px;
+      }
+
+      .filters {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+
+      @media (max-width: 640px) {
+        .filters {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      // SAMPLE DATA — final structure
+      const victims = [
+        {
+          name_en: "Yonatan Steinberg",
+          name_he: "יונתן שטיינברג",
+          death: "2023-10-07",
+          residence: "Kibbutz Shomria",
+          death_location: "Southern Israel",
+          category: "IDF Soldier"
+        },
+        {
+          name_en: "Shani Louk",
+          name_he: "שני לוק",
+          death: "2023-10-07",
+          residence: "Tel Aviv",
+          death_location: "Nova Festival",
+          category: "Civilian"
+        }
+      ];
+
+      function App() {
+        const [searchMode, setSearchMode] = React.useState("englishDate");
+        const [filterCategory, setFilterCategory] = React.useState("All");
+        const [input, setInput] = React.useState("");
+        const [results, setResults] = React.useState([]);
+        const [hebrewDate, setHebrewDate] = React.useState("");
+
+        function applyCategoryFilter(list) {
+          if (filterCategory === "All") return list;
+          return list.filter(v => v.category === filterCategory);
+        }
+
+        function runSearch(value, mode) {
+          setInput(value);
+          setResults([]);
+          setHebrewDate("");
+
+          if (!value) return;
+
+          let matches = [];
+
+          // NAME
+          if (mode === "name") {
+            const q = value.toLowerCase();
+            matches = victims.filter(v =>
+              v.name_en.toLowerCase().includes(q) ||
+              v.name_he.includes(value)
+            );
+          }
+
+          // LOCATION OF DEATH
+          if (mode === "deathLocation") {
+            const q = value.toLowerCase();
+            matches = victims.filter(v =>
+              v.death_location.toLowerCase().includes(q)
+            );
+          }
+
+          // RESIDENCE
+          if (mode === "residence") {
+            const q = value.toLowerCase();
+            matches = victims.filter(v =>
+              v.residence.toLowerCase().includes(q)
+            );
+          }
+
+          // ENGLISH DATE (month & day only)
+          if (mode === "englishDate") {
+            const date = new Date(value);
+            if (isNaN(date)) return;
+
+            const hd = new Hebcal.HDate(date);
+            setHebrewDate(hd.renderGematriya());
+
+            const day = hd.getDate();
+            const month = hd.getMonth();
+
+            matches = victims.filter(v => {
+              const vHd = new Hebcal.HDate(new Date(v.death));
+              return vHd.getDate() === day && vHd.getMonth() === month;
+            });
+          }
+
+          // HEBREW DATE
+          if (mode === "hebrewDate") {
+            matches = victims.filter(v => {
+              const vHd = new Hebcal.HDate(new Date(v.death));
+              return vHd.renderGematriya().includes(value.trim());
+            });
+          }
+
+          setResults(applyCategoryFilter(matches));
+        }
+
+        return (
+          <>
+            <div className="hero">
+              <h1>Anu Zochrim</h1>
+              <h2>אנו זוכרים — We Remember</h2>
+              <p>
+                A memorial search tool honoring Israelis and Jews killed on
+                October 7th and in the war that followed.
+                <br />
+                Find a name and dedicate your learning or simcha in their memory.
+              </p>
+            </div>
+
+            <div className="container">
+              <div className="search-box">
+                <label>
+                  Select how you would like to search
+                </label>
+
+                <div className="filters">
+                  <select
+                    value={searchMode}
+                    onChange={e => {
+                      setSearchMode(e.target.value);
+                      setInput("");
+                      setResults([]);
+                      setHebrewDate("");
+                    }}
+                  >
+                    <option value="englishDate">By English date (month & day)</option>
+                    <option value="hebrewDate">By Hebrew date</option>
+                    <option value="name">By name</option>
+                    <option value="deathLocation">By location of death</option>
+                    <option value="residence">By place of residence</option>
+                  </select>
+
+                  <select
+                    value={filterCategory}
+                    onChange={e => setFilterCategory(e.target.value)}
+                  >
+                    <option value="All">All categories</option>
+                    <option value="IDF Soldier">IDF Soldier</option>
+                    <option value="Civilian">Civilian</option>
+                    <option value="Hostage">Hostage</option>
+                    <option value="Police / Border Patrol">Police / Border Patrol</option>
+                  </select>
+                </div>
+
+                {searchMode === "englishDate" && (
+                  <input
+                    type="date"
+                    onChange={e => runSearch(e.target.value, searchMode)}
+                  />
+                )}
+
+                {searchMode === "hebrewDate" && (
+                  <input
+                    type="text"
+                    placeholder="לדוגמה: כ״ב תשרי"
+                    onChange={e => runSearch(e.target.value, searchMode)}
+                  />
+                )}
+
+                {(searchMode === "name" ||
+                  searchMode === "deathLocation" ||
+                  searchMode === "residence") && (
+                  <input
+                    type="text"
+                    placeholder="Start typing…"
+                    onChange={e => runSearch(e.target.value, searchMode)}
+                  />
+                )}
+
+                {hebrewDate && (
+                  <p><strong>Hebrew date:</strong> {hebrewDate}</p>
+                )}
+              </div>
+
+              <div style={{ marginTop: "32px" }}>
+                {input && results.length === 0 && (
+                  <p>No results found.</p>
+                )}
+
+                {results.map((v, i) => (
+                  <div key={i} className="card">
+                    <div className="name">
+                      {v.name_en}
+                      <span className="hebrew"> ({v.name_he})</span>
+                    </div>
+                    <div className="meta">
+                      {v.category} · Lived in {v.residence} · Killed in {v.death_location}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>
