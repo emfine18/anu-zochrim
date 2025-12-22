@@ -26,13 +26,13 @@
     header {
       background: #0f172a;
       position: relative;
-      z-index: 10;
+      z-index: 1000;
     }
 
     .header-inner {
       max-width: 1100px;
       margin: auto;
-      padding: 20px 24px;
+      padding: 16px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -41,6 +41,7 @@
     .logo img {
       height: 42px;
       width: auto;
+      display: block;
     }
 
     .nav-desktop {
@@ -60,6 +61,7 @@
       background: none;
       border: none;
       cursor: pointer;
+      padding: 8px;
     }
 
     .hamburger span {
@@ -77,24 +79,24 @@
       inset: 0;
       background: white;
       padding: 80px 32px;
-      z-index: 999;
+      z-index: 2000;
     }
 
     .mobile-menu a {
       display: block;
-      font-size: 1.5rem;
-      margin-bottom: 24px;
+      font-size: 1.6rem;
+      margin-bottom: 28px;
       text-decoration: none;
       color: #0f172a;
     }
 
     .close-btn {
       position: absolute;
-      top: 24px;
+      top: 20px;
       right: 24px;
       background: none;
       border: none;
-      font-size: 2rem;
+      font-size: 2.2rem;
       cursor: pointer;
     }
 
@@ -124,7 +126,7 @@
     }
 
     .hero-content h1 {
-      font-size: 2.4rem;
+      font-size: 2.5rem;
     }
 
     /* DESCRIPTION */
@@ -300,7 +302,9 @@
 <script>
   function toggleMenu() {
     const menu = document.getElementById("mobileMenu");
-    menu.style.display = menu.style.display === "block" ? "none" : "block";
+    if (!menu) return;
+    menu.style.display =
+      menu.style.display === "block" ? "none" : "block";
   }
 
   const victims = [
@@ -319,4 +323,58 @@
       name_en: "Shani Louk",
       name_he: "שני לוק",
       birth_en: "04/07",
-     
+      death_en: "10/07",
+      birth_he: "ט״ז ניסן",
+      death_he: "כ״ב תשרי",
+      residence: "Tel Aviv",
+      death_location: "Nova Festival",
+      category: "Civilian"
+    }
+  ];
+
+  function runSearch() {
+    const type = document.getElementById("searchType").value;
+    const category = document.getElementById("category").value;
+    const input = document.getElementById("searchInput").value.trim();
+    const resultsDiv = document.getElementById("results");
+
+    resultsDiv.innerHTML = "";
+    if (!input) return;
+
+    const matches = victims.filter(v => {
+      if (type === "name") {
+        if (
+          !v.name_en.toLowerCase().includes(input.toLowerCase()) &&
+          !v.name_he.includes(input)
+        ) return false;
+      } else {
+        if (!v[type] || !v[type].toLowerCase().includes(input.toLowerCase()))
+          return false;
+      }
+
+      if (category && v.category !== category) return false;
+      return true;
+    });
+
+    if (matches.length === 0) {
+      resultsDiv.innerHTML = '<div class="no-results">No results found.</div>';
+      return;
+    }
+
+    matches.forEach(v => {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `
+        <div class="name">${v.name_en} (${v.name_he})</div>
+        <div class="meta">
+          ${v.category} · ${v.residence} · ${v.death_location}<br>
+          Birth: ${v.birth_en} (${v.birth_he}) · Death: ${v.death_en} (${v.death_he})
+        </div>
+      `;
+      resultsDiv.appendChild(div);
+    });
+  }
+</script>
+
+</body>
+</html>
