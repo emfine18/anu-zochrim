@@ -28,7 +28,7 @@
       font-family: "Poppins", sans-serif;
     }
 
-    /* TOP BAR OVER HERO */
+    /* TOP BAR */
     .top-bar {
       position: absolute;
       top: 0;
@@ -41,18 +41,8 @@
       align-items: center;
     }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-      color: white;
-      font-weight: 600;
-      font-size: 1.2rem;
-    }
-
     .logo img {
       height: 42px;
-      margin-right: 10px;
     }
 
     nav a {
@@ -66,7 +56,7 @@
     .hero {
       position: relative;
       height: 520px;
-      background-image: url("https://images.unsplash.com/photo-1549880338-65ddcdfd017b");
+      background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Flag_of_Israel.svg/1920px-Flag_of_Israel.svg.png");
       background-size: cover;
       background-position: center;
     }
@@ -83,22 +73,38 @@
       z-index: 2;
       max-width: 900px;
       margin: auto;
-      padding: 200px 24px 0;
+      padding: 220px 24px 0;
       color: white;
     }
 
     .hero-content h2 {
-      font-size: 2.1rem;
+      font-size: 2.2rem;
       margin-bottom: 12px;
     }
 
     .hero-content p {
       font-size: 1.05rem;
-      line-height: 1.7;
       max-width: 700px;
     }
 
-    /* MAIN */
+    /* FEATURED IMAGE */
+    .featured {
+      max-width: 900px;
+      margin: 56px auto 0;
+      padding: 0 24px;
+    }
+
+    .featured img {
+      width: 100%;
+      border: 1px solid #e5e7eb;
+    }
+
+    .caption {
+      font-size: 0.9rem;
+      color: #475569;
+      margin-top: 8px;
+    }
+
     main {
       max-width: 900px;
       margin: auto;
@@ -150,14 +156,14 @@
     }
 
     @media (max-width: 768px) {
-      .filters {
-        grid-template-columns: 1fr;
-      }
       .hero {
         height: 420px;
       }
       .hero-content {
-        padding-top: 160px;
+        padding-top: 170px;
+      }
+      .filters {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -171,7 +177,6 @@
       {
         name_en: "Yonatan Steinberg",
         name_he: "יונתן שטיינברג",
-        death: "2023-10-07",
         residence: "Kibbutz Shomria",
         death_location: "Southern Israel",
         category: "IDF Soldier"
@@ -179,7 +184,6 @@
       {
         name_en: "Shani Louk",
         name_he: "שני לוק",
-        death: "2023-10-07",
         residence: "Tel Aviv",
         death_location: "Nova Festival",
         category: "Civilian"
@@ -187,7 +191,6 @@
     ];
 
     function App() {
-      const [mode, setMode] = React.useState("name");
       const [category, setCategory] = React.useState("All");
       const [results, setResults] = React.useState([]);
 
@@ -214,10 +217,8 @@
           <div className="hero">
             <div className="top-bar">
               <a href="index.html" className="logo">
-                <!-- REPLACE THIS IMAGE WITH YOUR LOGO -->
-                <img src="https://via.placeholder.com/120x40?text=LOGO" alt="Anu Zochrim logo" />
+                <img src="https://via.placeholder.com/140x42?text=LOGO" alt="Anu Zochrim logo" />
               </a>
-
               <nav>
                 <a href="about.html">About</a>
                 <a href="contact.html">Contact</a>
@@ -234,51 +235,14 @@
             </div>
           </div>
 
-          <main>
-            <p>
-              Search by name, date, or place to dedicate learning, prayer,
-              or moments of joy in memory of those who were killed.
-            </p>
-
-            <div className="section">
-              <h3>Search the Memorial</h3>
-
-              <div className="filters">
-                <select onChange={e => setCategory(e.target.value)}>
-                  <option value="All">All categories</option>
-                  <option value="IDF Soldier">IDF Soldier</option>
-                  <option value="Civilian">Civilian</option>
-                  <option value="Hostage">Hostage</option>
-                  <option value="Police / Border Patrol">Police / Border Patrol</option>
-                </select>
-              </div>
-
-              <input
-                placeholder="Enter a name (English or Hebrew)"
-                onChange={e => runSearch(e.target.value)}
-              />
-
-              {results.map((v, i) => (
-                <div key={i} className="card">
-                  <div className="name">
-                    {v.name_en} ({v.name_he})
-                  </div>
-                  <div className="meta">
-                    {v.category} · Lived in {v.residence} · Killed in {v.death_location}
-                  </div>
-                </div>
-              ))}
+          <div className="featured">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Photographs_from_Kibbutz_Be%27eri%2C_a_few_days_after_the_Be%27eri_massacre_carried_out_in_the_kibbutz_by_Hamas_on_October_7%2C_2023_by_photographer_Micah_Brickman_%281%29_%28cropped%29.jpg"
+              alt="Kibbutz Be’eri, October 2023"
+            />
+            <div className="caption">
+              Kibbutz Be’eri, days after the October 7 attack. Photograph by Micah Brickman.
             </div>
-          </main>
+          </div>
 
-          <footer>
-            Anu Zochrim · אנו זוכרים · A public memorial initiative
-          </footer>
-        </>
-      );
-    }
-
-    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
-  </script>
-</body>
-</html>
+          <main>
