@@ -67,6 +67,25 @@
       line-height: 1.7;
     }
 
+    /* IMAGE */
+    .image-section {
+      max-width: 900px;
+      margin: 64px auto 0;
+      padding: 0 24px;
+    }
+
+    .image-section img {
+      width: 100%;
+      display: block;
+      border: 1px solid #e5e7eb;
+    }
+
+    .caption {
+      font-size: 0.9rem;
+      color: #475569;
+      margin-top: 8px;
+    }
+
     /* MAIN */
     main {
       max-width: 900px;
@@ -76,7 +95,7 @@
 
     /* SEARCH */
     .search-box {
-      margin-top: 40px;
+      margin-top: 32px;
     }
 
     input {
@@ -100,6 +119,11 @@
     .meta {
       font-size: 0.95rem;
       color: #475569;
+    }
+
+    .no-results {
+      color: #64748b;
+      font-style: italic;
     }
 
     footer {
@@ -137,10 +161,16 @@
       followed.
     </p>
     <p>
-      The project exists to ensure that names are preserved with dignity,
-      accuracy, and permanence — and that learning, prayer, and moments of life
-      can be intentionally dedicated in their memory.
+      The project exists to preserve names with dignity and accuracy, and to
+      enable learning, prayer, and moments of life to be dedicated in their memory.
     </p>
+  </div>
+</section>
+
+<section class="image-section">
+  <img src="images/beeri-oct7.jpg" alt="Kibbutz Be’eri, October 2023">
+  <div class="caption">
+    Kibbutz Be’eri, days after the October 7 massacre. Photograph by Micah Brickman.
   </div>
 </section>
 
@@ -148,8 +178,8 @@
   <h2>Search the Memorial</h2>
 
   <p>
-    Use the search below to find individuals by name. Additional search options
-    — including dates, locations, and categories — will be added.
+    Search by name (English or Hebrew). Additional filters and date-based search
+    will be added.
   </p>
 
   <div class="search-box">
@@ -168,10 +198,7 @@
 </footer>
 
 <script>
-  /*
-    This data is temporary.
-    Next step: replace this with a JSON file.
-  */
+  // Temporary data – next step is replacing this with a data file
   const victims = [
     {
       name_en: "Yonatan Steinberg",
@@ -200,6 +227,11 @@
       v.name_en.toLowerCase().includes(qLower) ||
       v.name_he.includes(query)
     );
+
+    if (matches.length === 0) {
+      resultsDiv.innerHTML = '<div class="no-results">No results found.</div>';
+      return;
+    }
 
     matches.forEach(v => {
       const div = document.createElement("div");
