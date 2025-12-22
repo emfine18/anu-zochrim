@@ -22,7 +22,6 @@
       font-family: "Noto Serif", serif;
     }
 
-    /* HEADER */
     header {
       background: #0f172a;
       padding: 20px 28px;
@@ -49,7 +48,6 @@
       font-weight: 500;
     }
 
-    /* HERO */
     .hero {
       background: #020617;
       color: white;
@@ -63,11 +61,9 @@
 
     .hero p {
       max-width: 720px;
-      font-size: 1.05rem;
       line-height: 1.7;
     }
 
-    /* IMAGE */
     .image-section {
       max-width: 900px;
       margin: 64px auto 0;
@@ -76,7 +72,6 @@
 
     .image-section img {
       width: 100%;
-      display: block;
       border: 1px solid #e5e7eb;
     }
 
@@ -86,24 +81,24 @@
       margin-top: 8px;
     }
 
-    /* MAIN */
     main {
       max-width: 900px;
       margin: auto;
       padding: 72px 24px;
     }
 
-    /* SEARCH */
-    .search-box {
-      margin-top: 32px;
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
     }
 
-    input {
-      width: 100%;
-      padding: 14px;
-      font-size: 1rem;
+    input, select {
+      padding: 12px;
+      font-size: 0.95rem;
       border: 1px solid #cbd5f5;
-      margin-bottom: 24px;
+      width: 100%;
     }
 
     .card {
@@ -141,9 +136,7 @@
 
 <header>
   <div class="header-inner">
-    <div class="site-title">
-      Anu Zochrim · אנו זוכרים
-    </div>
+    <div class="site-title">Anu Zochrim · אנו זוכרים</div>
     <nav>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
@@ -156,13 +149,8 @@
   <div class="hero-inner">
     <h1>We Remember</h1>
     <p>
-      Anu Zochrim is a public memorial initiative dedicated to honoring the
-      memory of Israelis and Jews murdered on October 7 and in the war that
-      followed.
-    </p>
-    <p>
-      The project exists to preserve names with dignity and accuracy, and to
-      enable learning, prayer, and moments of life to be dedicated in their memory.
+      A public memorial initiative honoring Israelis and Jews murdered on
+      October 7 and in the war that followed.
     </p>
   </div>
 </section>
@@ -170,24 +158,29 @@
 <section class="image-section">
   <img src="images/beeri-oct7.jpg" alt="Kibbutz Be’eri, October 2023">
   <div class="caption">
-    Kibbutz Be’eri, days after the October 7 massacre. Photograph by Micah Brickman.
+    Kibbutz Be’eri, days after October 7. Photograph by Micah Brickman.
   </div>
 </section>
 
 <main>
   <h2>Search the Memorial</h2>
 
-  <p>
-    Search by name (English or Hebrew). Additional filters and date-based search
-    will be added.
-  </p>
+  <div class="filters">
+    <input id="name" placeholder="Name (English or Hebrew)">
+    <input id="birth_en" placeholder="Birth date (MM/DD)">
+    <input id="death_en" placeholder="Death date (MM/DD)">
+    <input id="birth_he" placeholder="Birth date (Hebrew)">
+    <input id="death_he" placeholder="Death date (Hebrew)">
+    <input id="death_location" placeholder="City / location of death">
+    <input id="residence" placeholder="City / place of residence">
 
-  <div class="search-box">
-    <input
-      id="searchInput"
-      placeholder="Enter a name (English or Hebrew)"
-      oninput="runSearch()"
-    />
+    <select id="category">
+      <option value="">All categories</option>
+      <option>IDF Soldier</option>
+      <option>Civilian</option>
+      <option>Hostage</option>
+      <option>Police / Border Patrol</option>
+    </select>
   </div>
 
   <div id="results"></div>
@@ -198,35 +191,76 @@
 </footer>
 
 <script>
-  // Temporary data – next step is replacing this with a data file
   const victims = [
     {
       name_en: "Yonatan Steinberg",
       name_he: "יונתן שטיינברג",
-      category: "IDF Soldier",
-      residence: "Kibbutz Shomria"
+      birth_en: "03/12",
+      death_en: "10/07",
+      birth_he: "י״ט אדר",
+      death_he: "כ״ב תשרי",
+      residence: "Kibbutz Shomria",
+      death_location: "Southern Israel",
+      category: "IDF Soldier"
     },
     {
       name_en: "Shani Louk",
       name_he: "שני לוק",
-      category: "Civilian",
-      residence: "Tel Aviv"
+      birth_en: "04/07",
+      death_en: "10/07",
+      birth_he: "ט״ז ניסן",
+      death_he: "כ״ב תשרי",
+      residence: "Tel Aviv",
+      death_location: "Nova Festival",
+      category: "Civilian"
     }
   ];
 
+  const fields = [
+    "name", "birth_en", "death_en", "birth_he",
+    "death_he", "death_location", "residence", "category"
+  ];
+
+  fields.forEach(id => {
+    document.getElementById(id).addEventListener("input", runSearch);
+    document.getElementById(id).addEventListener("change", runSearch);
+  });
+
   function runSearch() {
-    const query = document.getElementById("searchInput").value.trim();
     const resultsDiv = document.getElementById("results");
     resultsDiv.innerHTML = "";
 
-    if (!query) return;
+    const filters = {
+      name: document.getElementById("name").value.toLowerCase(),
+      birth_en: document.getElementById("birth_en").value,
+      death_en: document.getElementById("death_en").value,
+      birth_he: document.getElementById("birth_he").value,
+      death_he: document.getElementById("death_he").value,
+      death_location: document.getElementById("death_location").value.toLowerCase(),
+      residence: document.getElementById("residence").value.toLowerCase(),
+      category: document.getElementById("category").value
+    };
 
-    const qLower = query.toLowerCase();
+    const matches = victims.filter(v => {
+      if (filters.name &&
+          !v.name_en.toLowerCase().includes(filters.name) &&
+          !v.name_he.includes(filters.name)) return false;
 
-    const matches = victims.filter(v =>
-      v.name_en.toLowerCase().includes(qLower) ||
-      v.name_he.includes(query)
-    );
+      if (filters.birth_en && v.birth_en !== filters.birth_en) return false;
+      if (filters.death_en && v.death_en !== filters.death_en) return false;
+      if (filters.birth_he && v.birth_he !== filters.birth_he) return false;
+      if (filters.death_he && v.death_he !== filters.death_he) return false;
+
+      if (filters.death_location &&
+          !v.death_location.toLowerCase().includes(filters.death_location)) return false;
+
+      if (filters.residence &&
+          !v.residence.toLowerCase().includes(filters.residence)) return false;
+
+      if (filters.category && v.category !== filters.category) return false;
+
+      return true;
+    });
 
     if (matches.length === 0) {
       resultsDiv.innerHTML = '<div class="no-results">No results found.</div>';
@@ -238,7 +272,10 @@
       div.className = "card";
       div.innerHTML = `
         <div class="name">${v.name_en} (${v.name_he})</div>
-        <div class="meta">${v.category} · ${v.residence}</div>
+        <div class="meta">
+          ${v.category} · ${v.residence} · ${v.death_location}<br>
+          Birth: ${v.birth_en} (${v.birth_he}) · Death: ${v.death_en} (${v.death_he})
+        </div>
       `;
       resultsDiv.appendChild(div);
     });
