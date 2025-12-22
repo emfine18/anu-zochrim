@@ -101,20 +101,19 @@
     }
 
     /* HERO */
- 
-    .hero {
-  background-image: url("images/beeri.png");
+
+  .hero {
+  background-image: url("images/beeri-oct7.jpg");
   background-size: cover;
   background-position: center 20%;
   height: 520px;
 }
 
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.45);
-    }
+@media (min-width: 1024px) {
+  .hero {
+    background-position: center bottom;
+  }
+}
 
     .hero-content {
       position: relative;
