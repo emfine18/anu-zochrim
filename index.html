@@ -18,50 +18,93 @@
       background: #ffffff;
     }
 
-    h1, h2, h3 {
+    h1, h2 {
       font-family: "Noto Serif", serif;
     }
 
     /* HEADER */
-    <header>
-  <div class="header-inner">
-    <div class="logo">
-      <a href="/">
-        <img src="images/logo.png" alt="Anu Zochrim logo">
-      </a>
-    </div>
+    header {
+      background: #0f172a;
+      position: relative;
+      z-index: 10;
+    }
 
-    <!-- Desktop nav -->
-    <nav class="nav-desktop">
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-      <a href="donate.html">Donate</a>
-    </nav>
+    .header-inner {
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-    <!-- Hamburger -->
-    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </div>
+    .logo img {
+      height: 42px;
+      width: auto;
+    }
 
-  <!-- Mobile menu -->
-  <div class="mobile-menu" id="mobileMenu">
-    <button class="close-btn" onclick="toggleMenu()">✕</button>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
-    <a href="donate.html">Donate</a>
-  </div>
-</header>
-    
+    .nav-desktop {
+      display: flex;
+    }
+
+    .nav-desktop a {
+      margin-left: 24px;
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+    }
+
+    /* HAMBURGER */
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 26px;
+      height: 2px;
+      background: white;
+      margin: 6px 0;
+    }
+
+    /* MOBILE MENU */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: white;
+      padding: 80px 32px;
+      z-index: 999;
+    }
+
+    .mobile-menu a {
+      display: block;
+      font-size: 1.5rem;
+      margin-bottom: 24px;
+      text-decoration: none;
+      color: #0f172a;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+
     /* HERO */
     .hero {
-      position: relative;
       height: 520px;
-      background-image: url("images/beeri-oct7.jpg");
+      background-image: url("images/beeri.png");
       background-size: cover;
       background-position: center;
+      position: relative;
     }
 
     .hero::after {
@@ -82,7 +125,6 @@
 
     .hero-content h1 {
       font-size: 2.4rem;
-      margin-bottom: 12px;
     }
 
     /* DESCRIPTION */
@@ -98,97 +140,6 @@
       color: #334155;
       margin-bottom: 20px;
     }
-
-/* LOGO */
-.logo img {
-  height: 42px;
-  width: auto;
-}
-
-/* NAV */
-.nav-desktop {
-  display: flex;
-}
-
-.nav-desktop a {
-  margin-left: 24px;
-  text-decoration: none;
-  color: white;
-  font-weight: 500;
-}
-
-/* HAMBURGER */
-.hamburger {
-  display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.hamburger span {
-  display: block;
-  width: 26px;
-  height: 2px;
-  background: white;
-  margin: 6px 0;
-}
-
-/* MOBILE MENU */
-.mobile-menu {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: white;
-  padding: 80px 32px;
-  z-index: 999;
-}
-
-.mobile-menu a {
-  display: block;
-  font-size: 1.5rem;
-  margin-bottom: 24px;
-  text-decoration: none;
-  color: #0f172a;
-}
-
-.close-btn {
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  background: none;
-  border: none;
-  font-size: 2rem;
-  cursor: pointer;
-}
-
-/* RESPONSIVE BREAKPOINT */
-@media (max-width: 900px) {
-  .nav-desktop {
-    display: none;
-  }
-
-  .hamburger {
-    display: block;
-  }
-}
-
-    <script>
-  function toggleMenu() {
-    const menu = document.getElementById("mobileMenu");
-    menu.style.display =
-      menu.style.display === "block" ? "none" : "block";
-  }
-</script>
-
-.hero {
-  background-image: url("images/beeri.png");
-  background-size: cover;
-  background-position: center;
-}
-
-    
-    
-    
 
     /* SEARCH */
     .search {
@@ -240,13 +191,24 @@
       font-size: 0.9rem;
     }
 
-    @media (max-width: 640px) {
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .nav-desktop {
+        display: none;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
       .search-controls {
         grid-template-columns: 1fr;
       }
+
       .hero {
         height: 420px;
       }
+
       .hero-content {
         padding-top: 170px;
       }
@@ -258,12 +220,30 @@
 
 <header>
   <div class="header-inner">
-    <div class="site-title">Anu Zochrim · אנו זוכרים</div>
-    <nav>
+    <div class="logo">
+      <a href="/">
+        <img src="images/logo.png" alt="Anu Zochrim logo">
+      </a>
+    </div>
+
+    <nav class="nav-desktop">
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
       <a href="donate.html">Donate</a>
     </nav>
+
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="close-btn" onclick="toggleMenu()">✕</button>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="donate.html">Donate</a>
   </div>
 </header>
 
@@ -278,23 +258,18 @@
     Anu Zochrim is a public memorial initiative dedicated to honoring the memory
     of Israelis and Jews murdered on October 7 and in the war that followed.
   </p>
-
   <p>
-    The project exists to ensure that names are preserved with dignity,
-    accuracy, and permanence — and to enable learning, prayer, and moments of
-    life to be intentionally dedicated in their memory.
+    The project exists to preserve names with dignity, accuracy, and permanence,
+    and to enable learning, prayer, and moments of life to be intentionally
+    dedicated in their memory.
   </p>
 </section>
 
 <section class="search">
   <h2>Search the Memorial</h2>
-
-  <p>
-    Select how you would like to search, then optionally refine by category.
-  </p>
+  <p>Select how you would like to search, then optionally refine by category.</p>
 
   <div class="search-controls">
-    <!-- SEARCH TYPE -->
     <select id="searchType">
       <option value="name">Name (English or Hebrew)</option>
       <option value="birth_en">Birth date (English – MM/DD)</option>
@@ -305,7 +280,6 @@
       <option value="residence">City / place of residence</option>
     </select>
 
-    <!-- CATEGORY -->
     <select id="category">
       <option value="">All categories</option>
       <option value="Civilian">Civilian</option>
@@ -315,12 +289,7 @@
     </select>
   </div>
 
-  <input
-    id="searchInput"
-    placeholder="Enter search value"
-    oninput="runSearch()"
-  />
-
+  <input id="searchInput" placeholder="Enter search value" oninput="runSearch()">
   <div id="results"></div>
 </section>
 
@@ -329,7 +298,11 @@
 </footer>
 
 <script>
-  // TEMPORARY DATA — NEXT STEP IS REPLACING WITH FILE
+  function toggleMenu() {
+    const menu = document.getElementById("mobileMenu");
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+  }
+
   const victims = [
     {
       name_en: "Yonatan Steinberg",
@@ -346,59 +319,4 @@
       name_en: "Shani Louk",
       name_he: "שני לוק",
       birth_en: "04/07",
-      death_en: "10/07",
-      birth_he: "ט״ז ניסן",
-      death_he: "כ״ב תשרי",
-      residence: "Tel Aviv",
-      death_location: "Nova Festival",
-      category: "Civilian"
-    }
-  ];
-
-  function runSearch() {
-    const type = document.getElementById("searchType").value;
-    const category = document.getElementById("category").value;
-    const input = document.getElementById("searchInput").value.trim();
-    const resultsDiv = document.getElementById("results");
-
-    resultsDiv.innerHTML = "";
-    if (!input) return;
-
-    const matches = victims.filter(v => {
-      if (type === "name") {
-        if (
-          !v.name_en.toLowerCase().includes(input.toLowerCase()) &&
-          !v.name_he.includes(input)
-        ) return false;
-      } else {
-        if (!v[type]) return false;
-        if (!v[type].toLowerCase().includes(input.toLowerCase())) return false;
-      }
-
-      if (category && v.category !== category) return false;
-      return true;
-    });
-
-    if (matches.length === 0) {
-      resultsDiv.innerHTML =
-        '<div class="no-results">No results found.</div>';
-      return;
-    }
-
-    matches.forEach(v => {
-      const div = document.createElement("div");
-      div.className = "card";
-      div.innerHTML = `
-        <div class="name">${v.name_en} (${v.name_he})</div>
-        <div class="meta">
-          ${v.category} · ${v.residence} · ${v.death_location}<br>
-          Birth: ${v.birth_en} (${v.birth_he}) · Death: ${v.death_en} (${v.death_he})
-        </div>
-      `;
-      resultsDiv.appendChild(div);
-    });
-  }
-</script>
-
-</body>
-</html>
+     
