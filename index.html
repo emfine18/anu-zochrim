@@ -17,85 +17,82 @@
 
     <style>
       body {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-        background: #f9fafb;
         margin: 0;
-        padding: 0;
-        color: #111827;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #ffffff;
+        color: #1f2937;
       }
 
-      .container {
+      header {
+        border-bottom: 1px solid #e5e7eb;
+        padding: 24px;
+      }
+
+      .header-inner {
+        max-width: 1100px;
+        margin: auto;
+      }
+
+      h1 {
+        font-size: 2rem;
+        margin: 0;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+        color: #374151;
+        margin-top: 4px;
+      }
+
+      main {
         max-width: 900px;
         margin: auto;
-        padding: 32px 24px;
+        padding: 48px 24px;
       }
 
-      .hero {
-        text-align: center;
-        padding: 60px 20px 40px;
+      h2 {
+        font-size: 1.4rem;
+        margin-bottom: 12px;
       }
 
-      .hero h1 {
-        font-size: 2.6rem;
-        margin-bottom: 8px;
-      }
-
-      .hero h2 {
-        font-size: 1.1rem;
-        font-weight: normal;
-        color: #6b7280;
-      }
-
-      .hero p {
-        max-width: 650px;
-        margin: 24px auto 0;
+      p {
+        font-size: 1rem;
+        line-height: 1.7;
         color: #374151;
-        font-size: 1.05rem;
+        max-width: 720px;
       }
 
-      .search-box {
-        background: white;
-        border-radius: 22px;
-        padding: 28px;
-        box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+      button {
+        background: #1d4ed8;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #1e40af;
+      }
+
+      .section {
+        margin-top: 64px;
+        border-top: 1px solid #e5e7eb;
+        padding-top: 40px;
       }
 
       label {
         display: block;
-        font-weight: 600;
+        font-weight: bold;
         margin-bottom: 8px;
       }
 
       select, input {
         width: 100%;
-        padding: 14px;
+        padding: 12px;
         font-size: 1rem;
         margin-bottom: 20px;
-        border-radius: 12px;
         border: 1px solid #d1d5db;
-      }
-
-      .card {
-        background: white;
-        padding: 18px;
-        border-radius: 18px;
-        margin-bottom: 14px;
-        box-shadow: 0 4px 14px rgba(0,0,0,0.05);
-      }
-
-      .name {
-        font-size: 1.2rem;
-        font-weight: 600;
-      }
-
-      .hebrew {
-        color: #4b5563;
-      }
-
-      .meta {
-        font-size: 0.95rem;
-        color: #6b7280;
-        margin-top: 6px;
       }
 
       .filters {
@@ -103,6 +100,23 @@
         grid-template-columns: 1fr 1fr;
         gap: 16px;
         margin-bottom: 20px;
+      }
+
+      .card {
+        border: 1px solid #e5e7eb;
+        padding: 16px;
+        margin-bottom: 12px;
+      }
+
+      .name {
+        font-weight: bold;
+        font-size: 1.05rem;
+      }
+
+      .meta {
+        font-size: 0.95rem;
+        color: #4b5563;
+        margin-top: 6px;
       }
 
       @media (max-width: 640px) {
@@ -117,7 +131,7 @@
     <div id="root"></div>
 
     <script type="text/babel">
-      // SAMPLE DATA — final structure
+      // SAMPLE DATA (NO YEAR LANGUAGE ANYWHERE)
       const victims = [
         {
           name_en: "Yonatan Steinberg",
@@ -138,11 +152,17 @@
       ];
 
       function App() {
+        const searchRef = React.useRef(null);
+
         const [searchMode, setSearchMode] = React.useState("englishDate");
         const [filterCategory, setFilterCategory] = React.useState("All");
         const [input, setInput] = React.useState("");
         const [results, setResults] = React.useState([]);
         const [hebrewDate, setHebrewDate] = React.useState("");
+
+        function scrollToSearch() {
+          searchRef.current.scrollIntoView({ behavior: "smooth" });
+        }
 
         function applyCategoryFilter(list) {
           if (filterCategory === "All") return list;
@@ -158,7 +178,6 @@
 
           let matches = [];
 
-          // NAME
           if (mode === "name") {
             const q = value.toLowerCase();
             matches = victims.filter(v =>
@@ -167,7 +186,6 @@
             );
           }
 
-          // LOCATION OF DEATH
           if (mode === "deathLocation") {
             const q = value.toLowerCase();
             matches = victims.filter(v =>
@@ -175,7 +193,6 @@
             );
           }
 
-          // RESIDENCE
           if (mode === "residence") {
             const q = value.toLowerCase();
             matches = victims.filter(v =>
@@ -183,7 +200,6 @@
             );
           }
 
-          // ENGLISH DATE (month & day only)
           if (mode === "englishDate") {
             const date = new Date(value);
             if (isNaN(date)) return;
@@ -200,7 +216,6 @@
             });
           }
 
-          // HEBREW DATE
           if (mode === "hebrewDate") {
             matches = victims.filter(v => {
               const vHd = new Hebcal.HDate(new Date(v.death));
@@ -213,22 +228,33 @@
 
         return (
           <>
-            <div className="hero">
-              <h1>Anu Zochrim</h1>
-              <h2>אנו זוכרים — We Remember</h2>
-              <p>
-                A memorial search tool honoring Israelis and Jews killed on
-                October 7th and in the war that followed.
-                <br />
-                Find a name and dedicate your learning or simcha in their memory.
-              </p>
-            </div>
+            <header>
+              <div className="header-inner">
+                <h1>Anu Zochrim</h1>
+                <div className="subtitle">אנו זוכרים — We Remember</div>
+              </div>
+            </header>
 
-            <div className="container">
-              <div className="search-box">
-                <label>
-                  Select how you would like to search
-                </label>
+            <main>
+              <h2>About this site</h2>
+              <p>
+                Anu Zochrim is a public memorial project dedicated to remembering
+                Israelis and Jews killed on October 7th and in the war that
+                followed.
+              </p>
+              <p>
+                The site allows users to search by date, name, or place, and to
+                dedicate learning, prayer, or moments of joy in their memory.
+              </p>
+
+              <button onClick={scrollToSearch}>
+                Search names and dates
+              </button>
+
+              <div className="section" ref={searchRef}>
+                <h2>Search</h2>
+
+                <label>Select how you would like to search</label>
 
                 <div className="filters">
                   <select
@@ -287,9 +313,7 @@
                 {hebrewDate && (
                   <p><strong>Hebrew date:</strong> {hebrewDate}</p>
                 )}
-              </div>
 
-              <div style={{ marginTop: "32px" }}>
                 {input && results.length === 0 && (
                   <p>No results found.</p>
                 )}
@@ -297,8 +321,7 @@
                 {results.map((v, i) => (
                   <div key={i} className="card">
                     <div className="name">
-                      {v.name_en}
-                      <span className="hebrew"> ({v.name_he})</span>
+                      {v.name_en} ({v.name_he})
                     </div>
                     <div className="meta">
                       {v.category} · Lived in {v.residence} · Killed in {v.death_location}
@@ -306,7 +329,7 @@
                   </div>
                 ))}
               </div>
-            </div>
+            </main>
           </>
         );
       }
