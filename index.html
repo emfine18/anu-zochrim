@@ -14,8 +14,6 @@
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-  <!-- Hebrew Calendar -->
   <script src="https://unpkg.com/@hebcal/core"></script>
 
   <style>
@@ -23,84 +21,94 @@
       margin: 0;
       font-family: "Lora", serif;
       color: #0f172a;
-      background: linear-gradient(180deg, #e6f0ff 0%, #ffffff 50%);
+      background: #ffffff;
     }
 
-    h1, h2, h3, h4,
-    header, nav a, button, label, select {
+    h1, h2, h3, nav a, button, select {
       font-family: "Poppins", sans-serif;
     }
 
-    header {
-      background: white;
-      border-bottom: 1px solid #e5e7eb;
-      padding: 18px 24px;
-    }
-
-    .header-inner {
-      max-width: 1100px;
-      margin: auto;
+    /* TOP BAR OVER HERO */
+    .top-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      padding: 20px 28px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    nav a {
-      margin-left: 20px;
+    .logo {
+      display: flex;
+      align-items: center;
       text-decoration: none;
-      color: #0f172a;
+      color: white;
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+
+    .logo img {
+      height: 42px;
+      margin-right: 10px;
+    }
+
+    nav a {
+      margin-left: 24px;
+      text-decoration: none;
+      color: white;
       font-weight: 500;
     }
 
+    /* HERO */
     .hero {
-      padding: 96px 24px 72px;
+      position: relative;
+      height: 520px;
+      background-image: url("https://images.unsplash.com/photo-1549880338-65ddcdfd017b");
+      background-size: cover;
+      background-position: center;
     }
 
-    .hero-box {
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.35);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
       max-width: 900px;
       margin: auto;
-      background: rgba(255,255,255,0.95);
-      padding: 44px;
-      border-left: 6px solid #1d4ed8;
+      padding: 200px 24px 0;
+      color: white;
     }
 
+    .hero-content h2 {
+      font-size: 2.1rem;
+      margin-bottom: 12px;
+    }
+
+    .hero-content p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      max-width: 700px;
+    }
+
+    /* MAIN */
     main {
       max-width: 900px;
       margin: auto;
-      padding: 56px 24px;
-    }
-
-    p {
-      font-size: 1rem;
-      line-height: 1.75;
-      color: #334155;
-    }
-
-    .image-strip {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin: 56px 0;
-    }
-
-    .image-strip img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border: 1px solid #e5e7eb;
+      padding: 64px 24px;
     }
 
     .section {
-      border-top: 1px solid #e5e7eb;
-      padding-top: 48px;
       margin-top: 72px;
-    }
-
-    .filters {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 16px;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 40px;
     }
 
     select, input {
@@ -111,8 +119,13 @@
       border: 1px solid #cbd5f5;
     }
 
+    .filters {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
     .card {
-      background: white;
       border: 1px solid #e5e7eb;
       padding: 16px;
       margin-bottom: 12px;
@@ -137,8 +150,14 @@
     }
 
     @media (max-width: 768px) {
-      .image-strip, .filters {
+      .filters {
         grid-template-columns: 1fr;
+      }
+      .hero {
+        height: 420px;
+      }
+      .hero-content {
+        padding-top: 160px;
       }
     }
   </style>
@@ -168,67 +187,20 @@
     ];
 
     function App() {
-      const [mode, setMode] = React.useState("englishDate");
+      const [mode, setMode] = React.useState("name");
       const [category, setCategory] = React.useState("All");
-      const [input, setInput] = React.useState("");
       const [results, setResults] = React.useState([]);
-      const [hebrewDate, setHebrewDate] = React.useState("");
 
       function runSearch(value) {
-        setInput(value);
-        setHebrewDate("");
-
         if (!value) {
           setResults([]);
           return;
         }
 
-        let matches = [];
-
-        if (mode === "name") {
-          const q = value.toLowerCase();
-          matches = victims.filter(v =>
-            v.name_en.toLowerCase().includes(q) ||
-            v.name_he.includes(value)
-          );
-        }
-
-        if (mode === "deathLocation") {
-          const q = value.toLowerCase();
-          matches = victims.filter(v =>
-            v.death_location.toLowerCase().includes(q)
-          );
-        }
-
-        if (mode === "residence") {
-          const q = value.toLowerCase();
-          matches = victims.filter(v =>
-            v.residence.toLowerCase().includes(q)
-          );
-        }
-
-        if (mode === "englishDate") {
-          const date = new Date(value);
-          if (isNaN(date)) return;
-
-          const hd = new Hebcal.HDate(date);
-          setHebrewDate(hd.renderGematriya());
-
-          matches = victims.filter(v => {
-            const vHd = new Hebcal.HDate(new Date(v.death));
-            return (
-              vHd.getDate() === hd.getDate() &&
-              vHd.getMonth() === hd.getMonth()
-            );
-          });
-        }
-
-        if (mode === "hebrewDate") {
-          matches = victims.filter(v => {
-            const vHd = new Hebcal.HDate(new Date(v.death));
-            return vHd.renderGematriya().includes(value.trim());
-          });
-        }
+        let matches = victims.filter(v =>
+          v.name_en.toLowerCase().includes(value.toLowerCase()) ||
+          v.name_he.includes(value)
+        );
 
         if (category !== "All") {
           matches = matches.filter(v => v.category === category);
@@ -239,58 +211,39 @@
 
       return (
         <>
-          <header>
-            <div className="header-inner">
-              <div>
-                <h1>Anu Zochrim</h1>
-                <div>אנו זוכרים — We Remember</div>
-              </div>
+          <div className="hero">
+            <div className="top-bar">
+              <a href="index.html" className="logo">
+                <!-- REPLACE THIS IMAGE WITH YOUR LOGO -->
+                <img src="https://via.placeholder.com/120x40?text=LOGO" alt="Anu Zochrim logo" />
+              </a>
+
               <nav>
                 <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
                 <a href="donate.html">Donate</a>
               </nav>
             </div>
-          </header>
 
-          <div className="hero">
-            <div className="hero-box">
-              <h2>A National Commitment to Memory</h2>
+            <div className="hero-content">
+              <h2>Anu Zochrim · אנו זוכרים</h2>
               <p>
-                Anu Zochrim is a public memorial initiative dedicated to honoring
-                the memory of Israelis and Jews murdered on October 7 and in the
-                war that followed.
-              </p>
-              <p>
-                The project exists to ensure remembrance is accessible, accurate,
-                and dignified.
+                A public memorial initiative dedicated to honoring the memory of
+                Israelis and Jews murdered on October 7 and in the war that followed.
               </p>
             </div>
           </div>
 
           <main>
             <p>
-              Search by date, name, or place to dedicate learning, prayer,
+              Search by name, date, or place to dedicate learning, prayer,
               or moments of joy in memory of those who were killed.
             </p>
-
-            <div className="image-strip">
-              <img src="https://images.unsplash.com/photo-1549880338-65ddcdfd017b" />
-              <img src="https://images.unsplash.com/photo-1529101091764-c3526daf38fe" />
-              <img src="https://images.unsplash.com/photo-1549640376-19756cfa0b20" />
-            </div>
 
             <div className="section">
               <h3>Search the Memorial</h3>
 
               <div className="filters">
-                <select onChange={e => setMode(e.target.value)}>
-                  <option value="englishDate">By English date (month & day)</option>
-                  <option value="hebrewDate">By Hebrew date</option>
-                  <option value="name">By name</option>
-                  <option value="deathLocation">By location of death</option>
-                  <option value="residence">By place of residence</option>
-                </select>
-
                 <select onChange={e => setCategory(e.target.value)}>
                   <option value="All">All categories</option>
                   <option value="IDF Soldier">IDF Soldier</option>
@@ -301,12 +254,9 @@
               </div>
 
               <input
-                type={mode === "englishDate" ? "date" : "text"}
-                placeholder="Enter search value"
+                placeholder="Enter a name (English or Hebrew)"
                 onChange={e => runSearch(e.target.value)}
               />
-
-              {hebrewDate && <p><strong>Hebrew date:</strong> {hebrewDate}</p>}
 
               {results.map((v, i) => (
                 <div key={i} className="card">
