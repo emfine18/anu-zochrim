@@ -10,11 +10,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- React -->
-  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
   <style>
     body {
       margin: 0;
@@ -27,22 +22,24 @@
       font-family: "Noto Serif", serif;
     }
 
-    /* TOP BAR */
-    .top-bar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 10;
+    /* HEADER */
+    header {
+      background: #0f172a;
       padding: 20px 28px;
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(15, 23, 42, 0.6);
     }
 
-    .logo img {
-      height: 42px;
+    .site-title {
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
     }
 
     nav a {
@@ -54,64 +51,55 @@
 
     /* HERO */
     .hero {
-      position: relative;
-      height: 520px;
-      background-image: url("https://upload.wikimedia.org/wikipedia/commons/6/64/Photographs_from_Kibbutz_Be%27eri%2C_a_few_days_after_the_Be%27eri_massacre_carried_out_in_the_kibbutz_by_Hamas_on_October_7%2C_2023_by_photographer_Micah_Brickman_%282%29.jpg");
-      background-size: cover;
-      background-position: center;
+      background: #020617;
+      color: white;
+      padding: 96px 24px;
     }
 
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.45);
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
+    .hero-inner {
       max-width: 900px;
       margin: auto;
-      padding: 260px 24px 0;
-      color: white;
     }
 
-    .hero-content h2 {
-      font-size: 2.3rem;
-      margin-bottom: 12px;
-    }
-
-    .hero-content p {
+    .hero p {
+      max-width: 720px;
       font-size: 1.05rem;
-      max-width: 700px;
       line-height: 1.7;
     }
 
+    /* MAIN */
     main {
       max-width: 900px;
       margin: auto;
       padding: 72px 24px;
     }
 
-    .caption {
-      font-size: 0.9rem;
-      color: #475569;
-      margin-top: 8px;
+    /* SEARCH */
+    .search-box {
+      margin-top: 40px;
     }
 
     input {
       width: 100%;
       padding: 14px;
       font-size: 1rem;
-      margin: 24px 0;
       border: 1px solid #cbd5f5;
+      margin-bottom: 24px;
     }
 
     .card {
       border: 1px solid #e5e7eb;
       padding: 16px;
       margin-bottom: 12px;
+    }
+
+    .name {
+      font-weight: 600;
+    }
+
+    .meta {
+      font-size: 0.95rem;
+      color: #475569;
     }
 
     footer {
@@ -122,106 +110,108 @@
       text-align: center;
       font-size: 0.9rem;
     }
-
-    @media (max-width: 768px) {
-      .hero {
-        height: 420px;
-      }
-      .hero-content {
-        padding-top: 200px;
-      }
-    }
   </style>
 </head>
 
 <body>
-  <div id="root"></div>
 
-  <script type="text/babel">
-    const victims = [
-      {
-        name_en: "Yonatan Steinberg",
-        name_he: "יונתן שטיינברג",
-        residence: "Kibbutz Shomria",
-        category: "IDF Soldier"
-      },
-      {
-        name_en: "Shani Louk",
-        name_he: "שני לוק",
-        residence: "Tel Aviv",
-        category: "Civilian"
-      }
-    ];
+<header>
+  <div class="header-inner">
+    <div class="site-title">
+      Anu Zochrim · אנו זוכרים
+    </div>
+    <nav>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="donate.html">Donate</a>
+    </nav>
+  </div>
+</header>
 
-    function App() {
-      const [results, setResults] = React.useState([]);
+<section class="hero">
+  <div class="hero-inner">
+    <h1>We Remember</h1>
+    <p>
+      Anu Zochrim is a public memorial initiative dedicated to honoring the
+      memory of Israelis and Jews murdered on October 7 and in the war that
+      followed.
+    </p>
+    <p>
+      The project exists to ensure that names are preserved with dignity,
+      accuracy, and permanence — and that learning, prayer, and moments of life
+      can be intentionally dedicated in their memory.
+    </p>
+  </div>
+</section>
 
-      function runSearch(value) {
-        if (!value) {
-          setResults([]);
-          return;
-        }
+<main>
+  <h2>Search the Memorial</h2>
 
-        const q = value.toLowerCase();
-        setResults(
-          victims.filter(v =>
-            v.name_en.toLowerCase().includes(q) ||
-            v.name_he.includes(value)
-          )
-        );
-      }
+  <p>
+    Use the search below to find individuals by name. Additional search options
+    — including dates, locations, and categories — will be added.
+  </p>
 
-      return (
-        <>
-          <div className="hero">
-            <div className="top-bar">
-              <a href="index.html" className="logo">
-                <img src="https://via.placeholder.com/140x42?text=LOGO" alt="Anu Zochrim logo" />
-              </a>
-              <nav>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
-                <a href="donate.html">Donate</a>
-              </nav>
-            </div>
+  <div class="search-box">
+    <input
+      id="searchInput"
+      placeholder="Enter a name (English or Hebrew)"
+      oninput="runSearch()"
+    />
+  </div>
 
-            <div className="hero-content">
-              <h2>Anu Zochrim · אנו זוכרים</h2>
-              <p>
-                A public memorial initiative dedicated to honoring the memory of
-                Israelis and Jews murdered on October 7 and in the war that followed.
-              </p>
-            </div>
-          </div>
+  <div id="results"></div>
+</main>
 
-          <main>
-            <div className="caption">
-              Kibbutz Be’eri, days after the October 7 attack. Photograph by Micah Brickman (Wikimedia Commons).
-            </div>
+<footer>
+  Anu Zochrim · אנו זוכרים · A public memorial initiative
+</footer>
 
-            <h3>Search the Memorial</h3>
-
-            <input
-              placeholder="Enter a name (English or Hebrew)"
-              onChange={e => runSearch(e.target.value)}
-            />
-
-            {results.map((v, i) => (
-              <div key={i} className="card">
-                <strong>{v.name_en} ({v.name_he})</strong><br />
-                {v.category} · {v.residence}
-              </div>
-            ))}
-          </main>
-
-          <footer>
-            Anu Zochrim · אנו זוכרים · A public memorial initiative
-          </footer>
-        </>
-      );
+<script>
+  /*
+    This data is temporary.
+    Next step: replace this with a JSON file.
+  */
+  const victims = [
+    {
+      name_en: "Yonatan Steinberg",
+      name_he: "יונתן שטיינברג",
+      category: "IDF Soldier",
+      residence: "Kibbutz Shomria"
+    },
+    {
+      name_en: "Shani Louk",
+      name_he: "שני לוק",
+      category: "Civilian",
+      residence: "Tel Aviv"
     }
+  ];
 
-    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
-  </script>
+  function runSearch() {
+    const query = document.getElementById("searchInput").value.trim();
+    const resultsDiv = document.getElementById("results");
+    resultsDiv.innerHTML = "";
+
+    if (!query) return;
+
+    const qLower = query.toLowerCase();
+
+    const matches = victims.filter(v =>
+      v.name_en.toLowerCase().includes(qLower) ||
+      v.name_he.includes(query)
+    );
+
+    matches.forEach(v => {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `
+        <div class="name">${v.name_en} (${v.name_he})</div>
+        <div class="meta">${v.category} · ${v.residence}</div>
+      `;
+      resultsDiv.appendChild(div);
+    });
+  }
+</script>
+
 </body>
 </html>
