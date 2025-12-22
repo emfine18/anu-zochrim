@@ -14,23 +14,26 @@
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Hebrew calendar -->
     <script src="https://unpkg.com/@hebcal/core"></script>
 
     <style>
       body {
         margin: 0;
-        font-family: "Lora", serif;
-        color: #1f2937;
         background: #ffffff;
+        color: #1f2937;
+        font-family: "Lora", serif;
       }
 
-      h1, h2, h3, nav a, button, label, select {
+      h1, h2, h3, h4,
+      header, nav a, button, label, select {
         font-family: "Poppins", sans-serif;
       }
 
       header {
         border-bottom: 1px solid #e5e7eb;
-        padding: 20px 24px;
+        padding: 18px 24px;
       }
 
       .header-inner {
@@ -48,62 +51,72 @@
         font-weight: 500;
       }
 
+      /* HERO */
       .hero {
-        background-image: url("https://images.unsplash.com/photo-1549640376-19756cfa0b20");
+        background-image: url("https://images.unsplash.com/photo-1549880338-65ddcdfd017b"); /* Jerusalem */
         background-size: cover;
         background-position: center;
-        padding: 90px 24px;
+        padding: 110px 24px;
       }
 
       .hero-box {
         max-width: 900px;
         margin: auto;
-        background: rgba(255,255,255,0.95);
-        padding: 40px;
+        background: rgba(255,255,255,0.93);
+        padding: 44px;
+      }
+
+      .hero h2 {
+        font-size: 2rem;
+        margin-top: 0;
       }
 
       main {
         max-width: 900px;
         margin: auto;
-        padding: 56px 24px;
+        padding: 64px 24px;
       }
 
-      .images {
+      p {
+        font-size: 1rem;
+        line-height: 1.75;
+        color: #374151;
+      }
+
+      /* IMAGE STRIP */
+      .image-strip {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 16px;
-        margin: 48px 0;
+        margin: 56px 0;
       }
 
-      .images img {
+      .image-strip img {
         width: 100%;
-        height: 180px;
+        height: 200px;
         object-fit: cover;
       }
 
+      /* SEARCH */
       .section {
         border-top: 1px solid #e5e7eb;
-        padding-top: 40px;
-        margin-top: 64px;
+        padding-top: 48px;
+        margin-top: 72px;
       }
 
       select, input {
         width: 100%;
         padding: 12px;
-        margin-bottom: 16px;
         font-size: 1rem;
+        margin-bottom: 18px;
+        border: 1px solid #d1d5db;
       }
 
       .filters {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 16px;
-      }
-
-      .card {
-        border: 1px solid #e5e7eb;
-        padding: 16px;
-        margin-bottom: 12px;
+        margin-bottom: 16px;
       }
 
       button {
@@ -115,8 +128,23 @@
         cursor: pointer;
       }
 
+      .card {
+        border: 1px solid #e5e7eb;
+        padding: 16px;
+        margin-bottom: 12px;
+      }
+
+      .name {
+        font-weight: 600;
+      }
+
+      .meta {
+        font-size: 0.95rem;
+        color: #4b5563;
+      }
+
       @media (max-width: 768px) {
-        .images, .filters {
+        .image-strip, .filters {
           grid-template-columns: 1fr;
         }
       }
@@ -127,6 +155,7 @@
     <div id="root"></div>
 
     <script type="text/babel">
+      // SAMPLE DATA
       const victims = [
         {
           name_en: "Yonatan Steinberg",
@@ -135,24 +164,33 @@
           residence: "Kibbutz Shomria",
           death_location: "Southern Israel",
           category: "IDF Soldier"
+        },
+        {
+          name_en: "Shani Louk",
+          name_he: "שני לוק",
+          death: "2023-10-07",
+          residence: "Tel Aviv",
+          death_location: "Nova Festival",
+          category: "Civilian"
         }
       ];
 
       function App() {
-        const [mode, setMode] = React.useState("englishDate");
+        const [mode, setMode] = React.useState("name");
         const [input, setInput] = React.useState("");
         const [results, setResults] = React.useState([]);
 
-        function search(val) {
-          setInput(val);
-          if (!val) return setResults([]);
+        function search(value) {
+          setInput(value);
+          if (!value) return setResults([]);
 
-          if (mode === "name") {
-            setResults(victims.filter(v =>
-              v.name_en.toLowerCase().includes(val.toLowerCase()) ||
-              v.name_he.includes(val)
-            ));
-          }
+          const q = value.toLowerCase();
+          setResults(
+            victims.filter(v =>
+              v.name_en.toLowerCase().includes(q) ||
+              v.name_he.includes(value)
+            )
+          );
         }
 
         return (
@@ -170,39 +208,60 @@
               </div>
             </header>
 
+            {/* HERO */}
             <div className="hero">
               <div className="hero-box">
                 <h2>A National Commitment to Memory</h2>
                 <p>
                   Anu Zochrim is a public memorial initiative dedicated to honoring
-                  Israelis and Jews murdered on October 7 and in the war that followed.
+                  the memory of Israelis and Jews murdered on October 7 and in the
+                  war that followed.
                 </p>
-                <button>Search the Memorial</button>
+                <p>
+                  The project exists to ensure that remembrance is accessible,
+                  accurate, and dignified — and that names are never lost to time.
+                </p>
               </div>
             </div>
 
             <main>
-              <div className="images">
-                <img src="https://images.unsplash.com/photo-1529101091764-c3526daf38fe">
-                <img src="https://images.unsplash.com/photo-1505842465776-3a8a1d04d1c2">
-                <img src="https://images.unsplash.com/photo-1549640376-19756cfa0b20">
+              <p>
+                By enabling users to search by date, name, or place, Anu Zochrim
+                allows learning, prayer, and moments of joy to be intentionally
+                dedicated in memory of those who were killed.
+              </p>
+
+              {/* ISRAEL IMAGES */}
+              <div className="image-strip">
+                <!-- Tel Aviv -->
+                <img src="https://images.unsplash.com/photo-1529101091764-c3526daf38fe" />
+                <!-- Southern Israel / Negev -->
+                <img src="https://images.unsplash.com/photo-1549640376-19756cfa0b20" />
+                <!-- Jerusalem -->
+                <img src="https://images.unsplash.com/photo-1549880338-65ddcdfd017b" />
               </div>
 
+              {/* SEARCH */}
               <div className="section">
-                <h3>Search</h3>
+                <h3>Search the Memorial</h3>
+
                 <select onChange={e => setMode(e.target.value)}>
-                  <option value="name">By name</option>
+                  <option value="name">Search by name</option>
                 </select>
 
                 <input
-                  placeholder="Enter a name"
+                  placeholder="Enter a name (English or Hebrew)"
                   onChange={e => search(e.target.value)}
                 />
 
                 {results.map((v, i) => (
                   <div key={i} className="card">
-                    <strong>{v.name_en} ({v.name_he})</strong><br/>
-                    {v.category}
+                    <div className="name">
+                      {v.name_en} ({v.name_he})
+                    </div>
+                    <div className="meta">
+                      {v.category} · Lived in {v.residence} · Killed in {v.death_location}
+                    </div>
                   </div>
                 ))}
               </div>
