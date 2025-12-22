@@ -102,15 +102,25 @@
 
     /* HERO */
 
-  .hero {
+ .hero {
   background-image: url("images/beeri-oct7.jpg");
   background-size: cover;
-  background-position: center 20%;
-  height: 520px;
+  background-position: center 30%;
+  height: 420px;
 }
 
-@media (min-width: 1024px) {
+/* Medium screens (laptops, tablets landscape) */
+@media (min-width: 768px) {
   .hero {
+    height: 480px;
+    background-position: center 40%;
+  }
+}
+
+/* Large desktop */
+@media (min-width: 1200px) {
+  .hero {
+    height: 520px;
     background-position: center bottom;
   }
 }
