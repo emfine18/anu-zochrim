@@ -23,32 +23,37 @@
     }
 
     /* HEADER */
-    header {
-      background: #0f172a;
-      padding: 20px 28px;
-    }
+    <header>
+  <div class="header-inner">
+    <div class="logo">
+      <a href="/">
+        <img src="images/logo.png" alt="Anu Zochrim logo">
+      </a>
+    </div>
 
-    .header-inner {
-      max-width: 1100px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+    <!-- Desktop nav -->
+    <nav class="nav-desktop">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="donate.html">Donate</a>
+    </nav>
 
-    .site-title {
-      color: white;
-      font-weight: 600;
-      font-size: 1.1rem;
-    }
+    <!-- Hamburger -->
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
 
-    nav a {
-      margin-left: 24px;
-      text-decoration: none;
-      color: white;
-      font-weight: 500;
-    }
-
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="close-btn" onclick="toggleMenu()">✕</button>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="donate.html">Donate</a>
+  </div>
+</header>
     /* HERO */
     .hero {
       position: relative;
