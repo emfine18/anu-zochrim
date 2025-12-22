@@ -13,15 +13,16 @@
   <style>
     body {
       margin: 0;
-      background: #ffffff;
-      color: #0f172a;
       font-family: "Poppins", sans-serif;
+      color: #0f172a;
+      background: #ffffff;
     }
 
     h1, h2, h3 {
       font-family: "Noto Serif", serif;
     }
 
+    /* HEADER */
     header {
       background: #0f172a;
       padding: 20px 28px;
@@ -48,57 +49,69 @@
       font-weight: 500;
     }
 
+    /* HERO */
     .hero {
-      background: #020617;
-      color: white;
-      padding: 96px 24px;
+      position: relative;
+      height: 520px;
+      background-image: url("images/beeri-oct7.jpg");
+      background-size: cover;
+      background-position: center;
     }
 
-    .hero-inner {
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
       max-width: 900px;
       margin: auto;
+      padding: 220px 24px 0;
+      color: white;
     }
 
-    .hero p {
-      max-width: 720px;
-      line-height: 1.7;
+    .hero-content h1 {
+      font-size: 2.4rem;
+      margin-bottom: 12px;
     }
 
-    .image-section {
+    /* DESCRIPTION */
+    .description {
       max-width: 900px;
       margin: 64px auto 0;
       padding: 0 24px;
     }
 
-    .image-section img {
-      width: 100%;
-      border: 1px solid #e5e7eb;
+    .description p {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: #334155;
+      margin-bottom: 20px;
     }
 
-    .caption {
-      font-size: 0.9rem;
-      color: #475569;
-      margin-top: 8px;
-    }
-
-    main {
+    /* SEARCH */
+    .search {
       max-width: 900px;
-      margin: auto;
-      padding: 72px 24px;
+      margin: 72px auto;
+      padding: 0 24px;
     }
 
-    .filters {
+    .search-controls {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: 1fr 1fr;
       gap: 16px;
-      margin-bottom: 32px;
+      margin-bottom: 24px;
     }
 
-    input, select {
+    select, input {
+      width: 100%;
       padding: 12px;
       font-size: 0.95rem;
       border: 1px solid #cbd5f5;
-      width: 100%;
     }
 
     .card {
@@ -129,6 +142,18 @@
       text-align: center;
       font-size: 0.9rem;
     }
+
+    @media (max-width: 640px) {
+      .search-controls {
+        grid-template-columns: 1fr;
+      }
+      .hero {
+        height: 420px;
+      }
+      .hero-content {
+        padding-top: 170px;
+      }
+    }
   </style>
 </head>
 
@@ -146,51 +171,68 @@
 </header>
 
 <section class="hero">
-  <div class="hero-inner">
+  <div class="hero-content">
     <h1>We Remember</h1>
-    <p>
-      A public memorial initiative honoring Israelis and Jews murdered on
-      October 7 and in the war that followed.
-    </p>
   </div>
 </section>
 
-<section class="image-section">
-  <img src="images/beeri-oct7.jpg" alt="Kibbutz Be’eri, October 2023">
-  <div class="caption">
-    Kibbutz Be’eri, days after October 7. Photograph by Micah Brickman.
-  </div>
+<section class="description">
+  <p>
+    Anu Zochrim is a public memorial initiative dedicated to honoring the memory
+    of Israelis and Jews murdered on October 7 and in the war that followed.
+  </p>
+
+  <p>
+    The project exists to ensure that names are preserved with dignity,
+    accuracy, and permanence — and to enable learning, prayer, and moments of
+    life to be intentionally dedicated in their memory.
+  </p>
 </section>
 
-<main>
+<section class="search">
   <h2>Search the Memorial</h2>
 
-  <div class="filters">
-    <input id="name" placeholder="Name (English or Hebrew)">
-    <input id="birth_en" placeholder="Birth date (MM/DD)">
-    <input id="death_en" placeholder="Death date (MM/DD)">
-    <input id="birth_he" placeholder="Birth date (Hebrew)">
-    <input id="death_he" placeholder="Death date (Hebrew)">
-    <input id="death_location" placeholder="City / location of death">
-    <input id="residence" placeholder="City / place of residence">
+  <p>
+    Select how you would like to search, then optionally refine by category.
+  </p>
 
+  <div class="search-controls">
+    <!-- SEARCH TYPE -->
+    <select id="searchType">
+      <option value="name">Name (English or Hebrew)</option>
+      <option value="birth_en">Birth date (English – MM/DD)</option>
+      <option value="death_en">Death date (English – MM/DD)</option>
+      <option value="birth_he">Birth date (Hebrew)</option>
+      <option value="death_he">Death date (Hebrew)</option>
+      <option value="death_location">City / location of death</option>
+      <option value="residence">City / place of residence</option>
+    </select>
+
+    <!-- CATEGORY -->
     <select id="category">
       <option value="">All categories</option>
-      <option>IDF Soldier</option>
-      <option>Civilian</option>
-      <option>Hostage</option>
-      <option>Police / Border Patrol</option>
+      <option value="Civilian">Civilian</option>
+      <option value="Hostage">Hostage</option>
+      <option value="IDF Soldier">IDF Soldier</option>
+      <option value="Police / Border Patrol">Police / Border Patrol</option>
     </select>
   </div>
 
+  <input
+    id="searchInput"
+    placeholder="Enter search value"
+    oninput="runSearch()"
+  />
+
   <div id="results"></div>
-</main>
+</section>
 
 <footer>
   Anu Zochrim · אנו זוכרים · A public memorial initiative
 </footer>
 
 <script>
+  // TEMPORARY DATA — NEXT STEP IS REPLACING WITH FILE
   const victims = [
     {
       name_en: "Yonatan Steinberg",
@@ -216,54 +258,33 @@
     }
   ];
 
-  const fields = [
-    "name", "birth_en", "death_en", "birth_he",
-    "death_he", "death_location", "residence", "category"
-  ];
-
-  fields.forEach(id => {
-    document.getElementById(id).addEventListener("input", runSearch);
-    document.getElementById(id).addEventListener("change", runSearch);
-  });
-
   function runSearch() {
+    const type = document.getElementById("searchType").value;
+    const category = document.getElementById("category").value;
+    const input = document.getElementById("searchInput").value.trim();
     const resultsDiv = document.getElementById("results");
-    resultsDiv.innerHTML = "";
 
-    const filters = {
-      name: document.getElementById("name").value.toLowerCase(),
-      birth_en: document.getElementById("birth_en").value,
-      death_en: document.getElementById("death_en").value,
-      birth_he: document.getElementById("birth_he").value,
-      death_he: document.getElementById("death_he").value,
-      death_location: document.getElementById("death_location").value.toLowerCase(),
-      residence: document.getElementById("residence").value.toLowerCase(),
-      category: document.getElementById("category").value
-    };
+    resultsDiv.innerHTML = "";
+    if (!input) return;
 
     const matches = victims.filter(v => {
-      if (filters.name &&
-          !v.name_en.toLowerCase().includes(filters.name) &&
-          !v.name_he.includes(filters.name)) return false;
+      if (type === "name") {
+        if (
+          !v.name_en.toLowerCase().includes(input.toLowerCase()) &&
+          !v.name_he.includes(input)
+        ) return false;
+      } else {
+        if (!v[type]) return false;
+        if (!v[type].toLowerCase().includes(input.toLowerCase())) return false;
+      }
 
-      if (filters.birth_en && v.birth_en !== filters.birth_en) return false;
-      if (filters.death_en && v.death_en !== filters.death_en) return false;
-      if (filters.birth_he && v.birth_he !== filters.birth_he) return false;
-      if (filters.death_he && v.death_he !== filters.death_he) return false;
-
-      if (filters.death_location &&
-          !v.death_location.toLowerCase().includes(filters.death_location)) return false;
-
-      if (filters.residence &&
-          !v.residence.toLowerCase().includes(filters.residence)) return false;
-
-      if (filters.category && v.category !== filters.category) return false;
-
+      if (category && v.category !== category) return false;
       return true;
     });
 
     if (matches.length === 0) {
-      resultsDiv.innerHTML = '<div class="no-results">No results found.</div>';
+      resultsDiv.innerHTML =
+        '<div class="no-results">No results found.</div>';
       return;
     }
 
