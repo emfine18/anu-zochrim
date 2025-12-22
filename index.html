@@ -54,6 +54,7 @@
     <a href="donate.html">Donate</a>
   </div>
 </header>
+    
     /* HERO */
     .hero {
       position: relative;
@@ -97,6 +98,97 @@
       color: #334155;
       margin-bottom: 20px;
     }
+
+/* LOGO */
+.logo img {
+  height: 42px;
+  width: auto;
+}
+
+/* NAV */
+.nav-desktop {
+  display: flex;
+}
+
+.nav-desktop a {
+  margin-left: 24px;
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+}
+
+/* HAMBURGER */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.hamburger span {
+  display: block;
+  width: 26px;
+  height: 2px;
+  background: white;
+  margin: 6px 0;
+}
+
+/* MOBILE MENU */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: white;
+  padding: 80px 32px;
+  z-index: 999;
+}
+
+.mobile-menu a {
+  display: block;
+  font-size: 1.5rem;
+  margin-bottom: 24px;
+  text-decoration: none;
+  color: #0f172a;
+}
+
+.close-btn {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* RESPONSIVE BREAKPOINT */
+@media (max-width: 900px) {
+  .nav-desktop {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+
+    <script>
+  function toggleMenu() {
+    const menu = document.getElementById("mobileMenu");
+    menu.style.display =
+      menu.style.display === "block" ? "none" : "block";
+  }
+</script>
+
+.hero {
+  background-image: url("images/beeri.png");
+  background-size: cover;
+  background-position: center;
+}
+
+    
+    
+    
 
     /* SEARCH */
     .search {
