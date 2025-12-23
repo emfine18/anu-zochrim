@@ -11,22 +11,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
 
     body {
       font-family: "Poppins", sans-serif;
       background: #ffffff;
-      color: #0f172a;
     }
 
-    /* HEADER */
+    /* HEADER (same layout, different colors) */
     header {
       width: 100%;
       padding: 24px 32px;
@@ -57,81 +50,39 @@
       text-decoration: none;
       font-family: "Noto Serif", serif;
       font-weight: 500;
-      color: #556b2f; /* olive green */
+      color: #556b2f;              /* olive green */
       text-transform: uppercase;
       letter-spacing: 0.08em;
       font-size: 0.85rem;
     }
 
-    nav a:hover {
-      text-decoration: underline;
-    }
-
-    /* MOBILE MENU */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-    }
-
-    .hamburger span {
-      height: 2px;
-      width: 22px;
-      background: #556b2f;
-      margin: 4px 0;
-    }
-
-    @media (max-width: 768px) {
-      nav {
-        position: absolute;
-        top: 80px;
-        right: 32px;
-        background: #ffffff;
-        flex-direction: column;
-        padding: 16px;
-        display: none;
-        border: 1px solid #e5e7eb;
-      }
-
-      nav a {
-        margin: 12px 0;
-      }
-
-      nav.open {
-        display: flex;
-      }
-
-      .hamburger {
-        display: flex;
-      }
-    }
-
-    /* PAGE CONTENT */
-    .content {
+    /* ABOUT CONTENT */
+    .about {
       max-width: 900px;
-      margin: 56px auto;
+      margin: 64px auto;
       padding: 0 24px;
       font-family: "Noto Serif", serif;
     }
 
-    .content h1 {
+    .about h1 {
       font-size: 1.6rem;
       font-weight: 600;
-      text-transform: uppercase;
-      color: #556b2f;
-      margin-bottom: 28px;
+      color: #0f172a;
+      margin-bottom: 24px;
     }
 
-    .content p {
+    .about p {
       font-size: 1.05rem;
       line-height: 1.75;
       color: #334155;
       margin-bottom: 22px;
     }
 
-    .content strong {
-      font-weight: 600;
-      color: #0f172a;
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav a {
+        margin-left: 18px;
+      }
     }
   </style>
 </head>
@@ -146,50 +97,36 @@
       </a>
     </div>
 
-    <div class="hamburger" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-
-    <nav id="nav">
+    <nav>
+      <a href="index.html">Home</a>
       <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
       <a href="donate.html">Donate</a>
     </nav>
   </div>
 </header>
 
-<main class="content">
+<section class="about">
   <h1>About Anu Zochrim</h1>
 
   <p>
-    <strong>Anu Zochrim (“We Remember”)</strong> is a public memorial dedicated to
-    the Israelis murdered by Hamas on October 7, 2023, and to those who fell
-    defending the Jewish people and the State of Israel in the war that followed.
+    <strong>Anu Zochrim</strong> (“We Remember”) is a public memorial initiative
+    dedicated to honoring the memory of Israelis murdered by Hamas on
+    October 7, 2023, and those who fell defending the Jewish people and
+    the State of Israel.
   </p>
 
   <p>
-    This initiative was created to ensure that every name is preserved with
-    dignity, accuracy, and permanence. At a time when memory itself is contested,
-    Anu Zochrim stands as a clear and unwavering record of loss, sacrifice, and
-    moral clarity.
+    This project exists to preserve each name with dignity, accuracy,
+    and permanence, and to provide a meaningful way to dedicate learning,
+    prayer, and moments of life in their memory.
   </p>
 
   <p>
-    Beyond remembrance, the project provides a meaningful framework through
-    which learning, prayer, and moments of joy can be intentionally dedicated in
-    their memory. In doing so, we affirm the resilience of the Jewish people, the
-    righteousness of Jewish self-defense, and our enduring commitment to the
-    security and future of the State of Israel.
+    Jewish memory is an active commitment. Through remembrance, we affirm
+    the resilience of the Jewish people and our enduring responsibility
+    to the security and future of the State of Israel.
   </p>
-</main>
-
-<script>
-  function toggleMenu() {
-    document.getElementById("nav").classList.toggle("open");
-  }
-</script>
+</section>
 
 </body>
 </html>
