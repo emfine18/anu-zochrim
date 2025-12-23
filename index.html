@@ -183,16 +183,23 @@ nav a {
 
   <style>
 
-    <style>
+ <!-- LOAD NOTO SANS -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* FORCE NOTO SANS EVERYWHERE IN SEARCH */
+  #search,
+  #search * {
+    font-family: "Noto Sans", sans-serif !important;
+  }
+
   #search {
     max-width: 900px;
     margin: 72px auto;
     padding: 0 32px;
-    font-family: "Noto Sans", sans-serif;
   }
 
   .search-title {
-    font-family: "Noto Sans", sans-serif;
     font-weight: 600;
     letter-spacing: 0.12em;
     color: #556b2f;
@@ -208,7 +215,6 @@ nav a {
 
   #search select,
   #search input {
-    font-family: "Noto Sans", sans-serif;
     font-size: 0.95rem;
     padding: 14px 16px;
     border: 1px solid #9db28a;
@@ -226,7 +232,6 @@ nav a {
   }
 
   #search button {
-    font-family: "Noto Sans", sans-serif;
     font-size: 0.85rem;
     padding: 14px 28px;
     background: #556b2f;
@@ -393,7 +398,12 @@ nav a {
       );
     });
 
-    renderResults(matches);
+    resultsDiv.innerHTML = matches.map(v =>
+      `<div class="card">
+        <strong>${v.name_en} (${v.name_he})</strong><br>
+        ${v.category} · Lived in ${v.residence} · Killed in ${v.death_location}
+      </div>`
+    ).join("");
   };
 
   function runEnglishDateSearch() {
@@ -409,19 +419,15 @@ nav a {
       return true;
     });
 
-    renderResults(matches);
-  }
-
-  function runHebrewDateSearch() {
-    alert("Hebrew date matching coming next.");
-  }
-
-  function renderResults(list) {
-    resultsDiv.innerHTML = list.map(v =>
+    resultsDiv.innerHTML = matches.map(v =>
       `<div class="card">
         <strong>${v.name_en} (${v.name_he})</strong><br>
         ${v.category} · Lived in ${v.residence} · Killed in ${v.death_location}
       </div>`
     ).join("");
+  }
+
+  function runHebrewDateSearch() {
+    alert("Hebrew date matching coming next.");
   }
 </script>
