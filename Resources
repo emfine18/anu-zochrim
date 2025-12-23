@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Resources – Anu Zochrim</title>
+  <title>Anu Zochrim – Resources</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Fonts -->
@@ -13,22 +13,17 @@
   <style>
     * { box-sizing: border-box; }
 
-    html, body {
-      margin: 0;
-      padding: 0;
-    }
-
     body {
+      margin: 0;
       font-family: "Poppins", sans-serif;
       background: #ffffff;
       color: #334155;
     }
 
-    /* ===== HEADER ===== */
+    /* HEADER (same behavior as other pages) */
     header {
       width: 100%;
       padding: 24px 32px;
-      background: #ffffff;
       border-bottom: 1px solid #e5e7eb;
     }
 
@@ -42,81 +37,125 @@
 
     .logo img {
       height: 44px;
-      display: block;
     }
 
     nav {
       display: flex;
-      align-items: center;
+      gap: 28px;
     }
 
     nav a {
-      margin-left: 28px;
       text-decoration: none;
       font-family: "Noto Serif", serif;
-      font-weight: 500;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
       font-size: 0.85rem;
+      letter-spacing: 0.08em;
       color: #556b2f;
     }
 
-    nav a:hover {
-      text-decoration: underline;
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
     }
 
-    /* ===== CONTENT ===== */
-    .content {
-      max-width: 900px;
+    .hamburger span {
+      height: 2px;
+      width: 22px;
+      background: #556b2f;
+      margin: 4px 0;
+    }
+
+    /* PAGE CONTENT */
+    .page {
+      max-width: 1100px;
       margin: 48px auto;
       padding: 0 24px;
+    }
+
+    .page h1 {
       font-family: "Noto Serif", serif;
-    }
-
-    .page-title {
+      font-size: 1.6rem;
       font-weight: 600;
-      font-size: 1.4rem;
-      text-transform: uppercase;
-      letter-spacing: 0;
       color: #556b2f;
-      margin: 0 0 24px 0;
+      margin-bottom: 16px;
+      text-transform: uppercase;
     }
 
-    .content p {
-      font-size: 1.06rem;
-      line-height: 1.7;
-      margin-bottom: 20px;
+    .page p {
+      max-width: 700px;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 40px;
     }
 
-    .resource-list {
-      margin-top: 24px;
+    /* RESOURCE GRID */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
     }
 
-    .resource-item {
-      margin-bottom: 18px;
-    }
-
-    .resource-item a {
-      font-weight: 600;
-      color: #0f172a;
+    .resource-card {
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      overflow: hidden;
       text-decoration: none;
+      color: inherit;
+      background: #ffffff;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .resource-item a:hover {
-      text-decoration: underline;
+    .resource-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
     }
 
-    .resource-item span {
+    .resource-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
       display: block;
-      font-size: 0.95rem;
-      margin-top: 4px;
+    }
+
+    .resource-card-content {
+      padding: 18px;
+    }
+
+    .resource-card h3 {
+      font-family: "Noto Serif", serif;
+      font-size: 1.05rem;
+      margin: 0 0 8px 0;
+      color: #0f172a;
+    }
+
+    .resource-card p {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin: 0;
       color: #475569;
     }
 
+    /* MOBILE MENU */
     @media (max-width: 768px) {
-      nav a {
-        margin-left: 18px;
+      nav {
+        position: absolute;
+        top: 72px;
+        right: 24px;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        flex-direction: column;
+        padding: 16px;
+        display: none;
       }
+
+      nav.open { display: flex; }
+
+      nav a {
+        margin: 10px 0;
+      }
+
+      .hamburger { display: flex; }
     }
   </style>
 </head>
@@ -131,7 +170,11 @@
       </a>
     </div>
 
-    <nav>
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+
+    <nav id="nav">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="resources.html">Resources</a>
@@ -141,38 +184,51 @@
   </div>
 </header>
 
-<section class="content">
-  <h2 class="page-title">Resources</h2>
+<main class="page">
+  <h1>Resources</h1>
 
   <p>
-    This page provides trusted resources for learning, remembrance, and support
-    in the aftermath of October 7 and the war to defend the State of Israel.
+    Below are organizations and resources connected to remembrance, learning,
+    Jewish memory, and support. Each link opens an external website.
   </p>
 
-  <div class="resource-list">
+  <div class="resource-grid">
 
-    <div class="resource-item">
-      <a href="https://www.idf.il/en/" target="_blank">Israel Defense Forces</a>
-      <span>Official updates, statements, and information from the IDF.</span>
-    </div>
+    <!-- RESOURCE 1 -->
+    <a class="resource-card" href="https://www.yadvashem.org" target="_blank">
+      <img src="images/resource-placeholder.jpg" alt="Yad Vashem">
+      <div class="resource-card-content">
+        <h3>Yad Vashem</h3>
+        <p>Israel’s official memorial to the victims of the Holocaust.</p>
+      </div>
+    </a>
 
-    <div class="resource-item">
-      <a href="https://www.aipac.org/" target="_blank">AIPAC</a>
-      <span>Policy, advocacy, and educational resources supporting the U.S.–Israel relationship.</span>
-    </div>
+    <!-- RESOURCE 2 -->
+    <a class="resource-card" href="https://www.jewishvirtuallibrary.org" target="_blank">
+      <img src="images/resource-placeholder.jpg" alt="Jewish Virtual Library">
+      <div class="resource-card-content">
+        <h3>Jewish Virtual Library</h3>
+        <p>A comprehensive online encyclopedia of Jewish history and Israel.</p>
+      </div>
+    </a>
 
-    <div class="resource-item">
-      <a href="https://www.jewishvirtuallibrary.org/" target="_blank">Jewish Virtual Library</a>
-      <span>Historical background, biographies, and documentation.</span>
-    </div>
-
-    <div class="resource-item">
-      <a href="https://simchattorahchallenge.com/" target="_blank">Simchat Torah Challenge</a>
-      <span>Initiatives dedicating learning and mitzvot in memory of October 7 victims.</span>
-    </div>
+    <!-- RESOURCE 3 -->
+    <a class="resource-card" href="https://www.idf.il" target="_blank">
+      <img src="images/resource-placeholder.jpg" alt="IDF">
+      <div class="resource-card-content">
+        <h3>IDF Memorial & History</h3>
+        <p>Official resources related to Israeli defense and remembrance.</p>
+      </div>
+    </a>
 
   </div>
-</section>
+</main>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("nav").classList.toggle("open");
+  }
+</script>
 
 </body>
 </html>
