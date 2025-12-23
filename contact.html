@@ -196,26 +196,94 @@
     </section>
   </main>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-inner">
-      <img src="images/Logo.png" alt="Anu Zochrim logo">
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
 
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="resources.html">Resources</a>
-        <a href="contact.html">Contact</a>
-        <a href="donate.html">Donate</a>
-      </div>
-
-      <div class="footer-copy">
-        © 2025 Anu Zochrim · אנו זוכרים · All rights reserved
-      </div>
+    <div class="footer-logo">
+      <a href="index.html">
+        <img src="images/Logo.png" alt="Anu Zochrim logo">
+      </a>
     </div>
-  </footer>
 
-</div>
+    <nav class="footer-nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="resources.html">Resources</a>
+      <a href="contact.html">Contact</a>
+      <a href="donate.html">Donate</a>
+    </nav>
 
-</body>
-</html>
+    <div class="footer-text">
+      © <span id="year"></span> Anu Zochrim · אנו זוכרים · All rights reserved.
+    </div>
+
+  </div>
+</footer>
+
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+
+  .page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .content {
+    flex: 1;
+  }
+
+  .site-footer {
+    background: #252d4c;
+    color: #ffffff;
+    width: 100%;
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+  }
+
+  .footer-logo img {
+    height: 42px;
+  }
+
+  .footer-nav {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .footer-nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-family: "Noto Serif", serif;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .footer-nav a:hover {
+    text-decoration: underline;
+  }
+
+  .footer-text {
+    font-size: 0.75rem;
+    opacity: 0.85;
+  }
+</style>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
