@@ -38,134 +38,114 @@
     }
 
     <!-- ===== HOME PAGE HEADER ===== -->
+
 <style>
-  /* HEADER */
+/* ===== HEADER ===== */
+header {
+  width: 100%;
+  padding: 24px 32px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  position: relative;
+  z-index: 10;
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo img {
+  height: 44px;
+  display: block;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+}
+
+nav a {
+  margin-left: 28px;
+  text-decoration: none;
+  font-family: "Noto Serif", serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.85rem;
+  color: #556b2f;
+  position: relative;
+}
+
+/* hover underline */
+nav a::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #556b2f;
+  transition: width 0.2s ease;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+/* hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.hamburger span {
+  height: 2px;
+  width: 22px;
+  background: #556b2f;
+  margin: 4px 0;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+
   header {
-    position: relative;
-    padding: 24px 32px;
-    z-index: 10;
+    padding: 20px;
   }
 
-  .header-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .logo img {
-    height: 44px;
-    display: block;
+  .logo {
+    margin-left: -8px;
   }
 
   nav {
-    display: flex;
-    gap: 28px;
-    align-items: center;
+    position: absolute;
+    top: 100%;
+    right: 20px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    flex-direction: column;
+    padding: 16px;
+    display: none;
   }
 
   nav a {
-    font-family: "Noto Serif", serif;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #ffffff;
-    text-decoration: none;
-    position: relative;
+    margin: 12px 0;
   }
 
-  /* WHITE HOVER LINE (HOME PAGE ONLY) */
-  nav a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -4px;
-    width: 0;
-    height: 1px;
-    background: #ffffff;
-    transition: width 0.2s ease;
+  nav.open {
+    display: flex;
   }
 
-  nav a:hover::after {
-    width: 100%;
-  }
-
-  /* HAMBURGER */
   .hamburger {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
+    display: flex;
   }
-
-  .hamburger span {
-    width: 22px;
-    height: 2px;
-    background: #ffffff;
-    margin: 4px 0;
-  }
-
-  /* MOBILE */
-  @media (max-width: 768px) {
-    .header-inner {
-      align-items: center;
-    }
-
-    nav {
-      position: absolute;
-      top: 90px;
-      right: 32px;
-      background: rgba(0,0,0,0.9);
-      flex-direction: column;
-      padding: 16px 20px;
-      display: none;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    }
-
-    nav a {
-      color: #ffffff;
-      margin: 10px 0;
-    }
-
-    nav.open {
-      display: flex;
-    }
-
-    .hamburger {
-      display: flex;
-    }
-  }
+}
 </style>
-
-<header>
-  <div class="header-inner">
-    <div class="logo">
-      <a href="index.html">
-        <img src="images/Logo.png" alt="Anu Zochrim logo">
-      </a>
-    </div>
-
-    <div class="hamburger" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-
-    <nav id="nav">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="resources.html">Resources</a>
-      <a href="contact.html">Contact</a>
-      <a href="donate.html">Donate</a>
-    </nav>
-  </div>
-</header>
-
-<script>
-  function toggleMenu() {
-    document.getElementById("nav").classList.toggle("open");
-  }
-</script>
+    
 
     /* ✅ FIXED HERO */
    
