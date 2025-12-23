@@ -1,1 +1,6 @@
-
+id,name_en,name_he,search_name,profile_slug,first_name,middle_name,last_name,nickname,gender,age,city,country,role,party,status,event_date,death_date,front,event_location,death_location,cause_of_death,memorial_url,national_library_id
+11,Dipesh Bista,,Dipesh Bista,dipesh-bista-11,Dipesh,,Bista,,Male,25,Be’er Sheva,Israel,Civilian,,Murdered,2023-10-07,2023-10-07,,Re’im,,Gunshot wound,, 
+12,Yael Cohen,,Yael Cohen,yael-cohen-12,Yael,,Cohen,,Female,32,Tel Aviv,Israel,Civilian,,Murdered,2023-10-07,2023-10-07,,Nova Festival,,Gunshot wound,, 
+13,Noam Levi,,Noam Levi,noam-levi-13,Noam,,Levi,,Male,19,Haifa,Israel,Soldier,,Fallen,2023-10-07,2023-10-07,South,Gaza border,,Combat,, 
+14,Shira Ben David,,Shira Ben David,shira-ben david-14,Shira,,Ben David,,Female,41,Kfar Saba,Israel,Civilian,,Murdered,2023-10-07,2023-10-07,,Be’eri,,Gunshot wound,, 
+15,Amir Mizrahi,,Amir Mizrahi,amir-mizrahi-15,Amir,,Mizrahi,,Male,27,Ashdod,Israel,Reservist,,Fallen,2023-10-07,2023-10-08,South,Nahal Oz,,Combat,, 
