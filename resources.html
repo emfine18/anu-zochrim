@@ -193,6 +193,8 @@
     }
 
     /* ===== FOOTER (NORMAL, NO HAMBURGER) ===== */
+<footer>
+  <style>
     footer {
       background: #252d4c;
       color: #ffffff;
@@ -211,6 +213,8 @@
 
     .footer-logo img {
       height: 40px;
+      width: auto;
+      display: block;
     }
 
     .footer-links {
@@ -236,73 +240,11 @@
       opacity: 0.85;
     }
   </style>
-</head>
 
-<body>
-
-<header>
-  <div class="header-inner">
-    <div class="logo">
-      <a href="index.html">
-        <img src="images/AZlogo2Artboard 3.png" alt="Anu Zochrim logo">
-      </a>
-    </div>
-
-    <div class="hamburger" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-
-    <nav id="nav">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="resources.html">Resources</a>
-      <a href="contact.html">Contact</a>
-      <a href="donate.html">Donate</a>
-    </nav>
-  </div>
-</header>
-
-<main>
-  <section class="content">
-    <h2 class="page-title">Resources</h2>
-
-    <div class="resource-grid">
-
-      <a href="https://www.yadvashem.org" target="_blank" class="resource-card">
-        <img src="images/resource-placeholder.jpg" alt="">
-        <div class="resource-card-content">
-          <h3>Yad Vashem</h3>
-          <p>The World Holocaust Remembrance Center, preserving memory through education and documentation.</p>
-        </div>
-      </a>
-
-      <a href="https://www.idf.il" target="_blank" class="resource-card">
-        <img src="images/resource-placeholder.jpg" alt="">
-        <div class="resource-card-content">
-          <h3>IDF Memorials</h3>
-          <p>Official Israeli Defense Forces memorial and remembrance resources.</p>
-        </div>
-      </a>
-
-      <a href="https://www.jewishvirtuallibrary.org" target="_blank" class="resource-card">
-        <img src="images/resource-placeholder.jpg" alt="">
-        <div class="resource-card-content">
-          <h3>Jewish Virtual Library</h3>
-          <p>A comprehensive source for Jewish history, culture, and remembrance.</p>
-        </div>
-      </a>
-
-    </div>
-  </section>
-</main>
-
-<footer>
   <div class="footer-inner">
     <div class="footer-logo">
       <a href="index.html">
-        <img src="images/AZlogo2Artboard 3.png" alt="Anu Zochrim logo">
+        <img src="images/Logo.png" alt="Anu Zochrim logo">
       </a>
     </div>
 
@@ -319,12 +261,6 @@
     </div>
   </div>
 </footer>
-
-<script>
-  function toggleMenu() {
-    document.getElementById("nav").classList.toggle("open");
-  }
-</script>
 
 </body>
 </html>
