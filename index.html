@@ -78,9 +78,17 @@
 
     /* ✅ FIXED HERO */
    
-    .hero {
-  height: 360px;                 /* slightly taller */
-  background-position: center 65%; /* shows more of the top */
+   .hero {
+  margin-top: -96px;          /* pulls hero up under header */
+  padding-top: 96px;          /* keeps header clickable */
+  width: 100%;
+  height: 400px;              /* controls hero height */
+
+  background-image: url("images/beeri-oct7.jpg"); /* REQUIRED */
+  background-size: cover;     /* REQUIRED */
+  background-repeat: no-repeat; /* REQUIRED */
+
+  background-position: center 65%; /* crop control */
 }
 
     .description {
