@@ -268,38 +268,9 @@
 </section>
 
 <!-- ================= SEARCH SECTION ================= -->
+<!-- ================= SEARCH SECTION ================= -->
 
-  let victims = [];
-const resultsDiv = document.getElementById("results");
-
-/* LOAD CSV AND NORMALIZE TO EXISTING STRUCTURE */
-Papa.parse("/anu-zochrim/data/example.csv", {
-  download: true,
-  header: true,
-  complete: function (results) {
-    victims = results.data
-      .filter(r => r.id)
-      .map(r => ({
-        name_en: r.name_en,
-        name_he: r.name_he || "",
-        category: mapCategory(r),
-        residence: r.city || "",
-        death_location: r.death_location || r.event_location || "",
-        death: r.death_date || r.event_date || ""
-      }));
-  }
-});
-
-/* MAP CSV FIELDS TO EXISTING CATEGORY VALUES */
-function mapCategory(row) {
-  if (row.status === "Kidnapped") return "Hostage";
-  if (row.role === "Soldier") return "IDF Soldier";
-  if (row.role === "Reservist") return "IDF Soldier";
-  if (row.role === "Police") return "Police / Border Patrol";
-  return "Civilian";
-  
-  
-  <style>
+<style>
   #search {
     max-width: 900px;
     margin: 48px auto;
@@ -459,27 +430,51 @@ function mapCategory(row) {
 
     <button onclick="runHebrewDateSearch()">Search</button>
   </div>
+</section>
 
+<!-- ================= SEARCH OUTPUT (PLACEHOLDER) ================= -->
+
+<section id="search-output">
+  <h3 class="search-title">Search Results</h3>
   <div id="results"></div>
 </section>
 
+<!-- ================= SEARCH LOGIC ================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
 <script>
-  const victims = [
-    {
-      name_en: "Shani Louk",
-      name_he: "שני לוק",
-      residence: "Tel Aviv",
-      death_location: "Nova Festival",
-      category: "Civilian",
-      death: "2023-10-07"
+  let victims = [];
+  const resultsDiv = document.getElementById("results");
+
+  Papa.parse("/anu-zochrim/data/example.csv", {
+    download: true,
+    header: true,
+    complete: function (results) {
+      victims = results.data
+        .filter(r => r.id)
+        .map(r => ({
+          name_en: r.name_en,
+          name_he: r.name_he || "",
+          residence: r.city || "",
+          death_location: r.death_location || r.event_location || "",
+          category: mapCategory(r),
+          death: r.death_date || r.event_date || ""
+        }));
     }
-  ];
+  });
+
+  function mapCategory(row) {
+    if (row.status === "Kidnapped") return "Hostage";
+    if (row.role === "Soldier" || row.role === "Reservist") return "IDF Soldier";
+    if (row.role === "Police") return "Police / Border Patrol";
+    return "Civilian";
+  }
 
   const searchMode = document.getElementById("searchMode");
   const textSearch = document.getElementById("textSearch");
   const englishDate = document.getElementById("englishDate");
   const hebrewDate = document.getElementById("hebrewDate");
-  const resultsDiv = document.getElementById("results");
 
   searchMode.onchange = () => {
     textSearch.classList.add("hidden");
@@ -524,8 +519,8 @@ function mapCategory(row) {
 
     const matches = victims.filter(v => {
       const dt = new Date(v.death);
-      if (String(dt.getMonth() + 1).padStart(2, '0') !== m) return false;
-      if (String(dt.getDate()).padStart(2, '0') !== d) return false;
+      if (String(dt.getMonth() + 1).padStart(2, "0") !== m) return false;
+      if (String(dt.getDate()).padStart(2, "0") !== d) return false;
       if (cat && v.category !== cat) return false;
       return true;
     });
@@ -546,7 +541,7 @@ function mapCategory(row) {
     ).join("");
   }
 </script>
-
+  
 <footer>
   <a href="index.html">
     <img src="images/Logo.png" alt="Anu Zochrim logo">
