@@ -182,24 +182,27 @@ nav a {
 </script>
 
   <style>
+
+    <style>
   #search {
     max-width: 900px;
-    margin: 64px auto;
-    padding: 0 24px;
+    margin: 72px auto;
+    padding: 0 32px;
+    font-family: "Noto Sans", sans-serif;
   }
 
   .search-title {
     font-family: "Noto Sans", sans-serif;
     font-weight: 600;
     letter-spacing: 0.12em;
-    color: #556b2f; /* olive green */
-    margin-bottom: 28px;
+    color: #556b2f;
+    margin-bottom: 32px;
   }
 
   #search .filters {
     display: flex;
-    gap: 12px;
-    margin-bottom: 16px;
+    gap: 16px;
+    margin-bottom: 20px;
     flex-wrap: wrap;
   }
 
@@ -207,32 +210,52 @@ nav a {
   #search input {
     font-family: "Noto Sans", sans-serif;
     font-size: 0.95rem;
-    padding: 12px 14px;
-    border: 1px solid #cbd5e1;
+    padding: 14px 16px;
+    border: 1px solid #9db28a;
     border-radius: 4px;
-    background: white;
+    background: #eef4ea;
+    color: #1f2937;
+    min-width: 220px;
+  }
+
+  #search select:focus,
+  #search input:focus {
+    outline: none;
+    border-color: #556b2f;
+    background: #e6efe0;
   }
 
   #search button {
     font-family: "Noto Sans", sans-serif;
-    font-size: 0.9rem;
-    padding: 12px 20px;
-    background: #1f2937;
-    color: white;
+    font-size: 0.85rem;
+    padding: 14px 28px;
+    background: #556b2f;
+    color: #ffffff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
   }
 
   #search button:hover {
-    background: #111827;
+    background: #3f5222;
   }
 
   .card {
     border-bottom: 1px solid #e5e7eb;
-    padding: 16px 0;
+    padding: 18px 0;
+  }
+
+  @media (max-width: 768px) {
+    #search {
+      padding: 0 20px;
+    }
+
+    #search select,
+    #search input {
+      width: 100%;
+    }
   }
 </style>
 
@@ -370,12 +393,7 @@ nav a {
       );
     });
 
-    resultsDiv.innerHTML = matches.map(v =>
-      `<div class="card">
-        <strong>${v.name_en} (${v.name_he})</strong><br>
-        ${v.category} · Lived in ${v.residence} · Killed in ${v.death_location}
-      </div>`
-    ).join("");
+    renderResults(matches);
   };
 
   function runEnglishDateSearch() {
@@ -391,15 +409,19 @@ nav a {
       return true;
     });
 
-    resultsDiv.innerHTML = matches.map(v =>
+    renderResults(matches);
+  }
+
+  function runHebrewDateSearch() {
+    alert("Hebrew date matching coming next.");
+  }
+
+  function renderResults(list) {
+    resultsDiv.innerHTML = list.map(v =>
       `<div class="card">
         <strong>${v.name_en} (${v.name_he})</strong><br>
         ${v.category} · Lived in ${v.residence} · Killed in ${v.death_location}
       </div>`
     ).join("");
-  }
-
-  function runHebrewDateSearch() {
-    alert("Hebrew date matching coming next.");
   }
 </script>
