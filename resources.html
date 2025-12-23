@@ -1,205 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Resources – Anu Zochrim</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 
-<style>
-* { box-sizing: border-box; }
+  <style>
+    * { box-sizing: border-box; }
 
-body {
-  margin: 0;
-  font-family: "Poppins", sans-serif;
-  background: #ffffff;
-}
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
 
-/* ===== HEADER ===== */
-header {
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 24px 32px;
-  position: relative;
-  z-index: 100;
-}
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #ffffff;
+      color: #334155;
+    }
 
-.header-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+    /* ===== PAGE WRAPPER (FOOTER FIX) ===== */
+    .page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-.logo img {
-  height: 44px;
-  display: block;
-}
-
-nav {
-  display: flex;
-  gap: 28px;
-}
-
-nav a {
-  font-family: "Noto Serif", serif;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #556b2f;
-  text-decoration: none;
-  position: relative;
-}
-
-/* hover underline */
-nav a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -6px;
-  width: 0;
-  height: 2px;
-  background: #556b2f;
-  transition: width 0.2s ease;
-}
-
-nav a:hover::after {
-  width: 100%;
-}
-
-/* ===== HAMBURGER ===== */
-.hamburger {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-}
-
-.hamburger span {
-  width: 22px;
-  height: 2px;
-  background: #556b2f;
-  margin: 4px 0;
-}
-
-/* ===== MOBILE ===== */
-@media (max-width: 768px) {
-  header {
-    padding: 20px;
-  }
-
-  .logo {
-    margin-left: -8px;
-  }
-
-  nav {
-    position: absolute;
-    top: 100%;
-    right: 20px;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    flex-direction: column;
-    padding: 16px;
-    display: none;
-  }
-
-  nav.open {
-    display: flex;
-  }
-
-  nav a {
-    margin: 12px 0;
-    color: #556b2f;
-  }
-
-  .hamburger {
-    display: flex;
-  }
-}
-</style>
-</head>
-
-<body>
-
-<header>
-  <div class="header-inner">
-    <div class="logo">
-      <a href="index.html">
-        <img src="images/AZlogo2Artboard 3.png" alt="Anu Zochrim logo">
-      </a>
-    </div>
-
-    <div class="hamburger" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-
-    <nav id="nav">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="resources.html">Resources</a>
-      <a href="contact.html">Contact</a>
-      <a href="donate.html">Donate</a>
-    </nav>
-  </div>
-</header>
-
-<script>
-function toggleMenu() {
-  document.getElementById("nav").classList.toggle("open");
-}
-</script>
-
-</body>
-</html>
-
-    /* ===== MAIN CONTENT (PUSHES FOOTER DOWN) ===== */
     main {
       flex: 1;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      width: 100%;
+      padding: 24px 32px;
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      position: relative;
+      z-index: 10;
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo img {
+      height: 44px;
+      display: block;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+    }
+
+    nav a {
+      margin-left: 28px;
+      text-decoration: none;
+      font-family: "Noto Serif", serif;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.85rem;
+      color: #556b2f;
+      position: relative;
+    }
+
+    /* hover underline (desktop) */
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 0;
+      height: 2px;
+      background: #556b2f;
+      transition: width 0.25s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* ===== HAMBURGER ===== */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background: #556b2f;
+      margin: 4px 0;
+    }
+
+    /* ===== CONTENT ===== */
+    .content {
       max-width: 1100px;
-      margin: 48px auto;
+      margin: 56px auto;
       padding: 0 24px;
       font-family: "Noto Serif", serif;
     }
 
     .page-title {
-      font-size: 1.4rem;
       font-weight: 600;
+      font-size: 1.4rem;
       text-transform: uppercase;
       color: #556b2f;
       margin-bottom: 32px;
     }
 
     /* ===== RESOURCE GRID ===== */
-    .resources-grid {
+    .resource-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 28px;
+      gap: 24px;
     }
 
     .resource-card {
       border: 1px solid #e5e7eb;
-      border-radius: 6px;
-      overflow: hidden;
       text-decoration: none;
-      color: inherit;
-      background: #ffffff;
+      color: #334155;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .resource-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.08);
     }
 
     .resource-card img {
       width: 100%;
       height: 160px;
       object-fit: cover;
-      display: block;
     }
 
     .resource-card div {
@@ -207,67 +152,97 @@ function toggleMenu() {
     }
 
     .resource-card h3 {
-      margin: 0 0 8px 0;
+      margin: 0 0 10px;
       font-size: 1rem;
-      color: #0f172a;
+      color: #556b2f;
     }
 
     .resource-card p {
-      font-size: 0.9rem;
-      line-height: 1.5;
-      color: #475569;
       margin: 0;
+      font-size: 0.95rem;
+      line-height: 1.6;
     }
 
-    /* ===== FOOTER (ALWAYS BOTTOM) ===== */
+    /* ===== FOOTER ===== */
     footer {
       background: #252d4c;
       color: #ffffff;
-      padding: 36px 24px;
-    }
-
-    .footer-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 18px;
+      padding: 48px 24px;
       text-align: center;
     }
 
-    .footer-inner img {
+    footer img {
       height: 42px;
+      margin-bottom: 18px;
     }
 
-    .footer-links {
-      display: flex;
-      gap: 22px;
-      flex-wrap: wrap;
-      justify-content: center;
+    .footer-nav {
+      margin: 16px 0;
+    }
+
+    .footer-nav a {
+      display: block;
+      margin: 6px 0;
+      text-decoration: none;
       font-family: "Noto Serif", serif;
-      font-size: 0.85rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-    }
-
-    .footer-links a {
+      font-size: 0.8rem;
       color: #ffffff;
-      text-decoration: none;
     }
 
-    .footer-links a:hover {
-      text-decoration: underline;
-    }
-
-    .copyright {
+    footer p {
+      margin-top: 18px;
       font-size: 0.75rem;
-      opacity: 0.85;
+      opacity: 0.8;
+    }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 768px) {
+      header {
+        padding: 20px;
+      }
+
+      .logo {
+        margin-left: -8px;
+      }
+
+      nav {
+        position: absolute;
+        top: 100%;
+        right: 16px;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        flex-direction: column;
+        padding: 10px 14px;
+        display: none;
+        min-width: 180px;
+      }
+
+      nav.open {
+        display: flex;
+      }
+
+      nav a {
+        margin: 6px 0;
+        font-size: 0.8rem;
+        letter-spacing: 0.06em;
+        color: #556b2f;
+      }
+
+      nav a::after {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
     }
   </style>
 </head>
 
 <body>
+<div class="page-wrapper">
 
 <header>
   <div class="header-inner">
@@ -277,11 +252,13 @@ function toggleMenu() {
       </a>
     </div>
 
-    <div class="hamburger" onclick="toggleMenu()">
-      <span></span><span></span><span></span>
+    <div class="hamburger" onclick="document.querySelector('nav').classList.toggle('open')">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
 
-    <nav id="nav">
+    <nav>
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="resources.html">Resources</a>
@@ -292,53 +269,53 @@ function toggleMenu() {
 </header>
 
 <main>
-  <h2 class="page-title">Resources</h2>
+  <section class="content">
+    <h2 class="page-title">Resources</h2>
 
-  <div class="resources-grid">
-    <a class="resource-card" href="https://www.jewishvirtuallibrary.org" target="_blank">
-      <img src="images/resource1.jpg" alt="">
-      <div>
-        <h3>Jewish Virtual Library</h3>
-        <p>Historical and educational resources on Israel and Jewish history.</p>
-      </div>
-    </a>
+    <div class="resource-grid">
+      <a href="#" class="resource-card">
+        <img src="images/resource1.jpg" alt="">
+        <div>
+          <h3>Memorial Archive</h3>
+          <p>Historical records and verified documentation related to October 7.</p>
+        </div>
+      </a>
 
-    <a class="resource-card" href="https://www.idf.il" target="_blank">
-      <img src="images/resource2.jpg" alt="">
-      <div>
-        <h3>IDF Official Site</h3>
-        <p>Updates and official information from the Israel Defense Forces.</p>
-      </div>
-    </a>
+      <a href="#" class="resource-card">
+        <img src="images/resource2.jpg" alt="">
+        <div>
+          <h3>Educational Materials</h3>
+          <p>Articles, research, and learning tools for educators and communities.</p>
+        </div>
+      </a>
 
-    <a class="resource-card" href="https://www.yadvashem.org" target="_blank">
-      <img src="images/resource3.jpg" alt="">
-      <div>
-        <h3>Yad Vashem</h3>
-        <p>Holocaust remembrance, education, and historical documentation.</p>
-      </div>
-    </a>
-  </div>
+      <a href="#" class="resource-card">
+        <img src="images/resource3.jpg" alt="">
+        <div>
+          <h3>Support Organizations</h3>
+          <p>Trusted organizations providing aid and community support.</p>
+        </div>
+      </a>
+    </div>
+  </section>
 </main>
 
-  <footer class="site-footer" style="background:#252d4c;color:#ffffff;">
-  <div style="max-width:1200px;margin:0 auto;padding:32px 24px;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;">
+<footer>
+  <a href="index.html">
+    <img src="images/AZlogo-white.png" alt="Anu Zochrim logo">
+  </a>
 
-    <a href="index.html">
-      <img src="images/Logo.png" alt="Anu Zochrim Logo" style="height:44px;width:auto;display:block;" />
-    </a>
-
-    <nav style="display:flex;gap:28px;flex-wrap:wrap;justify-content:center;">
-      <a href="index.html" style="color:#ffffff;text-decoration:none;font-family:'Noto Serif',serif;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.08em;">Home</a>
-      <a href="about.html" style="color:#ffffff;text-decoration:none;font-family:'Noto Serif',serif;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.08em;">About</a>
-      <a href="resources.html" style="color:#ffffff;text-decoration:none;font-family:'Noto Serif',serif;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.08em;">Resources</a>
-      <a href="contact.html" style="color:#ffffff;text-decoration:none;font-family:'Noto Serif',serif;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.08em;">Contact</a>
-      <a href="donate.html" style="color:#ffffff;text-decoration:none;font-family:'Noto Serif',serif;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.08em;">Donate</a>
-    </nav>
-
-    <p style="margin:0;font-family:'Noto Serif',serif;font-size:0.8rem;color:#e5e7eb;">
-      © 2025 Anu Zochrim. All rights reserved.
-    </p>
-
+  <div class="footer-nav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="resources.html">Resources</a>
+    <a href="contact.html">Contact</a>
+    <a href="donate.html">Donate</a>
   </div>
+
+  <p>© 2025 Anu Zochrim. All rights reserved.</p>
 </footer>
+
+</div>
+</body>
+</html>
