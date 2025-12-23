@@ -195,23 +195,23 @@
 </body>
 </html>
 
-<footer style="background-color:#252d4c;padding:36px 32px;margin-top:80px;">
-  <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;">
+html, body {
+  height: 100%;
+  margin: 0;
+}
 
-    <div style="display:flex;align-items:center;gap:20px;">
-      <img src="images/Logo.png" alt="Anu Zochrim – We Remember" style="height:48px;width:auto;display:block;">
-      <span style="color:#e5e7eb;font-size:0.85rem;font-family:Poppins,sans-serif;">
-        © 2025 Anu Zochrim · All rights reserved
-      </span>
-    </div>
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
-    <nav style="display:flex;gap:24px;flex-wrap:wrap;">
-      <a href="index.html" style="color:#ffffff;text-decoration:none;font-size:0.8rem;font-family:Poppins,sans-serif;text-transform:uppercase;letter-spacing:0.08em;">Home</a>
-      <a href="about.html" style="color:#ffffff;text-decoration:none;font-size:0.8rem;font-family:Poppins,sans-serif;text-transform:uppercase;letter-spacing:0.08em;">About</a>
-      <a href="resources.html" style="color:#ffffff;text-decoration:none;font-size:0.8rem;font-family:Poppins,sans-serif;text-transform:uppercase;letter-spacing:0.08em;">Resources</a>
-      <a href="contact.html" style="color:#ffffff;text-decoration:none;font-size:0.8rem;font-family:Poppins,sans-serif;text-transform:uppercase;letter-spacing:0.08em;">Contact</a>
-      <a href="donate.html" style="color:#ffffff;text-decoration:none;font-size:0.8rem;font-family:Poppins,sans-serif;text-transform:uppercase;letter-spacing:0.08em;">Donate</a>
-    </nav>
+.content {
+  flex: 1; /* pushes footer to bottom */
+}
 
-  </div>
-</footer>
+.site-footer {
+  background: #252d4c; /* your blue */
+  color: white;
+  width: 100%;
+}
