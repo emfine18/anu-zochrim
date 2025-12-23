@@ -268,7 +268,38 @@
 </section>
 
 <!-- ================= SEARCH SECTION ================= -->
-<style>
+
+  let victims = [];
+const resultsDiv = document.getElementById("results");
+
+/* LOAD CSV AND NORMALIZE TO EXISTING STRUCTURE */
+Papa.parse("/anu-zochrim/data/example.csv", {
+  download: true,
+  header: true,
+  complete: function (results) {
+    victims = results.data
+      .filter(r => r.id)
+      .map(r => ({
+        name_en: r.name_en,
+        name_he: r.name_he || "",
+        category: mapCategory(r),
+        residence: r.city || "",
+        death_location: r.death_location || r.event_location || "",
+        death: r.death_date || r.event_date || ""
+      }));
+  }
+});
+
+/* MAP CSV FIELDS TO EXISTING CATEGORY VALUES */
+function mapCategory(row) {
+  if (row.status === "Kidnapped") return "Hostage";
+  if (row.role === "Soldier") return "IDF Soldier";
+  if (row.role === "Reservist") return "IDF Soldier";
+  if (row.role === "Police") return "Police / Border Patrol";
+  return "Civilian";
+  
+  
+  <style>
   #search {
     max-width: 900px;
     margin: 48px auto;
