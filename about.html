@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
   <meta charset="UTF-8" />
   <title>About – Anu Zochrim</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,14 +12,19 @@
 
   <style>
     * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: "Poppins", sans-serif;
       background: #ffffff;
+      color: #334155;
     }
 
-    /* HEADER (same layout, different colors) */
+    /* ===== HEADER (MATCHES HOMEPAGE) ===== */
     header {
       width: 100%;
       padding: 24px 32px;
@@ -51,35 +55,45 @@
       text-decoration: none;
       font-family: "Noto Serif", serif;
       font-weight: 500;
-      color: #556b2f;              /* olive green */
       text-transform: uppercase;
       letter-spacing: 0.08em;
       font-size: 0.85rem;
+      color: #556b2f; /* olive green */
     }
 
-    /* ABOUT CONTENT */
-    .about {
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== CONTENT ===== */
+    .content {
       max-width: 900px;
-      margin: 64px auto;
+      margin: 48px auto;
       padding: 0 24px;
       font-family: "Noto Serif", serif;
     }
 
-    .about h1 {
-      font-size: 1.6rem;
+    /* TITLE — SAME AS HOMEPAGE */
+    .page-title {
+      font-weight: 600;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      color: #556b2f;
+      margin: 0 0 24px 0;
+    }
+
+    .content p {
+      font-size: 1.06rem;
+      line-height: 1.7;
+      margin-bottom: 18px;
+    }
+
+    .content strong {
       font-weight: 600;
       color: #0f172a;
-      margin-bottom: 24px;
     }
 
-    .about p {
-      font-size: 1.05rem;
-      line-height: 1.75;
-      color: #334155;
-      margin-bottom: 22px;
-    }
-
-    /* MOBILE */
     @media (max-width: 768px) {
       nav a {
         margin-left: 18px;
@@ -101,31 +115,35 @@
     <nav>
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
       <a href="donate.html">Donate</a>
     </nav>
   </div>
 </header>
 
-<section class="about">
-  <h1>About Anu Zochrim</h1>
+<section class="content">
+  <h2 class="page-title">About Anu Zochrim</h2>
 
   <p>
-    <strong>Anu Zochrim</strong> (“We Remember”) is a public memorial initiative
-    dedicated to honoring the memory of Israelis murdered by Hamas on
-    October 7, 2023, and those who fell defending the Jewish people and
-    the State of Israel.
+    <strong>Anu Zochrim</strong> is a public memorial initiative dedicated to honoring
+    the memory of Israelis murdered by Hamas on October 7, 2023, and those who fell
+    defending the Jewish people and the State of Israel.
   </p>
 
   <p>
-    This project exists to preserve each name with dignity, accuracy,
-    and permanence, and to provide a meaningful way to dedicate learning,
-    prayer, and moments of life in their memory.
+    The project was created to serve as a central and accessible space for remembrance —
+    ensuring that each name is preserved with accuracy, dignity, and respect.
   </p>
 
   <p>
-    Jewish memory is an active commitment. Through remembrance, we affirm
-    the resilience of the Jewish people and our enduring responsibility
-    to the security and future of the State of Israel.
+    Jewish memory is active and enduring. Through learning, prayer, and moments of joy,
+    lives lost are honored with meaning. By enabling searches by name, date, or place,
+    Anu Zochrim allows moments of life to be intentionally dedicated in memory of those
+    who were killed.
+  </p>
+
+  <p>
+    Anu Zochrim is non-political and non-commercial in purpose. Its sole mission is remembrance.
   </p>
 </section>
 
