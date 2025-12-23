@@ -24,28 +24,51 @@
       color: #334155;
     }
 
-    /* ===== HEADER (MATCHES DONATE PAGE) ===== */
-<header>
-  <div class="header-inner">
-    <div class="logo">
-      <a href="index.html">
-        <img src="images/AZlogo2Artboard 3.png" alt="Anu Zochrim logo">
-      </a>
-    </div>
+    /* ===== HEADER (MATCHES DONATE PAGE EXACTLY) ===== */
+    header {
+      width: 100%;
+      padding: 24px 32px;
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+    }
 
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="resources.html">Resources</a>
-      <a href="contact.html">Contact</a>
-      <a href="donate.html">Donate</a>
-    </nav>
-  </div>
-</header>
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo img {
+      height: 44px;
+      display: block;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+    }
+
+    nav a {
+      margin-left: 28px;
+      text-decoration: none;
+      font-family: "Noto Serif", serif;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.85rem;
+      color: #556b2f;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
     /* ===== CONTENT ===== */
     .content {
-      max-width: 900px;
-      margin: 48px auto;
+      max-width: 1000px;
+      margin: 48px auto 80px;
       padding: 0 24px;
       font-family: "Noto Serif", serif;
     }
@@ -54,23 +77,21 @@
       font-weight: 600;
       font-size: 1.4rem;
       text-transform: uppercase;
-      letter-spacing: 0;
       color: #556b2f;
-      margin: 0 0 32px 0;
+      margin: 0 0 24px 0;
     }
 
     .content p {
       font-size: 1.06rem;
       line-height: 1.7;
-      margin-bottom: 22px;
+      margin-bottom: 32px;
     }
 
     /* ===== RESOURCE GRID ===== */
-    .resource-grid {
+    .resources-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 24px;
-      margin-top: 32px;
     }
 
     .resource-card {
@@ -79,12 +100,13 @@
       overflow: hidden;
       text-decoration: none;
       color: inherit;
-      transition: box-shadow 0.2s ease, transform 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      background: #ffffff;
     }
 
     .resource-card:hover {
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
     }
 
     .resource-card img {
@@ -94,21 +116,21 @@
       display: block;
     }
 
-    .resource-card-content {
-      padding: 18px;
+    .resource-card .card-content {
+      padding: 16px;
     }
 
     .resource-card h3 {
-      margin: 0 0 8px 0;
+      font-family: "Noto Serif", serif;
       font-size: 1rem;
-      font-weight: 600;
+      margin: 0 0 8px 0;
       color: #0f172a;
     }
 
     .resource-card p {
-      margin: 0;
       font-size: 0.95rem;
       line-height: 1.5;
+      margin: 0;
       color: #475569;
     }
 
@@ -144,39 +166,34 @@
   <h2 class="page-title">Resources</h2>
 
   <p>
-    This page provides trusted resources for learning, remembrance, advocacy,
-    and support related to October 7, 2023, the ongoing war, and the resilience
-    of the Jewish people and the State of Israel.
+    The following resources provide information, support, and opportunities for
+    learning, remembrance, and engagement related to the events of October 7
+    and the ongoing effort to strengthen Jewish life and the State of Israel.
   </p>
 
-  <p>
-    These organizations and initiatives offer meaningful ways to deepen
-    understanding, commemorate lives lost, and stand in solidarity with Israel.
-  </p>
-
-  <div class="resource-grid">
+  <div class="resources-grid">
 
     <a href="https://www.idf.il" target="_blank" class="resource-card">
-      <img src="images/resource-idf.jpg" alt="IDF">
-      <div class="resource-card-content">
+      <img src="images/resource-placeholder.jpg" alt="IDF">
+      <div class="card-content">
         <h3>Israel Defense Forces</h3>
-        <p>Official updates, statements, and information from the IDF.</p>
-      </div>
-    </a>
-
-    <a href="https://www.aipac.org" target="_blank" class="resource-card">
-      <img src="images/resource-aipac.jpg" alt="AIPAC">
-      <div class="resource-card-content">
-        <h3>AIPAC</h3>
-        <p>Advocacy, policy education, and support for the U.S.–Israel relationship.</p>
+        <p>Official updates and information from the IDF.</p>
       </div>
     </a>
 
     <a href="https://www.jewishfederations.org" target="_blank" class="resource-card">
-      <img src="images/resource-jfna.jpg" alt="Jewish Federations">
-      <div class="resource-card-content">
-        <h3>Jewish Federations of North America</h3>
-        <p>Community support, emergency relief, and global Jewish initiatives.</p>
+      <img src="images/resource-placeholder.jpg" alt="Jewish Federations">
+      <div class="card-content">
+        <h3>Jewish Federations</h3>
+        <p>Community support, relief efforts, and resources.</p>
+      </div>
+    </a>
+
+    <a href="https://www.aipac.org" target="_blank" class="resource-card">
+      <img src="images/resource-placeholder.jpg" alt="AIPAC">
+      <div class="card-content">
+        <h3>AIPAC</h3>
+        <p>Policy, advocacy, and educational resources.</p>
       </div>
     </a>
 
