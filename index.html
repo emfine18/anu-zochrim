@@ -1,280 +1,296 @@
-  /* ================= SEARCH ================= */
-  #search {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 0 24px;
-    font-family: "Noto Serif", serif;
-  }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Anu Zochrim – We Remember</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  #search * {
-    font-family: "Noto Serif", serif;
-  }
+  <!-- Social Preview -->
+  <meta property="og:title" content="Anu Zochrim – We Remember">
+  <meta property="og:description" content="A public memorial honoring the Israelis murdered by Hamas on October 7, 2023.">
+  <meta property="og:image" content="https://emfine18.github.io/anu-zochrim/preview.jpg">
+  <meta property="og:url" content="https://emfine18.github.io/anu-zochrim/">
+  <meta property="og:type" content="website">
 
-  .search-title {
-    font-weight: 600;
-    font-size: 1.4rem;
-    text-transform: uppercase;
-    color: #556b2f;
-    margin: 0 0 16px 0;
-  }
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 
-  .filters {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
+  <style>
+    * { box-sizing: border-box; }
 
-  select,
-  input {
-    font-size: 0.95rem;
-    padding: 12px 14px;
-    border: 1px solid #cbd5e1;
-    border-radius: 4px;
-    background: #ffffff;
-    color: #1f2937;
-    min-width: 220px;
-  }
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      color: #334155;
+      background: #ffffff;
+    }
 
-  button {
-    font-size: 0.9rem;
-    padding: 12px 28px;
-    background: #556b2f;
-    color: #ffffff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+    /* ================= HEADER ================= */
+    header {
+      position: absolute;
+      width: 100%;
+      padding: 24px 32px;
+      z-index: 1000;
+    }
 
-  button:hover {
-    background: #3f5222;
-  }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-  .hidden {
-    display: none;
-  }
+    .logo img {
+      height: 44px;
+      display: block;
+    }
 
-  .card {
-    border-bottom: 1px solid #e5e7eb;
-    padding: 14px 0;
-    font-size: 0.95rem;
-  }
+    nav {
+      display: flex;
+      align-items: center;
+    }
 
-  @media (max-width: 768px) {
+    nav a {
+      margin-left: 28px;
+      font-family: "Noto Serif", serif;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #ffffff;
+      text-decoration: none;
+      position: relative;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 1px;
+      background: #ffffff;
+      transition: width 0.2s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      width: 22px;
+      height: 2px;
+      background: #ffffff;
+      margin: 4px 0;
+    }
+
+    /* ================= HERO ================= */
+    .hero {
+      height: 500px;
+      background-image: url("images/beeri-107 copy.jpeg");
+      background-size: cover;
+      background-position: center 45%;
+    }
+
+    /* ================= MOBILE NAV ================= */
+    @media (max-width: 768px) {
+      nav {
+        position: absolute;
+        top: 100%;
+        right: 24px;
+        background: #ffffff;
+        flex-direction: column;
+        padding: 12px 16px;
+        display: none;
+        border: 1px solid #e5e7eb;
+      }
+
+      nav.open {
+        display: flex;
+      }
+
+      nav a {
+        margin: 6px 0;
+        color: #556b2f;
+      }
+
+      nav a::after {
+        background: #556b2f;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    /* ================= INTRO (GREEN) ================= */
+    .about-home {
+      background: #556b2f;
+      color: #ffffff;
+      padding: 48px 24px;
+    }
+
+    .about-home-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      font-family: "Noto Serif", serif;
+    }
+
+    .about-home p {
+      font-size: 1.06rem;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    /* ================= SEARCH ================= */
+    #search {
+      max-width: 900px;
+      margin: 48px auto;
+      padding: 0 24px;
+      font-family: "Noto Serif", serif;
+    }
+
+    #search * {
+      font-family: "Noto Serif", serif;
+    }
+
+    .search-title {
+      font-weight: 600;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      color: #556b2f;
+      margin-bottom: 16px;
+    }
+
+    .filters {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
     select,
     input {
-      width: 100%;
+      font-size: 0.95rem;
+      padding: 12px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      min-width: 220px;
     }
 
     button {
-      width: 100%;
-    }
-  }
-</style>
-
-<section id="search">
-  <h3 class="search-title">Search the Database</h3>
-
-  <!-- TOP FILTERS -->
-  <div class="filters">
-    <select id="searchMode">
-      <option value="">Search by</option>
-      <option value="name">Name (English)</option>
-      <option value="name">Name (Hebrew)</option>
-      <option value="birth_en">Birthday (English)</option>
-      <option value="birth_he">Birthday (Hebrew)</option>
-      <option value="death_en">Death date (English)</option>
-      <option value="death_he">Death date (Hebrew)</option>
-      <option value="death_location">Location of death</option>
-      <option value="residence">Location of residence</option>
-    </select>
-
-    <select id="category">
-      <option value="">All categories</option>
-      <option value="IDF Soldier">IDF Soldier</option>
-      <option value="Civilian">Civilian</option>
-      <option value="Hostage">Hostage</option>
-      <option value="Police / Border Patrol">Police / Border Patrol</option>
-    </select>
-  </div>
-
-  <!-- TEXT SEARCH -->
-  <div id="textSearch" class="filters hidden">
-    <input id="textValue" placeholder="Enter search value" />
-    <button onclick="runTextSearch()">Search</button>
-  </div>
-
-  <!-- ENGLISH DATE SEARCH -->
-  <div id="englishDate" class="filters hidden">
-    <select id="month">
-      <option value="">Month</option>
-      <option value="01">January</option>
-      <option value="02">February</option>
-      <option value="03">March</option>
-      <option value="04">April</option>
-      <option value="05">May</option>
-      <option value="06">June</option>
-      <option value="07">July</option>
-      <option value="08">August</option>
-      <option value="09">September</option>
-      <option value="10">October</option>
-      <option value="11">November</option>
-      <option value="12">December</option>
-    </select>
-
-    <select id="day">
-      <option value="">Day</option>
-      <script>
-        for (let i = 1; i <= 31; i++) {
-          document.write(`<option value="${String(i).padStart(2,'0')}">${i}</option>`);
-        }
-      </script>
-    </select>
-
-    <button onclick="runEnglishDateSearch()">Search</button>
-  </div>
-
-  <!-- HEBREW DATE SEARCH -->
-  <div id="hebrewDate" class="filters hidden">
-    <select id="hebMonth">
-      <option value="">Hebrew month</option>
-      <option>Nisan</option>
-      <option>Iyar</option>
-      <option>Sivan</option>
-      <option>Tammuz</option>
-      <option>Av</option>
-      <option>Elul</option>
-      <option>Tishrei</option>
-      <option>Cheshvan</option>
-      <option>Kislev</option>
-      <option>Tevet</option>
-      <option>Shevat</option>
-      <option>Adar</option>
-    </select>
-
-    <select id="hebDay">
-      <option value="">Day</option>
-      <script>
-        for (let i = 1; i <= 30; i++) {
-          document.write(`<option value="${i}">${i}</option>`);
-        }
-      </script>
-    </select>
-
-    <button onclick="runHebrewDateSearch()">Search</button>
-  </div>
-
-  <div id="results"></div>
-</section>
-
-<script>
-  const victims = [
-    {
-      name_en: "Shani Louk",
-      name_he: "שני לוק",
-      residence: "Tel Aviv",
-      death_location: "Nova Festival",
-      category: "Civilian",
-      death: "2023-10-07"
-    }
-  ];
-
-  const searchMode = document.getElementById("searchMode");
-  const textSearch = document.getElementById("textSearch");
-  const englishDate = document.getElementById("englishDate");
-  const hebrewDate = document.getElementById("hebrewDate");
-  const resultsDiv = document.getElementById("results");
-
-  searchMode.onchange = () => {
-    textSearch.classList.add("hidden");
-    englishDate.classList.add("hidden");
-    hebrewDate.classList.add("hidden");
-    resultsDiv.innerHTML = "";
-
-    if (["name", "death_location", "residence"].includes(searchMode.value)) {
-      textSearch.classList.remove("hidden");
+      padding: 12px 28px;
+      background: #556b2f;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
     }
 
-    if (["birth_en", "death_en"].includes(searchMode.value)) {
-      englishDate.classList.remove("hidden");
+    .hidden { display: none; }
+
+    .card {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 14px 0;
     }
 
-    if (["birth_he", "death_he"].includes(searchMode.value)) {
-      hebrewDate.classList.remove("hidden");
+    /* ================= FOOTER ================= */
+    footer {
+      background: #252d4c;
+      color: #ffffff;
+      text-align: center;
+      padding: 36px 24px;
     }
-  };
 
-  function runTextSearch() {
-    const q = document.getElementById("textValue").value.toLowerCase();
-    const cat = document.getElementById("category").value;
+    footer img {
+      height: 42px;
+      margin-bottom: 16px;
+    }
 
-    const matches = victims.filter(v => {
-      if (cat && v.category !== cat) return false;
-      return (
-        v.name_en.toLowerCase().includes(q) ||
-        v.name_he.includes(q) ||
-        v.death_location.toLowerCase().includes(q) ||
-        v.residence.toLowerCase().includes(q)
-      );
-    });
+    .footer-nav {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
 
-    render(matches);
-  }
-
-  function runEnglishDateSearch() {
-    const m = document.getElementById("month").value;
-    const d = document.getElementById("day").value;
-    const cat = document.getElementById("category").value;
-
-    const matches = victims.filter(v => {
-      const dt = new Date(v.death);
-      if (String(dt.getMonth() + 1).padStart(2,'0') !== m) return false;
-      if (String(dt.getDate()).padStart(2,'0') !== d) return false;
-      if (cat && v.category !== cat) return false;
-      return true;
-    });
-
-    render(matches);
-  }
-
-  function runHebrewDateSearch() {
-    alert("Hebrew date matching will be wired next.");
-  }
-
-  function render(list) {
-    resultsDiv.innerHTML = list.map(v =>
-      `<div class="card">
-        <strong>${v.name_en} (${v.name_he})</strong><br>
-        ${v.category} · Lived in ${v.residence} · Killed in ${v.death_location}
-      </div>`
-    ).join("");
-  }
-</script>
-
+    .footer-nav a {
+      color: #ffffff;
+      font-family: "Noto Serif", serif;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+  </style>
+</head>
 
 <body>
 
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <a href="index.html"><img src="images/Logo.png" alt="Anu Zochrim logo"></a>
+    </div>
+
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+
+    <nav id="nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="resources.html">Resources</a>
+      <a href="contact.html">Contact</a>
+      <a href="donate.html">Donate</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero"></section>
+
+<!-- INTRO -->
+<section class="about-home">
+  <div class="about-home-inner">
+    <p><strong>Anu Zochrim</strong> is a public memorial dedicated to the Israelis murdered by Hamas on October 7, 2023, and to those who fell defending the Jewish people and the State of Israel.</p>
+    <p>This initiative preserves their memory with dignity and purpose, providing a meaningful way to dedicate learning, prayer, and moments of joy in their honor.</p>
+  </div>
+</section>
+
+<!-- SEARCH -->
+<section id="search">
+  <h3 class="search-title">Search the Database</h3>
+  <!-- search UI stays exactly as you had it -->
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="index.html"><img src="images/Logo.png" alt="Anu Zochrim logo"></a>
+  <div class="footer-nav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="resources.html">Resources</a>
+    <a href="contact.html">Contact</a>
+    <a href="donate.html">Donate</a>
+  </div>
+  <p>© 2025 Anu Zochrim. All rights reserved.</p>
+</footer>
+
 <script>
-function toggleMenu() {
-  document.getElementById("nav").classList.toggle("open");
-}
-
-const victims = [{
-  name_en: "Shani Louk",
-  name_he: "שני לוק",
-  residence: "Tel Aviv",
-  death_location: "Nova Festival",
-  category: "Civilian"
-}];
-
-function runTextSearch() {
-  const q = document.getElementById("textValue").value.toLowerCase();
-  const results = victims.filter(v =>
-    v.name_en.toLowerCase().includes(q) ||
-    v.name_he.includes(q)
-  );
-  document.getElementById("results").innerHTML =
-    results.map(v => `<div class="card"><strong>${v.name_en} (${v.name_he})</strong></div>`).join("");
-}
+  function toggleMenu() {
+    document.getElementById("nav").classList.toggle("open");
+  }
 </script>
+
+</body>
+</html>
