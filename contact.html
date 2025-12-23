@@ -12,15 +12,19 @@
 
   <style>
     * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: "Poppins", sans-serif;
       background: #ffffff;
-      color: #0f172a;
+      color: #334155;
     }
 
-    /* HEADER */
+    /* ===== HEADER ===== */
     header {
       width: 100%;
       padding: 24px 32px;
@@ -51,50 +55,57 @@
       text-decoration: none;
       font-family: "Noto Serif", serif;
       font-weight: 500;
-      color: #556b2f;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       font-size: 0.85rem;
+      color: #556b2f;
     }
 
     nav a:hover {
       text-decoration: underline;
     }
 
-    /* CONTENT */
-    .contact {
+    /* ===== CONTENT ===== */
+    .content {
       max-width: 900px;
-      margin: 64px auto;
+      margin: 48px auto;
       padding: 0 24px;
       font-family: "Noto Serif", serif;
     }
 
-    .contact h1 {
-      font-size: 1.6rem;
+    .page-title {
       font-weight: 600;
-      color: #0f172a;
-      margin-bottom: 24px;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      color: #556b2f;
+      margin: 0 0 24px 0;
     }
 
-    .contact p {
-      font-size: 1.05rem;
-      line-height: 1.75;
-      color: #334155;
-      margin-bottom: 24px;
+    .content p {
+      font-size: 1.06rem;
+      line-height: 1.7;
+      margin-bottom: 20px;
     }
 
     .contact-box {
-      background: #f8fafc;
-      border: 1px solid #e5e7eb;
-      padding: 24px;
-      border-radius: 4px;
+      margin-top: 24px;
     }
 
     .contact-box strong {
       color: #0f172a;
     }
 
-    /* MOBILE */
+    .contact-box a {
+      color: #0f172a;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .contact-box a:hover {
+      text-decoration: underline;
+    }
+
     @media (max-width: 768px) {
       nav a {
         margin-left: 18px;
@@ -116,33 +127,29 @@
     <nav>
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
+      <a href="resources.html">Resources</a>
+      <a href="contact.html">Contact</a>
       <a href="donate.html">Donate</a>
     </nav>
   </div>
 </header>
 
-<main class="contact">
-  <h1>Contact</h1>
+<section class="content">
+  <h2 class="page-title">Contact</h2>
 
   <p>
-    Anu Zochrim is a public memorial initiative. We welcome thoughtful
-    inquiries, corrections, and messages related to the mission of
-    preserving memory with dignity and accuracy.
+    We welcome inquiries, corrections, and messages related to this memorial
+    initiative. If you have information to share or would like to get involved,
+    please reach out.
   </p>
 
   <div class="contact-box">
     <p>
       <strong>Email:</strong><br>
-      <a href="mailto:info@anuzochrim.org">info@anuzochrim.org</a>
-    </p>
-
-    <p>
-      For database corrections, source submissions, or partnership
-      inquiries, please include relevant details so we can review
-      your message carefully.
+      <a href="mailto:contact@anuzochrim.org">contact@anuzochrim.org</a>
     </p>
   </div>
-</main>
+</section>
 
 </body>
 </html>
