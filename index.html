@@ -29,129 +29,110 @@ body {
   background: #ffffff;
 }
 
-/* ===== HEADER ===== */
-header {
-  position: relative;
-  z-index: 100;
-  padding: 24px 32px;
-}
+  <!-- ================= HOME PAGE HEADER ================= -->
+<style>
+  /* ===== HEADER ===== */
+  header {
+    width: 100%;
+    padding: 24px 32px;
+    position: relative;
+    z-index: 1000;
+    background: transparent;
+  }
 
-.header-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-.logo img {
-  height: 44px;
-  display: block;
-}
-
-nav {
-  display: flex;
-  gap: 28px;
-}
-
-nav a {
-  font-family: "Noto Serif", serif;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #ffffff;
-  text-decoration: none;
-  position: relative;
-}
-
-/* white hover underline */
-nav a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -6px;
-  width: 0;
-  height: 2px;
-  background: #ffffff;
-  transition: width 0.2s ease;
-}
-
-nav a:hover::after {
-  width: 100%;
-}
-
-/* ===== HAMBURGER ===== */
-.hamburger {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-}
-
-.hamburger span {
-  width: 22px;
-  height: 2px;
-  background: #ffffff;
-  margin: 4px 0;
-}
-
-/* ===== HERO ===== */
-.hero {
-  margin-top: -96px;
-  padding-top: 96px;
-  width: 100%;
-  height: 500px;
-  background-image: url("images/beeri-107 copy.jpeg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center 45%;
-}
-
-/* ===== MOBILE ===== */
-@media (max-width: 768px) {
-    display: inline-block;   /* makes underline match text width */
-    align-self: flex-start;  /* prevents full-width stretching */
-}
-
-  .logo {
-    margin-left: -8px;
+  .logo img {
+    height: 44px;
+    display: block;
   }
 
   nav {
-    position: absolute;
-    top: 100%;
-    right: 20px;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    flex-direction: column;
-    padding: 16px;
-    display: none;
-  }
-
-  nav.open {
     display: flex;
+    align-items: center;
   }
 
+  /* DESKTOP MENU — WHITE */
   nav a {
-    margin: 12px 0;
-    color: #556b2f;
+    margin-left: 28px;
+    text-decoration: none;
+    font-family: "Noto Serif", serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.85rem;
+    color: #ffffff;
+    position: relative;
   }
 
   nav a::after {
-    background: #556b2f;
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 1px;
+    background: #ffffff;
+    transition: width 0.2s ease;
   }
 
+  nav a:hover::after {
+    width: 100%;
+  }
+
+  /* HAMBURGER — WHITE */
   .hamburger {
-    display: flex;
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
   }
 
   .hamburger span {
+    height: 2px;
+    width: 22px;
     background: #ffffff;
+    margin: 4px 0;
   }
-}
-</style>
-</head>
 
-<body>
+  /* ===== MOBILE ===== */
+  @media (max-width: 768px) {
+    nav {
+      position: absolute;
+      top: 100%;
+      right: 24px;
+      background: #ffffff;
+      flex-direction: column;
+      padding: 12px 16px;
+      display: none;
+      border: 1px solid #e5e7eb;
+      z-index: 1001;
+    }
+
+    nav.open {
+      display: flex;
+    }
+
+    /* MOBILE MENU — GREEN */
+    nav a {
+      margin: 8px 0;
+      color: #556b2f;
+    }
+
+    nav a::after {
+      background: #556b2f;
+    }
+
+    .hamburger {
+      display: flex;
+    }
+  }
+</style>
 
 <header>
   <div class="header-inner">
@@ -168,6 +149,7 @@ nav a:hover::after {
     </div>
 
     <nav id="nav">
+      <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="resources.html">Resources</a>
       <a href="contact.html">Contact</a>
@@ -175,6 +157,12 @@ nav a:hover::after {
     </nav>
   </div>
 </header>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("nav").classList.toggle("open");
+  }
+</script>
 
 <section class="hero"></section>
 
