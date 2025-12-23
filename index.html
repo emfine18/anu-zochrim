@@ -181,16 +181,64 @@ nav a {
   }
 </script>
 
-  <section id="search" class="section">
+  <style>
+  #search {
+    max-width: 900px;
+    margin: 64px auto;
+    padding: 0 24px;
+  }
+
+  .search-title {
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: #556b2f; /* olive green */
+    margin-bottom: 28px;
+  }
+
+  #search .filters {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  #search select,
+  #search input {
+    font-family: "Noto Sans", sans-serif;
+    font-size: 0.95rem;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    background: white;
+  }
+
+  #search button {
+    font-family: "Noto Sans", sans-serif;
+    font-size: 0.9rem;
+    padding: 12px 20px;
+    background: #1f2937;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  #search button:hover {
+    background: #111827;
+  }
+
+  .card {
+    border-bottom: 1px solid #e5e7eb;
+    padding: 16px 0;
+  }
+</style>
+
+<section id="search">
 
   <h3 class="search-title">SEARCH THE DATABASE</h3>
-    .search-title {
-  font-family: "Noto Sans", sans-serif;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: #556b2f; /* olive green */
-  margin-bottom: 28px;
-}
 
   <div class="filters">
     <select id="searchMode">
@@ -219,33 +267,27 @@ nav a {
   </div>
 
   <div id="englishDate" class="filters" style="display:none;">
-<select id="month">
-  <option value="">Month</option>
-  <option value="01">January</option>
-  <option value="02">February</option>
-  <option value="03">March</option>
-  <option value="04">April</option>
-  <option value="05">May</option>
-  <option value="06">June</option>
-  <option value="07">July</option>
-  <option value="08">August</option>
-  <option value="09">September</option>
-  <option value="10">October</option>
-  <option value="11">November</option>
-  <option value="12">December</option>
-</select>
+    <select id="month">
+      <option value="">Month</option>
+      <option value="01">January</option>
+      <option value="02">February</option>
+      <option value="03">March</option>
+      <option value="04">April</option>
+      <option value="05">May</option>
+      <option value="06">June</option>
+      <option value="07">July</option>
+      <option value="08">August</option>
+      <option value="09">September</option>
+      <option value="10">October</option>
+      <option value="11">November</option>
+      <option value="12">December</option>
+    </select>
 
-    #search {
-  max-width: 900px;
-  margin: 64px auto;
-}
-
-    
     <select id="day">
       <option value="">Day</option>
       <script>
         for (let i = 1; i <= 31; i++) {
-          document.write(`<option value="${String(i).padStart(2,'0')}">${String(i).padStart(2,'0')}</option>`);
+          document.write(`<option value="${String(i).padStart(2,'0')}">${i}</option>`);
         }
       </script>
     </select>
@@ -328,7 +370,12 @@ nav a {
       );
     });
 
-    renderResults(matches);
+    resultsDiv.innerHTML = matches.map(v =>
+      `<div class="card">
+        <strong>${v.name_en} (${v.name_he})</strong><br>
+        ${v.category} · Lived in ${v.residence} · Killed in ${v.death_location}
+      </div>`
+    ).join("");
   };
 
   function runEnglishDateSearch() {
@@ -344,15 +391,7 @@ nav a {
       return true;
     });
 
-    renderResults(matches);
-  }
-
-  function runHebrewDateSearch() {
-    alert("Hebrew date matching will be wired next.");
-  }
-
-  function renderResults(list) {
-    resultsDiv.innerHTML = list.map(v =>
+    resultsDiv.innerHTML = matches.map(v =>
       `<div class="card">
         <strong>${v.name_en} (${v.name_he})</strong><br>
         ${v.category} · Lived in ${v.residence} · Killed in ${v.death_location}
@@ -360,36 +399,7 @@ nav a {
     ).join("");
   }
 
-  #search {
-  padding-left: 24px;
-  padding-right: 24px;
-}
-
-#search select,
-#search input,
-#search button {
-  font-family: "Noto Sans", sans-serif;
-  font-size: 0.95rem;
-  padding: 10px 12px;
-  border: 1px solid #cbd5e1;
-  border-radius: 4px;
-}
-
-#search .filters {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-#search button {
-  background: #1f2937;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-#search button:hover {
-  background: #111827;
-
-}
+  function runHebrewDateSearch() {
+    alert("Hebrew date matching coming next.");
+  }
 </script>
