@@ -180,3 +180,163 @@ nav a {
     document.getElementById("nav").classList.toggle("open");
   }
 </script>
+
+  <section id="search" class="section">
+
+  <h3 class="search-title">SEARCH THE DATABASE</h3>
+
+  <div class="filters">
+    <select id="searchMode">
+      <option value="">Search by</option>
+      <option value="name_he">Name (HE)</option>
+      <option value="name_en">Name (ENG)</option>
+      <option value="birth_en">Birthday (ENG)</option>
+      <option value="birth_he">Birthday (HE)</option>
+      <option value="death_en">Death date (ENG)</option>
+      <option value="death_he">Death date (HE)</option>
+      <option value="death_location">Location of death</option>
+      <option value="residence">Location of residence</option>
+    </select>
+
+    <select id="category">
+      <option value="">All categories</option>
+      <option value="IDF Soldier">IDF Soldier</option>
+      <option value="Civilian">Civilian</option>
+      <option value="Hostage">Hostage</option>
+      <option value="Police / Border Patrol">Police / Border Patrol</option>
+    </select>
+  </div>
+
+  <div id="textInput" style="display:none;">
+    <input id="textValue" placeholder="Enter search value" />
+  </div>
+
+  <div id="englishDate" class="filters" style="display:none;">
+    <select id="month">
+      <option value="">Month</option>
+      <script>
+        for (let i = 1; i <= 12; i++) {
+          document.write(`<option value="${String(i).padStart(2,'0')}">${String(i).padStart(2,'0')}</option>`);
+        }
+      </script>
+    </select>
+
+    <select id="day">
+      <option value="">Day</option>
+      <script>
+        for (let i = 1; i <= 31; i++) {
+          document.write(`<option value="${String(i).padStart(2,'0')}">${String(i).padStart(2,'0')}</option>`);
+        }
+      </script>
+    </select>
+
+    <button onclick="runEnglishDateSearch()">Search</button>
+  </div>
+
+  <div id="hebrewDate" class="filters" style="display:none;">
+    <select id="hebMonth">
+      <option value="">Hebrew month</option>
+      <option>Nisan</option><option>Iyar</option><option>Sivan</option>
+      <option>Tammuz</option><option>Av</option><option>Elul</option>
+      <option>Tishrei</option><option>Cheshvan</option><option>Kislev</option>
+      <option>Tevet</option><option>Shevat</option><option>Adar</option>
+    </select>
+
+    <select id="hebDay">
+      <option value="">Day</option>
+      <script>
+        for (let i = 1; i <= 30; i++) {
+          document.write(`<option value="${i}">${i}</option>`);
+        }
+      </script>
+    </select>
+
+    <button onclick="runHebrewDateSearch()">Search</button>
+  </div>
+
+  <div id="results"></div>
+
+</section>
+
+<script>
+  const victims = [
+    {
+      name_en: "Shani Louk",
+      name_he: "שני לוק",
+      residence: "Tel Aviv",
+      death_location: "Nova Festival",
+      category: "Civilian",
+      death: "2023-10-07"
+    }
+  ];
+
+  const searchMode = document.getElementById("searchMode");
+  const categorySelect = document.getElementById("category");
+  const textInput = document.getElementById("textInput");
+  const englishDate = document.getElementById("englishDate");
+  const hebrewDate = document.getElementById("hebrewDate");
+  const resultsDiv = document.getElementById("results");
+
+  searchMode.onchange = () => {
+    textInput.style.display = "none";
+    englishDate.style.display = "none";
+    hebrewDate.style.display = "none";
+    resultsDiv.innerHTML = "";
+
+    if (["name_he","name_en","death_location","residence"].includes(searchMode.value)) {
+      textInput.style.display = "block";
+    }
+    if (["birth_en","death_en"].includes(searchMode.value)) {
+      englishDate.style.display = "flex";
+    }
+    if (["birth_he","death_he"].includes(searchMode.value)) {
+      hebrewDate.style.display = "flex";
+    }
+  };
+
+  document.getElementById("textValue").oninput = () => {
+    const q = document.getElementById("textValue").value.toLowerCase();
+    const cat = categorySelect.value;
+
+    const matches = victims.filter(v => {
+      if (cat && v.category !== cat) return false;
+      return (
+        v.name_en.toLowerCase().includes(q) ||
+        v.name_he.includes(q) ||
+        v.death_location.toLowerCase().includes(q) ||
+        v.residence.toLowerCase().includes(q)
+      );
+    });
+
+    renderResults(matches);
+  };
+
+  function runEnglishDateSearch() {
+    const m = document.getElementById("month").value;
+    const d = document.getElementById("day").value;
+    const cat = categorySelect.value;
+
+    const matches = victims.filter(v => {
+      const dt = new Date(v.death);
+      if (String(dt.getMonth()+1).padStart(2,'0') !== m) return false;
+      if (String(dt.getDate()).padStart(2,'0') !== d) return false;
+      if (cat && v.category !== cat) return false;
+      return true;
+    });
+
+    renderResults(matches);
+  }
+
+  function runHebrewDateSearch() {
+    alert("Hebrew date matching will be wired next.");
+  }
+
+  function renderResults(list) {
+    resultsDiv.innerHTML = list.map(v =>
+      `<div class="card">
+        <strong>${v.name_en} (${v.name_he})</strong><br>
+        ${v.category} · Lived in ${v.residence} · Killed in ${v.death_location}
+      </div>`
+    ).join("");
+  }
+</script>
