@@ -20,7 +20,7 @@
       color: #0f172a;
     }
 
-    /* HEADER (SAME STRUCTURE) */
+    /* HEADER */
     header {
       width: 100%;
       padding: 24px 32px;
@@ -32,8 +32,8 @@
       max-width: 1200px;
       margin: 0 auto;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
     }
 
     .logo img {
@@ -51,62 +51,53 @@
       text-decoration: none;
       font-family: "Noto Serif", serif;
       font-weight: 500;
-      color: #556b2f; /* OLIVE GREEN */
+      color: #556b2f;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       font-size: 0.85rem;
     }
 
-    /* PAGE CONTENT */
-    .page {
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* CONTENT */
+    .contact {
       max-width: 900px;
-      margin: 56px auto;
+      margin: 64px auto;
       padding: 0 24px;
       font-family: "Noto Serif", serif;
     }
 
-    .page h1 {
+    .contact h1 {
       font-size: 1.6rem;
       font-weight: 600;
-      color: #556b2f;
-      text-transform: uppercase;
+      color: #0f172a;
       margin-bottom: 24px;
     }
 
-    .page p {
+    .contact p {
       font-size: 1.05rem;
-      line-height: 1.7;
+      line-height: 1.75;
       color: #334155;
-      margin-bottom: 18px;
+      margin-bottom: 24px;
     }
 
-    /* CONTACT BOX */
     .contact-box {
-      margin-top: 32px;
-      padding: 24px;
-      border: 1px solid #e5e7eb;
       background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      padding: 24px;
+      border-radius: 4px;
     }
 
     .contact-box strong {
-      display: block;
-      margin-bottom: 8px;
       color: #0f172a;
     }
 
-    a.email {
-      color: #556b2f;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    a.email:hover {
-      text-decoration: underline;
-    }
-
+    /* MOBILE */
     @media (max-width: 768px) {
       nav a {
-        margin-left: 16px;
+        margin-left: 18px;
       }
     }
   </style>
@@ -117,39 +108,39 @@
 <header>
   <div class="header-inner">
     <div class="logo">
-      <!-- NEW COLOR LOGO -->
-      <a href="/">
-        <img src="images/Logo-color.png" alt="Anu Zochrim logo">
+      <a href="index.html">
+        <img src="images/AZlogo2Artboard 3.png" alt="Anu Zochrim logo">
       </a>
     </div>
 
     <nav>
+      <a href="index.html">Home</a>
       <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
       <a href="donate.html">Donate</a>
     </nav>
   </div>
 </header>
 
-<main class="page">
-  <h1>Contact Us</h1>
+<main class="contact">
+  <h1>Contact</h1>
 
   <p>
-    Anu Zochrim is a public memorial initiative dedicated to remembrance,
-    dignity, and historical responsibility. We welcome thoughtful inquiries,
-    corrections, and partnership opportunities.
-  </p>
-
-  <p>
-    If you have information to share, questions about the project, or would like
-    to support this effort, please reach out.
+    Anu Zochrim is a public memorial initiative. We welcome thoughtful
+    inquiries, corrections, and messages related to the mission of
+    preserving memory with dignity and accuracy.
   </p>
 
   <div class="contact-box">
-    <strong>Email</strong>
-    <a class="email" href="mailto:info@anuzochrim.org">
-      info@anuzochrim.org
-    </a>
+    <p>
+      <strong>Email:</strong><br>
+      <a href="mailto:info@anuzochrim.org">info@anuzochrim.org</a>
+    </p>
+
+    <p>
+      For database corrections, source submissions, or partnership
+      inquiries, please include relevant details so we can review
+      your message carefully.
+    </p>
   </div>
 </main>
 
