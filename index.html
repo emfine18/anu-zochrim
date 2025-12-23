@@ -184,26 +184,26 @@ nav a {
 </body>
 </html>
 
-<section class="search">
-  <div class="search-header">
-    <h2>Search the Database</h2>
-    <p>
-      Search by name, date, or location to find individuals and dedicate learning,
-      prayer, or moments of life in their memory.
-    </p>
-  </div>
+<section id="search" style="max-width:900px;margin:72px auto;padding:0 24px;">
+  <h2 style="font-family:'Noto Serif',serif;">Search the Memorial</h2>
 
-  <div class="search-controls">
+  <p>
+    Select how you would like to search, then optionally refine by category.
+  </p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
+    <!-- SEARCH MODE -->
     <select id="searchType">
       <option value="name">Name (English or Hebrew)</option>
       <option value="birth_en">Birth date (English – MM/DD)</option>
       <option value="death_en">Death date (English – MM/DD)</option>
       <option value="birth_he">Birth date (Hebrew)</option>
       <option value="death_he">Death date (Hebrew)</option>
-      <option value="death_location">Location of death</option>
-      <option value="residence">Place of residence</option>
+      <option value="death_location">City / location of death</option>
+      <option value="residence">City / place of residence</option>
     </select>
 
+    <!-- CATEGORY FILTER -->
     <select id="category">
       <option value="">All categories</option>
       <option value="Civilian">Civilian</option>
@@ -213,11 +213,88 @@ nav a {
     </select>
   </div>
 
+  <!-- SEARCH INPUT -->
   <input
     id="searchInput"
-    placeholder="Enter search term"
+    placeholder="Enter search value"
+    style="width:100%;padding:14px;border:1px solid #cbd5f5;margin-bottom:24px;"
     oninput="runSearch()"
   />
 
+  <!-- RESULTS -->
   <div id="results"></div>
 </section>
+
+<script>
+  /* TEMP DATA – will be replaced by file */
+  const victims = [
+    {
+      name_en: "Yonatan Steinberg",
+      name_he: "יונתן שטיינברג",
+      birth_en: "03/12",
+      death_en: "10/07",
+      birth_he: "י״ט אדר",
+      death_he: "כ״ב תשרי",
+      residence: "Kibbutz Shomria",
+      death_location: "Southern Israel",
+      category: "IDF Soldier"
+    },
+    {
+      name_en: "Shani Louk",
+      name_he: "שני לוק",
+      birth_en: "04/07",
+      death_en: "10/07",
+      birth_he: "ט״ז ניסן",
+      death_he: "כ״ב תשרי",
+      residence: "Tel Aviv",
+      death_location: "Nova Festival",
+      category: "Civilian"
+    }
+  ];
+
+  function runSearch() {
+    const type = document.getElementById("searchType").value;
+    const category = document.getElementById("category").value;
+    const input = document.getElementById("searchInput").value.trim();
+    const resultsDiv = document.getElementById("results");
+
+    resultsDiv.innerHTML = "";
+    if (!input) return;
+
+    const matches = victims.filter(v => {
+      if (type === "name") {
+        if (
+          !v.name_en.toLowerCase().includes(input.toLowerCase()) &&
+          !v.name_he.includes(input)
+        ) return false;
+      } else {
+        if (!v[type]) return false;
+        if (v[type].toLowerCase().indexOf(input.toLowerCase()) === -1)
+          return false;
+      }
+
+      if (category && v.category !== category) return false;
+      return true;
+    });
+
+    if (matches.length === 0) {
+      resultsDiv.innerHTML =
+        '<div style="color:#64748b;font-style:italic;">No results found.</div>';
+      return;
+    }
+
+    matches.forEach(v => {
+      const div = document.createElement("div");
+      div.style.border = "1px solid #e5e7eb";
+      div.style.padding = "16px";
+      div.style.marginBottom = "12px";
+
+      div.innerHTML = `
+        <strong>${v.name_en} (${v.name_he})</strong><br>
+        ${v.category} · ${v.residence} · ${v.death_location}<br>
+        Birth: ${v.birth_en} (${v.birth_he}) · Death: ${v.death_en} (${v.death_he})
+      `;
+      resultsDiv.appendChild(div);
+    });
+  }
+</script>
