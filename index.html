@@ -184,104 +184,95 @@ nav a {
 </body>
 </html>
 
-<section className="search-section">
-  <h3 className="search-title">SEARCH THE DATABASE</h3>
+<h3 className="search-title">SEARCH THE DATABASE</h3>
 
-  {/* SEARCH MODE */}
+<div className="filters">
+  <select
+    value={mode}
+    onChange={e => {
+      setMode(e.target.value);
+      setResults([]);
+      setInput("");
+    }}
+  >
+    <option value="">Search by</option>
+    <option value="name_he">Name (HE)</option>
+    <option value="name_en">Name (ENG)</option>
+    <option value="birth_he">Birthday (HE)</option>
+    <option value="birth_en">Birthday (ENG)</option>
+    <option value="death_he">Death date (HE)</option>
+    <option value="death_en">Death date (ENG)</option>
+    <option value="death_location">Location of death</option>
+    <option value="residence">Location of residence</option>
+  </select>
+
+  <select value={category} onChange={e => setCategory(e.target.value)}>
+    <option value="All">All categories</option>
+    <option value="IDF Soldier">IDF Soldier</option>
+    <option value="Civilian">Civilian</option>
+    <option value="Hostage">Hostage</option>
+    <option value="Police / Border Patrol">Police / Border Patrol</option>
+  </select>
+</div>
+
+{/* TEXT INPUT */}
+{["name_he", "name_en", "death_location", "residence"].includes(mode) && (
+  <input
+    placeholder="Enter search value"
+    onChange={e => runSearch(e.target.value)}
+  />
+)}
+
+{/* ENGLISH DATE */}
+{["birth_en", "death_en"].includes(mode) && (
   <div className="filters">
-    <select
-      value={mode}
-      onChange={e => {
-        setMode(e.target.value);
-        setInput("");
-        setResults([]);
-        setHebrewDate("");
-      }}
-    >
-      <option value="">Search by</option>
-      <option value="name_he">Name (HE)</option>
-      <option value="name_en">Name (ENG)</option>
-      <option value="birth_he">Birthday (HE)</option>
-      <option value="birth_en">Birthday (ENG)</option>
-      <option value="death_he">Death date (HE)</option>
-      <option value="death_en">Death date (ENG)</option>
-      <option value="death_location">Location of death</option>
-      <option value="residence">Location of residence</option>
+    <select id="month">
+      <option value="">Month</option>
+      {["01","02","03","04","05","06","07","08","09","10","11","12"].map(m =>
+        <option key={m} value={m}>{m}</option>
+      )}
     </select>
 
-    <select value={category} onChange={e => setCategory(e.target.value)}>
-      <option value="All">All categories</option>
-      <option value="IDF Soldier">IDF Soldier</option>
-      <option value="Civilian">Civilian</option>
-      <option value="Hostage">Hostage</option>
-      <option value="Police / Border Patrol">Police / Border Patrol</option>
+    <select id="day">
+      <option value="">Day</option>
+      {Array.from({ length: 31 }, (_, i) => {
+        const d = String(i + 1).padStart(2, "0");
+        return <option key={d} value={d}>{d}</option>;
+      })}
     </select>
   </div>
+)}
 
-  {/* INPUTS */}
-  {mode === "name_en" || mode === "name_he" || mode === "death_location" || mode === "residence" ? (
-    <input
-      placeholder="Enter search value"
-      onChange={e => runSearch(e.target.value)}
-    />
-  ) : null}
+{/* HEBREW DATE */}
+{["birth_he", "death_he"].includes(mode) && (
+  <div className="filters">
+    <select id="hebrewMonth">
+      <option value="">Hebrew month</option>
+      {[
+        "Nisan","Iyar","Sivan","Tammuz","Av","Elul",
+        "Tishrei","Cheshvan","Kislev","Tevet","Shevat","Adar"
+      ].map(m => (
+        <option key={m} value={m}>{m}</option>
+      ))}
+    </select>
 
-  {/* ENGLISH DATE (MM / DD) */}
-  {(mode === "birth_en" || mode === "death_en") && (
-    <div className="filters">
-      <select id="month">
-        <option value="">Month</option>
-        {[
-          "01","02","03","04","05","06",
-          "07","08","09","10","11","12"
-        ].map(m => (
-          <option key={m} value={m}>{m}</option>
-        ))}
-      </select>
-
-      <select id="day">
-        <option value="">Day</option>
-        {Array.from({ length: 31 }, (_, i) => {
-          const d = String(i + 1).padStart(2, "0");
-          return <option key={d} value={d}>{d}</option>;
-        })}
-      </select>
-    </div>
-  )}
-
-  {/* HEBREW DATE */}
-  {(mode === "birth_he" || mode === "death_he") && (
-    <div className="filters">
-      <select id="hebrewMonth">
-        <option value="">Hebrew month</option>
-        {[
-          "Nisan","Iyar","Sivan","Tammuz","Av","Elul",
-          "Tishrei","Cheshvan","Kislev","Tevet","Shevat","Adar"
-        ].map(m => (
-          <option key={m} value={m}>{m}</option>
-        ))}
-      </select>
-
-      <select id="hebrewDay">
-        <option value="">Day</option>
-        {Array.from({ length: 30 }, (_, i) => (
-          <option key={i + 1} value={i + 1}>{i + 1}</option>
-        ))}
-      </select>
-    </div>
-  )}
-
-  {/* RESULTS */}
-  <div className="results">
-    {results.map((v, i) => (
-      <div key={i} className="result-card">
-        <div className="result-name">
-          {v.name_en} ({v.name_he})
-        </div>
-        <div className="result-meta">
-          {v.category} · Lived in {v.residence} · Killed in {v.death_location}
-        </div>
-      </div>
-    ))}
+    <select id="hebrewDay">
+      <option value="">Day</option>
+      {Array.from({ length: 30 }, (_, i) => (
+        <option key={i + 1} value={i + 1}>{i + 1}</option>
+      ))}
+    </select>
   </div>
-</section>
+)}
+
+{/* RESULTS */}
+{results.map((v, i) => (
+  <div key={i} className="card">
+    <div className="name">
+      {v.name_en} ({v.name_he})
+    </div>
+    <div className="meta">
+      {v.category} · Lived in {v.residence} · Killed in {v.death_location}
+    </div>
+  </div>
+))}
