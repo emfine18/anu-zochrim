@@ -1,114 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Resources – Anu Zochrim</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 
-  <style>
-    * { box-sizing: border-box; }
+<style>
+* { box-sizing: border-box; }
 
-    html, body {
-      height: 100%;
-      margin: 0;
-    }
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: #ffffff;
+}
 
-    body {
-      font-family: "Poppins", sans-serif;
-      background: #ffffff;
-      color: #334155;
-      display: flex;
-      flex-direction: column;
-    }
+/* ===== HEADER ===== */
+header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 24px 32px;
+  position: relative;
+  z-index: 100;
+}
 
-    /* ===== HEADER ===== */
-    header {
-      padding: 24px 32px;
-      border-bottom: 1px solid #e5e7eb;
-    }
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-    .header-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+.logo img {
+  height: 44px;
+  display: block;
+}
 
-    .logo img {
-      height: 44px;
-      display: block;
-    }
+nav {
+  display: flex;
+  gap: 28px;
+}
 
-    nav {
-      display: flex;
-      gap: 28px;
-      align-items: center;
-    }
+nav a {
+  font-family: "Noto Serif", serif;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #556b2f;
+  text-decoration: none;
+  position: relative;
+}
 
-    nav a {
-      font-family: "Noto Serif", serif;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #556b2f;
-      text-decoration: none;
-      position: relative;
-    }
+/* hover underline */
+nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: #556b2f;
+  transition: width 0.2s ease;
+}
 
-    nav a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -4px;
-      width: 0;
-      height: 1px;
-      background: #556b2f;
-      transition: width 0.2s ease;
-    }
+nav a:hover::after {
+  width: 100%;
+}
 
-    nav a:hover::after {
-      width: 100%;
-    }
+/* ===== HAMBURGER ===== */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
 
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-    }
+.hamburger span {
+  width: 22px;
+  height: 2px;
+  background: #556b2f;
+  margin: 4px 0;
+}
 
-    .hamburger span {
-      width: 22px;
-      height: 2px;
-      background: #556b2f;
-      margin: 4px 0;
-    }
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  header {
+    padding: 20px;
+  }
 
-    @media (max-width: 768px) {
-      nav {
-        position: absolute;
-        top: 90px;
-        right: 32px;
-        background: #ffffff;
-        flex-direction: column;
-        padding: 16px;
-        display: none;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-      }
+  .logo {
+    margin-left: -8px;
+  }
 
-      nav.open {
-        display: flex;
-      }
+  nav {
+    position: absolute;
+    top: 100%;
+    right: 20px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    flex-direction: column;
+    padding: 16px;
+    display: none;
+  }
 
-      .hamburger {
-        display: flex;
-      }
-    }
+  nav.open {
+    display: flex;
+  }
+
+  nav a {
+    margin: 12px 0;
+    color: #556b2f;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <a href="index.html">
+        <img src="images/AZlogo2Artboard 3.png" alt="Anu Zochrim logo">
+      </a>
+    </div>
+
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <nav id="nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="resources.html">Resources</a>
+      <a href="contact.html">Contact</a>
+      <a href="donate.html">Donate</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+function toggleMenu() {
+  document.getElementById("nav").classList.toggle("open");
+}
+</script>
+
+</body>
+</html>
 
     /* ===== MAIN CONTENT (PUSHES FOOTER DOWN) ===== */
     main {
