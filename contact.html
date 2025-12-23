@@ -11,7 +11,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     html, body {
       margin: 0;
@@ -19,17 +21,19 @@
     }
 
     body {
-      font-family: "Poppins", sans-serif;
+      font-family: "Noto Serif", serif;
       background: #ffffff;
       color: #334155;
     }
 
-    /* ===== HEADER ===== */
+    /* HEADER */
     header {
       width: 100%;
       padding: 24px 32px;
       background: #ffffff;
       border-bottom: 1px solid #e5e7eb;
+      position: relative;
+      z-index: 10;
     }
 
     .header-inner {
@@ -42,6 +46,7 @@
 
     .logo img {
       height: 44px;
+      width: auto;
       display: block;
     }
 
@@ -55,60 +60,88 @@
       text-decoration: none;
       font-family: "Noto Serif", serif;
       font-weight: 500;
+      color: #556b2f; /* olive green */
       text-transform: uppercase;
       letter-spacing: 0.08em;
       font-size: 0.85rem;
-      color: #556b2f;
     }
 
-    nav a:hover {
-      text-decoration: underline;
+    /* HAMBURGER */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
     }
 
-    /* ===== CONTENT ===== */
+    .hamburger span {
+      height: 2px;
+      width: 22px;
+      background: #556b2f;
+      margin: 4px 0;
+    }
+
+    /* PAGE CONTENT */
     .content {
       max-width: 900px;
-      margin: 48px auto;
+      margin: 64px auto;
       padding: 0 24px;
-      font-family: "Noto Serif", serif;
     }
 
-    .page-title {
+    .content h1 {
+      font-size: 1.6rem;
       font-weight: 600;
-      font-size: 1.4rem;
+      color: #556b2f;
+      margin-bottom: 24px;
       text-transform: uppercase;
       letter-spacing: 0;
-      color: #556b2f;
-      margin: 0 0 24px 0;
     }
 
     .content p {
-      font-size: 1.06rem;
+      font-size: 1.05rem;
       line-height: 1.7;
       margin-bottom: 20px;
     }
 
-    .contact-box {
-      margin-top: 24px;
-    }
-
-    .contact-box strong {
-      color: #0f172a;
-    }
-
-    .contact-box a {
-      color: #0f172a;
-      text-decoration: none;
+    .email {
       font-weight: 600;
+      font-size: 1.1rem;
+      color: #0f172a;
     }
 
-    .contact-box a:hover {
-      text-decoration: underline;
-    }
-
+    /* MOBILE */
     @media (max-width: 768px) {
+
+      header {
+        padding: 20px 20px;
+      }
+
+      /* move logo slightly left */
+      .logo {
+        margin-left: -8px;
+      }
+
+      nav {
+        position: absolute;
+        top: 100%;
+        right: 20px;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        flex-direction: column;
+        padding: 16px;
+        display: none;
+      }
+
       nav a {
-        margin-left: 18px;
+        margin: 12px 0;
+        color: #556b2f;
+      }
+
+      nav.open {
+        display: flex;
+      }
+
+      .hamburger {
+        display: flex;
       }
     }
   </style>
@@ -124,7 +157,13 @@
       </a>
     </div>
 
-    <nav>
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <nav id="nav">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="resources.html">Resources</a>
@@ -135,57 +174,23 @@
 </header>
 
 <section class="content">
-  <h2 class="page-title">Contact</h2>
+  <h1>Contact</h1>
 
   <p>
-    We welcome inquiries, corrections, and messages related to this memorial
-    initiative. If you have information to share or would like to get involved,
-    please reach out.
+    We welcome inquiries, corrections, and messages related to this memorial initiative.
+    If you have information to share or would like to get involved, please reach out.
   </p>
 
-  <div class="contact-box">
-    <p>
-      <strong>Email:</strong><br>
-      <a href="mailto:contact@anuzochrim.org">contact@anuzochrim.org</a>
-    </p>
-  </div>
+  <p class="email">
+    Email: contact@anuzochrim.org
+  </p>
 </section>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("nav").classList.toggle("open");
+  }
+</script>
 
 </body>
 </html>
-
-@media (max-width: 768px) {
-
-  header {
-    padding: 20px 20px;
-  }
-
-  /* move logo slightly left on mobile */
-  .logo {
-    margin-left: -8px;
-  }
-
-  nav {
-    position: absolute;
-    top: 100%;
-    right: 20px;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    flex-direction: column;
-    padding: 16px;
-    display: none;
-  }
-
-  nav a {
-    margin: 12px 0;
-    color: #556b2f; /* olive green for contact page */
-  }
-
-  nav.open {
-    display: flex;
-  }
-
-  .hamburger {
-    display: flex;
-  }
-}
