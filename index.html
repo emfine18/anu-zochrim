@@ -187,76 +187,80 @@ nav a {
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-  /* FORCE NOTO SANS EVERYWHERE IN SEARCH */
-  #search,
-  #search * {
-    font-family: "Noto Sans", sans-serif !important;
-  }
+<!-- LOAD NOTO SERIF -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+<style>
+  /* SEARCH CONTAINER */
   #search {
     max-width: 900px;
-    margin: 72px auto;
-    padding: 0 32px;
+    margin: 64px auto;
+    padding: 0 24px;
+    font-family: "Noto Serif", serif;
   }
 
+  /* TITLE */
   .search-title {
+    font-family: "Noto Serif", serif;
     font-weight: 600;
-    letter-spacing: 0.12em;
-    color: #556b2f;
-    margin-bottom: 32px;
+    font-size: 1.1rem;
+    color: #556b2f; /* olive green */
+    margin-bottom: 20px;
   }
 
+  /* FILTER ROWS */
   #search .filters {
     display: flex;
-    gap: 16px;
-    margin-bottom: 20px;
+    gap: 12px;
+    margin-bottom: 16px;
     flex-wrap: wrap;
   }
 
+  /* INPUTS */
   #search select,
   #search input {
+    font-family: "Noto Serif", serif;
     font-size: 0.95rem;
-    padding: 14px 16px;
-    border: 1px solid #9db28a;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
     border-radius: 4px;
-    background: #eef4ea;
+    background: #f7f9f4; /* very subtle green */
     color: #1f2937;
-    min-width: 220px;
+    min-width: 200px;
   }
 
   #search select:focus,
   #search input:focus {
     outline: none;
     border-color: #556b2f;
-    background: #e6efe0;
+    background: #f1f5ec;
   }
 
+  /* BUTTONS */
   #search button {
-    font-size: 0.85rem;
-    padding: 14px 28px;
+    font-family: "Noto Serif", serif;
+    font-size: 0.9rem;
+    padding: 10px 18px;
     background: #556b2f;
     color: #ffffff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
   }
 
   #search button:hover {
     background: #3f5222;
   }
 
+  /* RESULTS */
   .card {
     border-bottom: 1px solid #e5e7eb;
-    padding: 18px 0;
+    padding: 14px 0;
+    font-family: "Noto Serif", serif;
   }
 
+  /* MOBILE */
   @media (max-width: 768px) {
-    #search {
-      padding: 0 20px;
-    }
-
     #search select,
     #search input {
       width: 100%;
@@ -266,7 +270,7 @@ nav a {
 
 <section id="search">
 
-  <h3 class="search-title">SEARCH THE DATABASE</h3>
+  <h3 class="search-title">Search the Database</h3>
 
   <div class="filters">
     <select id="searchMode">
@@ -347,87 +351,3 @@ nav a {
   <div id="results"></div>
 
 </section>
-
-<script>
-  const victims = [
-    {
-      name_en: "Shani Louk",
-      name_he: "שני לוק",
-      residence: "Tel Aviv",
-      death_location: "Nova Festival",
-      category: "Civilian",
-      death: "2023-10-07"
-    }
-  ];
-
-  const searchMode = document.getElementById("searchMode");
-  const categorySelect = document.getElementById("category");
-  const textInput = document.getElementById("textInput");
-  const englishDate = document.getElementById("englishDate");
-  const hebrewDate = document.getElementById("hebrewDate");
-  const resultsDiv = document.getElementById("results");
-
-  searchMode.onchange = () => {
-    textInput.style.display = "none";
-    englishDate.style.display = "none";
-    hebrewDate.style.display = "none";
-    resultsDiv.innerHTML = "";
-
-    if (["name_he","name_en","death_location","residence"].includes(searchMode.value)) {
-      textInput.style.display = "block";
-    }
-    if (["birth_en","death_en"].includes(searchMode.value)) {
-      englishDate.style.display = "flex";
-    }
-    if (["birth_he","death_he"].includes(searchMode.value)) {
-      hebrewDate.style.display = "flex";
-    }
-  };
-
-  document.getElementById("textValue").oninput = () => {
-    const q = document.getElementById("textValue").value.toLowerCase();
-    const cat = categorySelect.value;
-
-    const matches = victims.filter(v => {
-      if (cat && v.category !== cat) return false;
-      return (
-        v.name_en.toLowerCase().includes(q) ||
-        v.name_he.includes(q) ||
-        v.death_location.toLowerCase().includes(q) ||
-        v.residence.toLowerCase().includes(q)
-      );
-    });
-
-    resultsDiv.innerHTML = matches.map(v =>
-      `<div class="card">
-        <strong>${v.name_en} (${v.name_he})</strong><br>
-        ${v.category} · Lived in ${v.residence} · Killed in ${v.death_location}
-      </div>`
-    ).join("");
-  };
-
-  function runEnglishDateSearch() {
-    const m = document.getElementById("month").value;
-    const d = document.getElementById("day").value;
-    const cat = categorySelect.value;
-
-    const matches = victims.filter(v => {
-      const dt = new Date(v.death);
-      if (String(dt.getMonth()+1).padStart(2,'0') !== m) return false;
-      if (String(dt.getDate()).padStart(2,'0') !== d) return false;
-      if (cat && v.category !== cat) return false;
-      return true;
-    });
-
-    resultsDiv.innerHTML = matches.map(v =>
-      `<div class="card">
-        <strong>${v.name_en} (${v.name_he})</strong><br>
-        ${v.category} · Lived in ${v.residence} · Killed in ${v.death_location}
-      </div>`
-    ).join("");
-  }
-
-  function runHebrewDateSearch() {
-    alert("Hebrew date matching coming next.");
-  }
-</script>
