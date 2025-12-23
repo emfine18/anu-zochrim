@@ -8,154 +8,172 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     * { box-sizing: border-box; }
+    body { margin:0; font-family:"Noto Serif", serif; background:#ffffff; }
 
-    body {
-      margin: 0;
-      font-family: "Poppins", sans-serif;
-      background: #ffffff;
-      color: #334155;
-    }
-
-    /* HEADER (same behavior as other pages) */
     header {
-      width: 100%;
-      padding: 24px 32px;
-      border-bottom: 1px solid #e5e7eb;
+      width:100%;
+      padding:24px 32px;
     }
 
     .header-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      max-width:1200px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
     }
 
     .logo img {
-      height: 44px;
+      height:44px;
+      display:block;
     }
 
     nav {
-      display: flex;
-      gap: 28px;
+      display:flex;
+      align-items:center;
     }
 
     nav a {
-      text-decoration: none;
-      font-family: "Noto Serif", serif;
-      text-transform: uppercase;
-      font-size: 0.85rem;
-      letter-spacing: 0.08em;
-      color: #556b2f;
+      margin-left:28px;
+      text-decoration:none;
+      font-size:0.85rem;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+      color:#556b2f;
     }
 
     .hamburger {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
+      display:none;
+      flex-direction:column;
+      cursor:pointer;
     }
 
     .hamburger span {
-      height: 2px;
-      width: 22px;
-      background: #556b2f;
-      margin: 4px 0;
+      height:2px;
+      width:22px;
+      background:#556b2f;
+      margin:4px 0;
     }
 
-    /* PAGE CONTENT */
-    .page {
-      max-width: 1100px;
-      margin: 48px auto;
-      padding: 0 24px;
+    @media (max-width:768px) {
+      nav {
+        position:absolute;
+        top:100%;
+        right:32px;
+        background:#0f172a;
+        padding:16px;
+        flex-direction:column;
+        display:none;
+      }
+      nav a {
+        margin:12px 0;
+        color:#ffffff;
+      }
+      nav.open { display:flex; }
+      .hamburger { display:flex; }
     }
 
-    .page h1 {
-      font-family: "Noto Serif", serif;
-      font-size: 1.6rem;
-      font-weight: 600;
-      color: #556b2f;
-      margin-bottom: 16px;
-      text-transform: uppercase;
+    .content {
+      max-width:1000px;
+      margin:40px auto 80px;
+      padding:0 24px;
     }
 
-    .page p {
-      max-width: 700px;
-      font-size: 1.05rem;
-      line-height: 1.6;
-      margin-bottom: 40px;
+    h1 {
+      font-size:1.6rem;
+      font-weight:600;
+      color:#556b2f;
+      margin-bottom:16px;
+      text-transform:uppercase;
     }
 
-    /* RESOURCE GRID */
-    .resource-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
+    p {
+      font-size:1.05rem;
+      line-height:1.6;
+      color:#334155;
+      margin-bottom:32px;
+    }
+
+    .resources-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+      gap:24px;
     }
 
     .resource-card {
-      border: 1px solid #e5e7eb;
-      border-radius: 6px;
-      overflow: hidden;
-      text-decoration: none;
-      color: inherit;
-      background: #ffffff;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border:1px solid #e5e7eb;
+      border-radius:6px;
+      overflow:hidden;
+      text-decoration:none;
+      color:inherit;
+      background:#ffffff;
+      transition:transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .resource-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      transform:translateY(-4px);
+      box-shadow:0 8px 24px rgba(0,0,0,0.08);
     }
 
     .resource-card img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      display: block;
+      width:100%;
+      height:160px;
+      object-fit:cover;
+      display:block;
     }
 
-    .resource-card-content {
-      padding: 18px;
+    .resource-card div {
+      padding:16px;
     }
 
     .resource-card h3 {
-      font-family: "Noto Serif", serif;
-      font-size: 1.05rem;
-      margin: 0 0 8px 0;
-      color: #0f172a;
+      font-size:1.05rem;
+      font-weight:600;
+      margin:0 0 8px;
+      color:#0f172a;
     }
 
-    .resource-card p {
-      font-size: 0.9rem;
-      line-height: 1.5;
-      margin: 0;
-      color: #475569;
+    .resource-card span {
+      font-size:0.9rem;
+      color:#475569;
     }
 
-    /* MOBILE MENU */
-    @media (max-width: 768px) {
-      nav {
-        position: absolute;
-        top: 72px;
-        right: 24px;
-        background: #ffffff;
-        border: 1px solid #e5e7eb;
-        flex-direction: column;
-        padding: 16px;
-        display: none;
-      }
+    footer {
+      background:#1e3a8a;
+      color:#ffffff;
+      padding:32px 24px;
+    }
 
-      nav.open { display: flex; }
+    .footer-inner {
+      max-width:1200px;
+      margin:0 auto;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+      gap:16px;
+    }
 
-      nav a {
-        margin: 10px 0;
-      }
+    .footer-inner img {
+      height:48px;
+    }
 
-      .hamburger { display: flex; }
+    .footer-links a {
+      color:#ffffff;
+      margin:0 12px;
+      text-decoration:none;
+      font-size:0.85rem;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+    }
+
+    .footer-copy {
+      font-size:0.8rem;
+      opacity:0.85;
     }
   </style>
 </head>
@@ -166,7 +184,7 @@
   <div class="header-inner">
     <div class="logo">
       <a href="index.html">
-        <img src="images/AZlogo2Artboard 3.png" alt="Anu Zochrim logo">
+        <img src="images/AZlogo2Artboard 3.png" alt="Anu Zochrim">
       </a>
     </div>
 
@@ -184,45 +202,67 @@
   </div>
 </header>
 
-<main class="page">
+<section class="content">
   <h1>Resources</h1>
 
   <p>
-    Below are organizations and resources connected to remembrance, learning,
-    Jewish memory, and support. Each link opens an external website.
+    This page provides trusted resources for learning, remembrance, support,
+    and engagement with Israel and the Jewish people. These organizations and
+    initiatives reflect our commitment to memory, truth, strength, and the
+    enduring future of the State of Israel.
   </p>
 
-  <div class="resource-grid">
+  <div class="resources-grid">
 
-    <!-- RESOURCE 1 -->
-    <a class="resource-card" href="https://www.yadvashem.org" target="_blank">
-      <img src="images/resource-placeholder.jpg" alt="Yad Vashem">
-      <div class="resource-card-content">
-        <h3>Yad Vashem</h3>
-        <p>Israel’s official memorial to the victims of the Holocaust.</p>
-      </div>
-    </a>
-
-    <!-- RESOURCE 2 -->
-    <a class="resource-card" href="https://www.jewishvirtuallibrary.org" target="_blank">
-      <img src="images/resource-placeholder.jpg" alt="Jewish Virtual Library">
-      <div class="resource-card-content">
-        <h3>Jewish Virtual Library</h3>
-        <p>A comprehensive online encyclopedia of Jewish history and Israel.</p>
-      </div>
-    </a>
-
-    <!-- RESOURCE 3 -->
     <a class="resource-card" href="https://www.idf.il" target="_blank">
-      <img src="images/resource-placeholder.jpg" alt="IDF">
-      <div class="resource-card-content">
-        <h3>IDF Memorial & History</h3>
-        <p>Official resources related to Israeli defense and remembrance.</p>
+      <img src="images/resource-idf.jpg" alt="IDF">
+      <div>
+        <h3>Israel Defense Forces</h3>
+        <span>Official updates, history, and values of Israel’s army</span>
+      </div>
+    </a>
+
+    <a class="resource-card" href="https://www.aipac.org" target="_blank">
+      <img src="images/resource-aipac.jpg" alt="AIPAC">
+      <div>
+        <h3>AIPAC</h3>
+        <span>Strengthening the U.S.–Israel relationship</span>
+      </div>
+    </a>
+
+    <a class="resource-card" href="https://www.simchattorahchallenge.org" target="_blank">
+      <img src="images/resource-simchat.jpg" alt="Simchat Torah Challenge">
+      <div>
+        <h3>Simchat Torah Challenge</h3>
+        <span>Learning and unity in memory of October 7</span>
+      </div>
+    </a>
+
+    <a class="resource-card" href="https://www.jewishvirtuallibrary.org" target="_blank">
+      <img src="images/resource-jvl.jpg" alt="Jewish Virtual Library">
+      <div>
+        <h3>Jewish Virtual Library</h3>
+        <span>History, facts, and documentation</span>
       </div>
     </a>
 
   </div>
-</main>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <img src="images/Logo.png" alt="Anu Zochrim Logo">
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="resources.html">Resources</a>
+      <a href="contact.html">Contact</a>
+      <a href="donate.html">Donate</a>
+    </div>
+    <div class="footer-copy">
+      © 2025 Anu Zochrim. All rights reserved.
+    </div>
+  </div>
+</footer>
 
 <script>
   function toggleMenu() {
