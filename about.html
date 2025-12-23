@@ -8,110 +8,139 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+
     body {
-      margin: 0;
-      font-family: "Lora", serif;
-      color: #0f172a;
-      background: linear-gradient(180deg, #e6f0ff 0%, #ffffff 50%);
-    }
-
-    h1, h2, h3, nav a {
       font-family: "Poppins", sans-serif;
+      background: #ffffff;
+      color: #0f172a;
     }
 
+    /* HEADER (SAME AS CONTACT) */
     header {
-      background: white;
+      width: 100%;
+      padding: 24px 32px;
+      background: #ffffff;
       border-bottom: 1px solid #e5e7eb;
-      padding: 18px 24px;
     }
 
     .header-inner {
-      max-width: 1100px;
-      margin: auto;
+      max-width: 1200px;
+      margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
+    .logo img {
+      height: 44px;
+      display: block;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+    }
+
     nav a {
-      margin-left: 20px;
+      margin-left: 28px;
       text-decoration: none;
-      color: #0f172a;
+      font-family: "Noto Serif", serif;
       font-weight: 500;
+      color: #556b2f; /* OLIVE GREEN */
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.85rem;
     }
 
-    main {
+    /* PAGE CONTENT */
+    .page {
       max-width: 900px;
-      margin: auto;
-      padding: 64px 24px;
+      margin: 56px auto;
+      padding: 0 24px;
+      font-family: "Noto Serif", serif;
     }
 
-    p {
-      font-size: 1rem;
-      line-height: 1.75;
+    .page h1 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #556b2f;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .page p {
+      font-size: 1.05rem;
+      line-height: 1.7;
       color: #334155;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
-    footer {
-      margin-top: 80px;
-      padding: 32px 24px;
-      background: #0f172a;
-      color: #e5e7eb;
-      text-align: center;
-      font-size: 0.9rem;
+    .page strong {
+      color: #0f172a;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      nav a {
+        margin-left: 16px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <div class="header-inner">
-      <div>
-        <h1>Anu Zochrim</h1>
-        <div>אנו זוכרים — We Remember</div>
-      </div>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="donate.html">Donate</a>
-      </nav>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <!-- COLORED LOGO -->
+      <a href="/">
+        <img src="images/Logo-color.png" alt="Anu Zochrim logo">
+      </a>
     </div>
-  </header>
 
-  <main>
-    <h2>About Anu Zochrim</h2>
+    <nav>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="donate.html">Donate</a>
+    </nav>
+  </div>
+</header>
 
-    <p>
-      Anu Zochrim is a public memorial initiative dedicated to honoring the
-      memory of Israelis and Jews who were murdered on October 7 and in the war
-      that followed.
-    </p>
+<main class="page">
+  <h1>About Anu Zochrim</h1>
 
-    <p>
-      The project was created to serve as a central, accessible resource for
-      remembrance — ensuring that names are preserved with accuracy, dignity,
-      and respect.
-    </p>
+  <p>
+    <strong>Anu Zochrim</strong> (“We Remember”) is a public memorial initiative
+    created in response to the atrocities of October 7, 2023, and the war that
+    followed. It exists to honor the Israelis murdered by Hamas and those who
+    fell defending the Jewish people and the State of Israel.
+  </p>
 
-    <p>
-      Jewish memory is not passive. It is expressed through learning, prayer,
-      and acts of meaning. By allowing users to search by date, name, or place,
-      Anu Zochrim enables moments of life to be intentionally dedicated in the
-      memory of those who were killed.
-    </p>
+  <p>
+    The initiative was founded on the belief that remembrance is not passive.
+    Preserving names, dates, and stories is an act of responsibility — one that
+    strengthens collective memory and affirms the moral clarity of Jewish
+    self-defense.
+  </p>
 
-    <p>
-      Anu Zochrim is non-political and non-commercial in purpose. Its sole
-      mission is remembrance.
-    </p>
-  </main>
+  <p>
+    Anu Zochrim provides a structured way for individuals and communities to
+    dedicate learning, prayer, and moments of joy in memory of those who were
+    lost. Through remembrance, we reinforce resilience, unity, and commitment to
+    the future of the State of Israel.
+  </p>
 
-  <footer>
-    Anu Zochrim · אנו זוכרים · A public memorial initiative
-  </footer>
+  <p>
+    This project is independent, non-partisan, and rooted in the conviction that
+    memory is essential to justice, continuity, and national strength.
+  </p>
+</main>
+
 </body>
 </html>
