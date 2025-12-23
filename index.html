@@ -412,12 +412,12 @@
     font-size: 1.3rem;
     text-transform: uppercase;
     color: #556b2f;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
 
-  .result-card {
+  .result {
     border-bottom: 1px solid #e5e7eb;
-    padding: 18px 0;
+    padding: 16px 0;
   }
 
   .result-name {
@@ -435,133 +435,30 @@
 
 <section id="search-output">
   <h3>Search Results</h3>
-
-  <!-- RESULTS GO HERE -->
   <div id="results"></div>
 </section>
 
 <script>
-  /* RENDER SEARCH RESULTS */
   function render(list) {
-    const resultsDiv = document.getElementById("results");
+    const el = document.getElementById("results");
 
     if (!list || list.length === 0) {
-      resultsDiv.innerHTML = "<p>No results found.</p>";
+      el.innerHTML = "<p>No results found.</p>";
       return;
     }
 
-    resultsDiv.innerHTML = list.map(v => `
-      <div class="result-card">
+    el.innerHTML = list.map(v => `
+      <div class="result">
         <div class="result-name">
           ${v.name_en}${v.name_he ? ` (${v.name_he})` : ""}
         </div>
         <div class="result-meta">
           ${v.category}<br>
-          Lived in ${v.residence}<br>
-          Killed in ${v.death_location}
+          Lived in ${v.residence || "—"}<br>
+          Killed in ${v.death_location || "—"}
         </div>
       </div>
     `).join("");
-  }
-</script>
-  
-  <!-- ================= SEARCH LOGIC ================= -->
-
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-
-<script>
-  let victims = [];
-  let dataReady = true;
-
-  const resultsDiv = document.getElementById("results");
-  const searchMode = document.getElementById("searchMode");
-  const textSearch = document.getElementById("textSearch");
-  const englishDate = document.getElementById("englishDate");
-
-Papa.parse(console.log("CSV rows loaded:", results.data.length);, {
-  download: true,
-    header: true,
-    complete: function (results) {
-      victims = results.data
-        .filter(r => r.id)
-        .map(r => ({
-          name_en: r.name_en,
-          name_he: r.name_he || "",
-          residence: r.city || "",
-          death_location: r.death_location || r.event_location || "",
-          category: mapCategory(r),
-          death: r.death_date || r.event_date || ""
-        }));
-
-      dataReady = true;
-    }
-  });
-
-  function mapCategory(row) {
-    if (row.status === "Kidnapped") return "Hostage";
-    if (row.role === "Soldier" || row.role === "Reservist") return "IDF Soldier";
-    if (row.role === "Police") return "Police / Border Patrol";
-    return "Civilian";
-  }
-
-  searchMode.onchange = () => {
-    textSearch.classList.add("hidden");
-    englishDate.classList.add("hidden");
-    resultsDiv.innerHTML = "";
-
-    if (["name", "death_location", "residence"].includes(searchMode.value)) {
-      textSearch.classList.remove("hidden");
-    }
-
-    if (searchMode.value === "death_en") {
-      englishDate.classList.remove("hidden");
-    }
-  };
-
-    const q = document.getElementById("textValue").value.toLowerCase();
-    const cat = document.getElementById("category").value;
-
-    const matches = victims.filter(v => {
-      if (cat && v.category !== cat) return false;
-
-      return (
-        v.name_en.toLowerCase().includes(q) ||
-        v.name_he.includes(q) ||
-        v.death_location.toLowerCase().includes(q) ||
-        v.residence.toLowerCase().includes(q)
-      );
-    });
-
-    render(matches);
-  }
-
-  function runEnglishDateSearch() {
-    if (!dataReady) return alert("Data still loading.");
-
-    const m = document.getElementById("month").value;
-    const d = document.getElementById("day").value;
-    const cat = document.getElementById("category").value;
-
-    const matches = victims.filter(v => {
-      const dt = new Date(v.death);
-      if (String(dt.getMonth() + 1).padStart(2, "0") !== m) return false;
-      if (String(dt.getDate()).padStart(2, "0") !== d) return false;
-      if (cat && v.category !== cat) return false;
-      return true;
-    });
-
-    render(matches);
-  }
-
-  function render(list) {
-    resultsDiv.innerHTML = list.length
-      ? list.map(v =>
-          `<div class="card">
-            <strong>${v.name_en}${v.name_he ? ` (${v.name_he})` : ""}</strong><br>
-            ${v.category} · Lived in ${v.residence} · Killed in ${v.death_location}
-          </div>`
-        ).join("")
-      : "<p>No results found.</p>";
   }
 </script>
   
