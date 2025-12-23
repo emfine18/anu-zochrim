@@ -185,56 +185,95 @@ nav a {
 </html>
 
 <section className="search-section">
-  <div className="search-container">
-    <div className="search-header">
-      <h3>Search the Database</h3>
-      <p>
-        Find individuals by date, name, or location to dedicate learning,
-        prayer, or moments of life in their memory.
-      </p>
-    </div>
+  <h3 className="search-title">SEARCH THE DATABASE</h3>
 
-    <div className="filters">
-      <select onChange={e => setMode(e.target.value)}>
-        <option value="englishDate">By English date (month & day)</option>
-        <option value="hebrewDate">By Hebrew date</option>
-        <option value="name">By name (English or Hebrew)</option>
-        <option value="deathLocation">By location of death</option>
-        <option value="residence">By place of residence</option>
+  <div className="search-quote">
+    זֵכֶר צַדִּיק לִבְרָכָה — The memory of the righteous is a blessing
+  </div>
+
+  {/* SEARCH MODE */}
+  <select
+    value={mode}
+    onChange={e => {
+      setMode(e.target.value);
+      setInput("");
+      setResults([]);
+      setHebrewDate("");
+    }}
+  >
+    <option value="" disabled>
+      Search by
+    </option>
+    <option value="name_he">Name (HE)</option>
+    <option value="name_en">Name (ENG)</option>
+    <option value="birth_he">Birthday (HE)</option>
+    <option value="birth_en">Birthday (ENG)</option>
+    <option value="death_he">Death date (HE)</option>
+    <option value="death_en">Death date (ENG)</option>
+    <option value="death_location">Location of death</option>
+    <option value="residence">Location of residence</option>
+  </select>
+
+  {/* CATEGORY FILTER */}
+  <select
+    value={category}
+    onChange={e => setCategory(e.target.value)}
+  >
+    <option value="All">All categories</option>
+    <option value="IDF Soldier">IDF Soldier</option>
+    <option value="Civilian">Civilian</option>
+    <option value="Hostage">Hostage</option>
+    <option value="Police / Border Patrol">Police / Border Patrol</option>
+  </select>
+
+  {/* DYNAMIC INPUT */}
+  {mode === "birth_he" || mode === "death_he" ? (
+    <div className="hebrew-date-input">
+      <select onChange={e => setHebrewMonth(e.target.value)}>
+        <option value="">Hebrew month</option>
+        {[
+          "Tishrei","Cheshvan","Kislev","Tevet","Shevat",
+          "Adar","Nisan","Iyar","Sivan","Tammuz","Av","Elul"
+        ].map(m => (
+          <option key={m} value={m}>{m}</option>
+        ))}
       </select>
 
-      <select onChange={e => setCategory(e.target.value)}>
-        <option value="All">All categories</option>
-        <option value="IDF Soldier">IDF Soldier</option>
-        <option value="Civilian">Civilian</option>
-        <option value="Hostage">Hostage</option>
-        <option value="Police / Border Patrol">Police / Border Patrol</option>
+      <select onChange={e => setHebrewDay(e.target.value)}>
+        <option value="">Day</option>
+        {Array.from({ length: 30 }, (_, i) => i + 1).map(d => (
+          <option key={d} value={d}>{d}</option>
+        ))}
       </select>
     </div>
-
+  ) : (
     <input
-      type={mode === "englishDate" ? "date" : "text"}
-      placeholder="Enter search value"
+      type="text"
+      placeholder={
+        mode === "birth_en" || mode === "death_en"
+          ? "MM/DD"
+          : "Enter search value"
+      }
+      value={input}
       onChange={e => runSearch(e.target.value)}
     />
+  )}
 
-    {hebrewDate && (
-      <div className="hebrew-date">
-        Hebrew date: <strong>{hebrewDate}</strong>
-      </div>
+  {/* RESULTS */}
+  <div className="results">
+    {results.length === 0 && input && (
+      <div className="no-results">No results found.</div>
     )}
 
-    <div className="results">
-      {results.map((v, i) => (
-        <div key={i} className="result-card">
-          <div className="result-name">
-            {v.name_en} ({v.name_he})
-          </div>
-          <div className="result-meta">
-            {v.category} · Lived in {v.residence} · Killed in {v.death_location}
-          </div>
+    {results.map((v, i) => (
+      <div key={i} className="result-card">
+        <div className="result-name">
+          {v.name_en} ({v.name_he})
         </div>
-      ))}
-    </div>
+        <div className="result-meta">
+          {v.category} · Lived in {v.residence} · Killed in {v.death_location}
+        </div>
+      </div>
+    ))}
   </div>
 </section>
