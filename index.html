@@ -108,9 +108,9 @@ nav a:hover::after {
 
 /* ===== MOBILE ===== */
 @media (max-width: 768px) {
-  header {
-    padding: 20px;
-  }
+    display: inline-block;   /* makes underline match text width */
+    align-self: flex-start;  /* prevents full-width stretching */
+}
 
   .logo {
     margin-left: -8px;
