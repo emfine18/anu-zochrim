@@ -184,8 +184,6 @@ nav a {
   <style>
 
 <style>
-<!-- LOAD NOTO SERIF -->
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- LOAD NOTO SERIF -->
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&display=swap" rel="stylesheet">
@@ -199,7 +197,6 @@ nav a {
   }
 
   .search-title {
-    font-family: "Noto Serif", serif;
     font-weight: 600;
     font-size: 1rem;
     letter-spacing: 0.08em;
@@ -208,15 +205,15 @@ nav a {
     margin-bottom: 28px;
   }
 
-  #search .filters {
+  .filters {
     display: flex;
     gap: 16px;
     margin-bottom: 20px;
     flex-wrap: wrap;
   }
 
-  /* DROPDOWNS */
-  #search select {
+  select,
+  input {
     font-family: "Noto Serif", serif;
     font-size: 0.95rem;
     padding: 12px 14px;
@@ -227,22 +224,7 @@ nav a {
     min-width: 220px;
   }
 
-  /* TEXT INPUT */
-  #search input {
-    font-family: "Noto Serif", serif;
-    font-size: 0.95rem;
-    padding: 12px 14px;
-    border: 1px solid #cbd5e1;
-    border-radius: 4px;
-    background: #ffffff;
-    color: #1f2937;
-    width: 100%;
-    max-width: 460px;
-    margin-bottom: 20px;
-  }
-
-  /* SEARCH BUTTON (THIS is olive green) */
-  #search button {
+  button {
     font-family: "Noto Serif", serif;
     font-size: 0.9rem;
     padding: 12px 26px;
@@ -251,11 +233,14 @@ nav a {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    letter-spacing: 0.05em;
   }
 
-  #search button:hover {
+  button:hover {
     background: #3f5222;
+  }
+
+  .hidden {
+    display: none;
   }
 
   .card {
@@ -264,27 +249,21 @@ nav a {
   }
 
   @media (max-width: 768px) {
-    #search {
-      padding: 0 20px;
-    }
-
-    #search select,
-    #search input {
+    select,
+    input {
       width: 100%;
-      max-width: 100%;
     }
   }
 </style>
 
 <section id="search">
-
   <h3 class="search-title">SEARCH THE DATABASE</h3>
 
+  <!-- TOP FILTERS -->
   <div class="filters">
     <select id="searchMode">
       <option value="">Search by</option>
-      <option value="name_he">Name (HE)</option>
-      <option value="name_en">Name (ENG)</option>
+      <option value="name">Name (HE / ENG)</option>
       <option value="birth_en">Birthday (ENG)</option>
       <option value="birth_he">Birthday (HE)</option>
       <option value="death_en">Death date (ENG)</option>
@@ -302,14 +281,65 @@ nav a {
     </select>
   </div>
 
-  <!-- SEARCH INPUT (STAYS VISIBLE) -->
-  <input id="textValue" placeholder="Enter search value" />
+  <!-- TEXT SEARCH -->
+  <div id="textSearch" class="hidden">
+    <input id="textValue" placeholder="Enter search value" />
+    <button onclick="runTextSearch()">Search</button>
+  </div>
 
-  <!-- SEARCH BUTTON -->
-  <button onclick="runTextSearch()">Search</button>
+  <!-- ENGLISH DATE SEARCH -->
+  <div id="englishDate" class="filters hidden">
+    <select id="month">
+      <option value="">Month</option>
+      <option value="01">January</option>
+      <option value="02">February</option>
+      <option value="03">March</option>
+      <option value="04">April</option>
+      <option value="05">May</option>
+      <option value="06">June</option>
+      <option value="07">July</option>
+      <option value="08">August</option>
+      <option value="09">September</option>
+      <option value="10">October</option>
+      <option value="11">November</option>
+      <option value="12">December</option>
+    </select>
+
+    <select id="day">
+      <option value="">Day</option>
+      <script>
+        for (let i = 1; i <= 31; i++) {
+          document.write(`<option value="${String(i).padStart(2,'0')}">${i}</option>`);
+        }
+      </script>
+    </select>
+
+    <button onclick="runEnglishDateSearch()">Search</button>
+  </div>
+
+  <!-- HEBREW DATE SEARCH -->
+  <div id="hebrewDate" class="filters hidden">
+    <select id="hebMonth">
+      <option value="">Hebrew month</option>
+      <option>Nisan</option><option>Iyar</option><option>Sivan</option>
+      <option>Tammuz</option><option>Av</option><option>Elul</option>
+      <option>Tishrei</option><option>Cheshvan</option><option>Kislev</option>
+      <option>Tevet</option><option>Shevat</option><option>Adar</option>
+    </select>
+
+    <select id="hebDay">
+      <option value="">Day</option>
+      <script>
+        for (let i = 1; i <= 30; i++) {
+          document.write(`<option value="${i}">${i}</option>`);
+        }
+      </script>
+    </select>
+
+    <button onclick="runHebrewDateSearch()">Search</button>
+  </div>
 
   <div id="results"></div>
-
 </section>
 
 <script>
@@ -319,14 +349,39 @@ nav a {
       name_he: "שני לוק",
       residence: "Tel Aviv",
       death_location: "Nova Festival",
-      category: "Civilian"
+      category: "Civilian",
+      death: "2023-10-07"
     }
   ];
+
+  const searchMode = document.getElementById("searchMode");
+  const textSearch = document.getElementById("textSearch");
+  const englishDate = document.getElementById("englishDate");
+  const hebrewDate = document.getElementById("hebrewDate");
+  const resultsDiv = document.getElementById("results");
+
+  searchMode.onchange = () => {
+    textSearch.classList.add("hidden");
+    englishDate.classList.add("hidden");
+    hebrewDate.classList.add("hidden");
+    resultsDiv.innerHTML = "";
+
+    if (["name","death_location","residence"].includes(searchMode.value)) {
+      textSearch.classList.remove("hidden");
+    }
+
+    if (["birth_en","death_en"].includes(searchMode.value)) {
+      englishDate.classList.remove("hidden");
+    }
+
+    if (["birth_he","death_he"].includes(searchMode.value)) {
+      hebrewDate.classList.remove("hidden");
+    }
+  };
 
   function runTextSearch() {
     const q = document.getElementById("textValue").value.toLowerCase();
     const cat = document.getElementById("category").value;
-    const resultsDiv = document.getElementById("results");
 
     const matches = victims.filter(v => {
       if (cat && v.category !== cat) return false;
@@ -338,7 +393,31 @@ nav a {
       );
     });
 
-    resultsDiv.innerHTML = matches.map(v =>
+    render(matches);
+  }
+
+  function runEnglishDateSearch() {
+    const m = document.getElementById("month").value;
+    const d = document.getElementById("day").value;
+    const cat = document.getElementById("category").value;
+
+    const matches = victims.filter(v => {
+      const dt = new Date(v.death);
+      if (String(dt.getMonth()+1).padStart(2,'0') !== m) return false;
+      if (String(dt.getDate()).padStart(2,'0') !== d) return false;
+      if (cat && v.category !== cat) return false;
+      return true;
+    });
+
+    render(matches);
+  }
+
+  function runHebrewDateSearch() {
+    alert("Hebrew date matching will be wired next.");
+  }
+
+  function render(list) {
+    resultsDiv.innerHTML = list.map(v =>
       `<div class="card">
         <strong>${v.name_en} (${v.name_he})</strong><br>
         ${v.category} · Lived in ${v.residence} · Killed in ${v.death_location}
