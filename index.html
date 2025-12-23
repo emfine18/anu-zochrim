@@ -110,31 +110,42 @@
   color: #0f172a;
 }
 
-    @media (max-width: 768px) {
-      nav {
-        position: absolute;
-        top: 100%;
-        right: 32px;
-        background: rgba(0,0,0,0.85);
-        flex-direction: column;
-        padding: 16px;
-        display: none;
-      }
+@media (max-width: 768px) {
 
-      nav a {
-        margin: 12px 0;
-      }
+  header {
+    padding: 20px 20px;
+  }
 
-      nav.open {
-        display: flex;
-      }
+  /* move logo slightly left on mobile */
+  .logo {
+    margin-left: -8px;
+  }
 
-      .hamburger {
-        display: flex;
-      }
+  nav {
+    position: absolute;
+    top: 100%;
+    right: 20px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    flex-direction: column;
+    padding: 16px;
+    display: none;
+  }
 
+  nav a {
+    margin: 12px 0;
+    color: #ffffff; /* keep white for hero */
+  }
 
-    }
+  nav.open {
+    display: flex;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}
+    
   </style>
 </head>
 
