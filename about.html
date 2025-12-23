@@ -17,23 +17,23 @@
     body {
       font-family: "Poppins", sans-serif;
       background: #ffffff;
-      color: #0f172a;
     }
 
-    /* HEADER (SAME AS CONTACT) */
+    /* HEADER — SAME AS HOMEPAGE */
     header {
+      position: relative;
       width: 100%;
       padding: 24px 32px;
-      background: #ffffff;
-      border-bottom: 1px solid #e5e7eb;
+      background: transparent;
+      z-index: 2;
     }
 
     .header-inner {
       max-width: 1200px;
       margin: 0 auto;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
     }
 
     .logo img {
@@ -50,44 +50,78 @@
       margin-left: 28px;
       text-decoration: none;
       font-family: "Noto Serif", serif;
-      font-weight: 500;
-      color: #556b2f; /* OLIVE GREEN */
+      font-weight: 400;
+      color: #ffffff;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       font-size: 0.85rem;
     }
 
+    /* HAMBURGER */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      height: 2px;
+      width: 22px;
+      background: white;
+      margin: 4px 0;
+    }
+
     /* PAGE CONTENT */
     .page {
       max-width: 900px;
-      margin: 56px auto;
+      margin: 72px auto;
       padding: 0 24px;
       font-family: "Noto Serif", serif;
     }
 
     .page h1 {
-      font-size: 1.6rem;
       font-weight: 600;
-      color: #556b2f;
+      font-size: 1.4rem;
       text-transform: uppercase;
-      margin-bottom: 24px;
+      letter-spacing: 0;
+      color: #556b2f;
+      margin: 0 0 24px 0;
     }
 
     .page p {
-      font-size: 1.05rem;
+      font-size: 1.06rem;
       line-height: 1.7;
       color: #334155;
       margin-bottom: 18px;
     }
 
     .page strong {
-      color: #0f172a;
       font-weight: 600;
+      color: #0f172a;
     }
 
+    /* MOBILE */
     @media (max-width: 768px) {
+      nav {
+        position: absolute;
+        top: 100%;
+        right: 32px;
+        background: rgba(0,0,0,0.85);
+        flex-direction: column;
+        padding: 16px;
+        display: none;
+      }
+
       nav a {
-        margin-left: 16px;
+        margin: 12px 0;
+      }
+
+      nav.open {
+        display: flex;
+      }
+
+      .hamburger {
+        display: flex;
       }
     }
   </style>
@@ -104,7 +138,13 @@
       </a>
     </div>
 
-    <nav>
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <nav id="nav">
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
       <a href="donate.html">Donate</a>
@@ -117,30 +157,29 @@
 
   <p>
     <strong>Anu Zochrim</strong> (“We Remember”) is a public memorial initiative
-    created in response to the atrocities of October 7, 2023, and the war that
-    followed. It exists to honor the Israelis murdered by Hamas and those who
-    fell defending the Jewish people and the State of Israel.
+    dedicated to honoring the Israelis murdered by Hamas on October 7, 2023, and
+    those who fell defending the Jewish people and the State of Israel.
   </p>
 
   <p>
-    The initiative was founded on the belief that remembrance is not passive.
-    Preserving names, dates, and stories is an act of responsibility — one that
-    strengthens collective memory and affirms the moral clarity of Jewish
-    self-defense.
+    The initiative exists to preserve names, dates, and memory with dignity and
+    permanence. Remembrance is not passive — it is an act of responsibility,
+    continuity, and moral clarity.
   </p>
 
   <p>
-    Anu Zochrim provides a structured way for individuals and communities to
-    dedicate learning, prayer, and moments of joy in memory of those who were
-    lost. Through remembrance, we reinforce resilience, unity, and commitment to
-    the future of the State of Israel.
-  </p>
-
-  <p>
-    This project is independent, non-partisan, and rooted in the conviction that
-    memory is essential to justice, continuity, and national strength.
+    Anu Zochrim provides a meaningful way to dedicate learning, prayer, and
+    moments of joy in their honor. In remembering them, we affirm the resilience
+    of the Jewish people and our enduring commitment to the security and future
+    of the State of Israel.
   </p>
 </main>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("nav").classList.toggle("open");
+  }
+</script>
 
 </body>
 </html>
