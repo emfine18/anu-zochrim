@@ -184,6 +184,13 @@ nav a {
   <section id="search" class="section">
 
   <h3 class="search-title">SEARCH THE DATABASE</h3>
+    .search-title {
+  font-family: "Noto Sans", sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #556b2f; /* olive green */
+  margin-bottom: 28px;
+}
 
   <div class="filters">
     <select id="searchMode">
@@ -212,15 +219,28 @@ nav a {
   </div>
 
   <div id="englishDate" class="filters" style="display:none;">
-    <select id="month">
-      <option value="">Month</option>
-      <script>
-        for (let i = 1; i <= 12; i++) {
-          document.write(`<option value="${String(i).padStart(2,'0')}">${String(i).padStart(2,'0')}</option>`);
-        }
-      </script>
-    </select>
+<select id="month">
+  <option value="">Month</option>
+  <option value="01">January</option>
+  <option value="02">February</option>
+  <option value="03">March</option>
+  <option value="04">April</option>
+  <option value="05">May</option>
+  <option value="06">June</option>
+  <option value="07">July</option>
+  <option value="08">August</option>
+  <option value="09">September</option>
+  <option value="10">October</option>
+  <option value="11">November</option>
+  <option value="12">December</option>
+</select>
 
+    #search {
+  max-width: 900px;
+  margin: 64px auto;
+}
+
+    
     <select id="day">
       <option value="">Day</option>
       <script>
