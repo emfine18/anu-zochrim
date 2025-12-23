@@ -186,7 +186,8 @@ nav a {
 <style>
 <!-- LOAD NOTO SERIF -->
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600;700&display=swap" rel="stylesheet">
-<!-- LOAD NOTO SERIF -->
+
+    <!-- LOAD NOTO SERIF -->
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
@@ -226,46 +227,37 @@ nav a {
     min-width: 220px;
   }
 
-  /* TEXT SEARCH INPUT (OLIVE GREEN) */
+  /* TEXT INPUT */
   #search input {
     font-family: "Noto Serif", serif;
     font-size: 0.95rem;
     padding: 12px 14px;
-    border: 1px solid #556b2f;
+    border: 1px solid #cbd5e1;
     border-radius: 4px;
-    background: #556b2f;
-    color: #ffffff;
+    background: #ffffff;
+    color: #1f2937;
     width: 100%;
     max-width: 460px;
+    margin-bottom: 20px;
   }
 
-  #search input::placeholder {
-    color: #e6efe0;
-  }
-
-  #search input:focus {
-    outline: none;
-    border-color: #3f5222;
-    background: #3f5222;
-  }
-
-  /* BUTTON */
+  /* SEARCH BUTTON (THIS is olive green) */
   #search button {
     font-family: "Noto Serif", serif;
     font-size: 0.9rem;
-    padding: 12px 20px;
-    background: #1f2937;
+    padding: 12px 26px;
+    background: #556b2f;
     color: #ffffff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    letter-spacing: 0.05em;
   }
 
   #search button:hover {
-    background: #111827;
+    background: #3f5222;
   }
 
-  /* RESULTS */
   .card {
     border-bottom: 1px solid #e5e7eb;
     padding: 14px 0;
@@ -310,60 +302,47 @@ nav a {
     </select>
   </div>
 
-  <div id="textInput">
-    <input id="textValue" placeholder="Enter search value" />
-  </div>
+  <!-- SEARCH INPUT (STAYS VISIBLE) -->
+  <input id="textValue" placeholder="Enter search value" />
 
-  <div id="englishDate" class="filters" style="display:none;">
-    <select id="month">
-      <option value="">Month</option>
-      <option value="01">January</option>
-      <option value="02">February</option>
-      <option value="03">March</option>
-      <option value="04">April</option>
-      <option value="05">May</option>
-      <option value="06">June</option>
-      <option value="07">July</option>
-      <option value="08">August</option>
-      <option value="09">September</option>
-      <option value="10">October</option>
-      <option value="11">November</option>
-      <option value="12">December</option>
-    </select>
-
-    <select id="day">
-      <option value="">Day</option>
-      <script>
-        for (let i = 1; i <= 31; i++) {
-          document.write(`<option value="${String(i).padStart(2,'0')}">${i}</option>`);
-        }
-      </script>
-    </select>
-
-    <button onclick="runEnglishDateSearch()">Search</button>
-  </div>
-
-  <div id="hebrewDate" class="filters" style="display:none;">
-    <select id="hebMonth">
-      <option value="">Hebrew month</option>
-      <option>Nisan</option><option>Iyar</option><option>Sivan</option>
-      <option>Tammuz</option><option>Av</option><option>Elul</option>
-      <option>Tishrei</option><option>Cheshvan</option><option>Kislev</option>
-      <option>Tevet</option><option>Shevat</option><option>Adar</option>
-    </select>
-
-    <select id="hebDay">
-      <option value="">Day</option>
-      <script>
-        for (let i = 1; i <= 30; i++) {
-          document.write(`<option value="${i}">${i}</option>`);
-        }
-      </script>
-    </select>
-
-    <button onclick="runHebrewDateSearch()">Search</button>
-  </div>
+  <!-- SEARCH BUTTON -->
+  <button onclick="runTextSearch()">Search</button>
 
   <div id="results"></div>
 
 </section>
+
+<script>
+  const victims = [
+    {
+      name_en: "Shani Louk",
+      name_he: "שני לוק",
+      residence: "Tel Aviv",
+      death_location: "Nova Festival",
+      category: "Civilian"
+    }
+  ];
+
+  function runTextSearch() {
+    const q = document.getElementById("textValue").value.toLowerCase();
+    const cat = document.getElementById("category").value;
+    const resultsDiv = document.getElementById("results");
+
+    const matches = victims.filter(v => {
+      if (cat && v.category !== cat) return false;
+      return (
+        v.name_en.toLowerCase().includes(q) ||
+        v.name_he.includes(q) ||
+        v.death_location.toLowerCase().includes(q) ||
+        v.residence.toLowerCase().includes(q)
+      );
+    });
+
+    resultsDiv.innerHTML = matches.map(v =>
+      `<div class="card">
+        <strong>${v.name_en} (${v.name_he})</strong><br>
+        ${v.category} · Lived in ${v.residence} · Killed in ${v.death_location}
+      </div>`
+    ).join("");
+  }
+</script>
