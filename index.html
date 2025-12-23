@@ -471,14 +471,14 @@
 
 <script>
   let victims = [];
-  let dataReady = false;
+  let dataReady = true;
 
   const resultsDiv = document.getElementById("results");
   const searchMode = document.getElementById("searchMode");
   const textSearch = document.getElementById("textSearch");
   const englishDate = document.getElementById("englishDate");
 
-Papa.parse("/data/example.csv", {
+Papa.parse(console.log("CSV rows loaded:", results.data.length);, {
   download: true,
     header: true,
     complete: function (results) {
@@ -517,9 +517,6 @@ Papa.parse("/data/example.csv", {
       englishDate.classList.remove("hidden");
     }
   };
-
-  function runTextSearch() {
-    if (!dataReady) return alert("Data still loading.");
 
     const q = document.getElementById("textValue").value.toLowerCase();
     const cat = document.getElementById("category").value;
