@@ -8,110 +8,156 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
-    body {
+    * { box-sizing: border-box; }
+
+    html, body {
       margin: 0;
-      font-family: "Lora", serif;
-      color: #0f172a;
-      background: linear-gradient(180deg, #e6f0ff 0%, #ffffff 50%);
+      padding: 0;
     }
 
-    h1, h2, h3, nav a, button {
+    body {
       font-family: "Poppins", sans-serif;
+      background: #ffffff;
+      color: #334155;
     }
 
+    /* ===== HEADER (MATCHES HOME / ABOUT) ===== */
     header {
-      background: white;
+      width: 100%;
+      padding: 24px 32px;
+      background: #ffffff;
       border-bottom: 1px solid #e5e7eb;
-      padding: 18px 24px;
     }
 
     .header-inner {
-      max-width: 1100px;
-      margin: auto;
+      max-width: 1200px;
+      margin: 0 auto;
       display: flex;
+      align-items: center;
       justify-content: space-between;
+    }
+
+    .logo img {
+      height: 44px;
+      display: block;
+    }
+
+    nav {
+      display: flex;
       align-items: center;
     }
 
     nav a {
-      margin-left: 20px;
+      margin-left: 28px;
       text-decoration: none;
-      color: #0f172a;
+      font-family: "Noto Serif", serif;
       font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.85rem;
+      color: #556b2f;
     }
 
-    main {
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== CONTENT ===== */
+    .content {
       max-width: 900px;
-      margin: auto;
-      padding: 64px 24px;
+      margin: 48px auto;
+      padding: 0 24px;
+      font-family: "Noto Serif", serif;
     }
 
-    p {
-      font-size: 1rem;
-      line-height: 1.75;
-      color: #334155;
-      margin-bottom: 20px;
+    /* TITLE — SAME AS HOMEPAGE */
+    .page-title {
+      font-weight: 600;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      color: #556b2f;
+      margin: 0 0 24px 0;
     }
 
-    button {
-      background: #1d4ed8;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      font-size: 1rem;
-      cursor: pointer;
+    .content p {
+      font-size: 1.06rem;
+      line-height: 1.7;
+      margin-bottom: 18px;
     }
 
-    footer {
-      margin-top: 80px;
-      padding: 32px 24px;
-      background: #0f172a;
-      color: #e5e7eb;
-      text-align: center;
-      font-size: 0.9rem;
+    /* ===== DONATE BUTTON ===== */
+    .donate-button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 14px 36px;
+      background: #556b2f;
+      color: #ffffff;
+      text-decoration: none;
+      font-family: "Noto Serif", serif;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-radius: 4px;
+    }
+
+    .donate-button:hover {
+      background: #3f5222;
+    }
+
+    @media (max-width: 768px) {
+      nav a {
+        margin-left: 18px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <div class="header-inner">
-      <div>
-        <h1>Anu Zochrim</h1>
-        <div>אנו זוכרים — We Remember</div>
-      </div>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="donate.html">Donate</a>
-      </nav>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <a href="index.html">
+        <img src="images/AZlogo2Artboard 3.png" alt="Anu Zochrim logo">
+      </a>
     </div>
-  </header>
 
-  <main>
-    <h2>Support This Project</h2>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="donate.html">Donate</a>
+    </nav>
+  </div>
+</header>
 
-    <p>
-      Anu Zochrim is maintained as a public memorial resource. Contributions help
-      support ongoing development, data accuracy, hosting, and long-term
-      preservation.
-    </p>
+<section class="content">
+  <h2 class="page-title">Donate</h2>
 
-    <p>
-      Your support ensures that this memorial remains accessible, respectful,
-      and sustainable.
-    </p>
+  <p>
+    Anu Zochrim exists to preserve the memory of those murdered on October 7, 2023,
+    and those who fell defending the Jewish people and the State of Israel.
+  </p>
 
-    <button disabled>
-      Donate (coming soon)
-    </button>
-  </main>
+  <p>
+    Your support helps ensure that each name is recorded with care, dignity, and
+    historical accuracy, and that this memorial remains accessible for generations
+    to come.
+  </p>
 
-  <footer>
-    Anu Zochrim · אנו זוכרים · A public memorial initiative
-  </footer>
+  <p>
+    Contributions directly support site maintenance, archival research, and the
+    long-term preservation of this public memorial.
+  </p>
+
+  <a href="#" class="donate-button">
+    Make a Donation
+  </a>
+</section>
+
 </body>
 </html>
