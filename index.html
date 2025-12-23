@@ -184,3 +184,44 @@ nav a {
 
 </body>
 </html>
+
+
+<section class="search">
+  <h2>SEARCH THE MEMORIAL</h2>
+
+  <p class="search-intro">
+    Select how you would like to search, then optionally refine by category.
+  </p>
+
+  <div class="search-controls">
+    <!-- SEARCH MODE -->
+    <select id="searchType">
+      <option value="name">NAME (ENGLISH OR HEBREW)</option>
+      <option value="birth_en">BIRTH DATE (ENGLISH – MM/DD)</option>
+      <option value="death_en">DEATH DATE (ENGLISH – MM/DD)</option>
+      <option value="birth_he">BIRTH DATE (HEBREW)</option>
+      <option value="death_he">DEATH DATE (HEBREW)</option>
+      <option value="death_location">LOCATION OF DEATH</option>
+      <option value="residence">PLACE OF RESIDENCE</option>
+    </select>
+
+    <!-- CATEGORY FILTER -->
+    <select id="category">
+      <option value="">ALL CATEGORIES</option>
+      <option value="Civilian">CIVILIAN</option>
+      <option value="Hostage">HOSTAGE</option>
+      <option value="IDF Soldier">IDF SOLDIER</option>
+      <option value="Police / Border Patrol">POLICE / BORDER PATROL</option>
+    </select>
+  </div>
+
+  <!-- SEARCH INPUT -->
+  <input
+    id="searchInput"
+    placeholder="ENTER SEARCH VALUE"
+    oninput="runSearch()"
+  />
+
+  <!-- RESULTS -->
+  <div id="results"></div>
+</section>
