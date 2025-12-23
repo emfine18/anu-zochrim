@@ -413,8 +413,8 @@
   const textSearch = document.getElementById("textSearch");
   const englishDate = document.getElementById("englishDate");
 
-  Papa.parse("/anu-zochrim/data/example.csv", {
-    download: true,
+Papa.parse("/data/example.csv", {
+  download: true,
     header: true,
     complete: function (results) {
       victims = results.data
