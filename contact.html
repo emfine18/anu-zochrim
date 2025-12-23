@@ -153,3 +153,39 @@
 
 </body>
 </html>
+
+@media (max-width: 768px) {
+
+  header {
+    padding: 20px 20px;
+  }
+
+  /* move logo slightly left on mobile */
+  .logo {
+    margin-left: -8px;
+  }
+
+  nav {
+    position: absolute;
+    top: 100%;
+    right: 20px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    flex-direction: column;
+    padding: 16px;
+    display: none;
+  }
+
+  nav a {
+    margin: 12px 0;
+    color: #556b2f; /* olive green for contact page */
+  }
+
+  nav.open {
+    display: flex;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}
