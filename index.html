@@ -143,6 +143,64 @@ nav a:hover::after { width: 100%; }
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <a href="index.html"><img src="images/Logo.png"></a>
+    </div>
+
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+
+    <nav id="nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="resources.html">Resources</a>
+      <a href="contact.html">Contact</a>
+      <a href="donate.html">Donate</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero"></section>
+
+<section class="about-home">
+  <div class="about-home-inner">
+    <p><strong>Anu Zochrim</strong> is a public memorial dedicated to the Israelis murdered by Hamas on October 7, 2023, and to those who fell defending the Jewish people and the State of Israel.</p>
+    <p>This initiative preserves their memory with dignity and purpose, providing a meaningful way to dedicate learning, prayer, and moments of joy in their honor.</p>
+  </div>
+</section>
+
+<!-- ================= SEARCH ================= -->
+<section id="search">
+  <h3 class="search-title">Search the Database</h3>
+
+  <div class="filters">
+    <select id="searchMode">
+      <option value="">Search by</option>
+      <option value="name">Name (Hebrew & English)</option>
+      <option value="death_en">Death date (English)</option>
+      <option value="death_location">Location of death</option>
+      <option value="residence">Location of residence</option>
+    </select>
+
+    <select id="category">
+      <option value="">All categories</option>
+      <option value="IDF Soldier">IDF Soldier</option>
+      <option value="Civilian">Civilian</option>
+    </select>
+  </div>
+
+  <div id="textSearch" class="filters hidden">
+    <input id="textValue" placeholder="Enter search value" />
+    <button onclick="runTextSearch()">Search</button>
+  </div>
+
+  <div id="results"></div>
+</section>
+
   /* ================= SEARCH ================= */
   #search {
     max-width: 900px;
@@ -397,102 +455,9 @@ nav a:hover::after { width: 100%; }
   }
 </script>
 
-/* ================= FOOTER ================= */
-footer {
-  background: #252d4c;
-  color: #ffffff;
-  text-align: center;
-  padding: 36px 24px;
-}
-
-footer img {
-  height: 42px;
-  margin-bottom: 16px;
-}
-
-.footer-nav {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  flex-wrap: wrap;
-  margin-bottom: 12px;
-}
-
-.footer-nav a {
-  color: #ffffff;
-  font-family: "Noto Serif", serif;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  text-decoration: none;
-}
-
-footer p {
-  font-size: 0.8rem;
-  opacity: 0.85;
-}
-</style>
-</head>
 
 <body>
-
-<header>
-  <div class="header-inner">
-    <div class="logo">
-      <a href="index.html"><img src="images/Logo.png"></a>
-    </div>
-
-    <div class="hamburger" onclick="toggleMenu()">
-      <span></span><span></span><span></span>
-    </div>
-
-    <nav id="nav">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="resources.html">Resources</a>
-      <a href="contact.html">Contact</a>
-      <a href="donate.html">Donate</a>
-    </nav>
-  </div>
-</header>
-
-<section class="hero"></section>
-
-<section class="about-home">
-  <div class="about-home-inner">
-    <p><strong>Anu Zochrim</strong> is a public memorial dedicated to the Israelis murdered by Hamas on October 7, 2023, and to those who fell defending the Jewish people and the State of Israel.</p>
-    <p>This initiative preserves their memory with dignity and purpose, providing a meaningful way to dedicate learning, prayer, and moments of joy in their honor.</p>
-  </div>
-</section>
-
-<!-- ================= SEARCH ================= -->
-<section id="search">
-  <h3 class="search-title">Search the Database</h3>
-
-  <div class="filters">
-    <select id="searchMode">
-      <option value="">Search by</option>
-      <option value="name">Name (Hebrew & English)</option>
-      <option value="death_en">Death date (English)</option>
-      <option value="death_location">Location of death</option>
-      <option value="residence">Location of residence</option>
-    </select>
-
-    <select id="category">
-      <option value="">All categories</option>
-      <option value="IDF Soldier">IDF Soldier</option>
-      <option value="Civilian">Civilian</option>
-    </select>
-  </div>
-
-  <div id="textSearch" class="filters hidden">
-    <input id="textValue" placeholder="Enter search value" />
-    <button onclick="runTextSearch()">Search</button>
-  </div>
-
-  <div id="results"></div>
-</section>
-
+  
 <footer>
   <a href="index.html"><img src="images/Logo.png"></a>
   <div class="footer-nav">
