@@ -184,117 +184,57 @@ nav a {
 </body>
 </html>
 
-<section id="search" style="max-width:900px;margin:72px auto;padding:0 24px;">
-  <h2 style="font-family:'Noto Serif',serif;">Search the Memorial</h2>
+<section className="search-section">
+  <div className="search-container">
+    <div className="search-header">
+      <h3>Search the Database</h3>
+      <p>
+        Find individuals by date, name, or location to dedicate learning,
+        prayer, or moments of life in their memory.
+      </p>
+    </div>
 
-  <p>
-    Select how you would like to search, then optionally refine by category.
-  </p>
+    <div className="filters">
+      <select onChange={e => setMode(e.target.value)}>
+        <option value="englishDate">By English date (month & day)</option>
+        <option value="hebrewDate">By Hebrew date</option>
+        <option value="name">By name (English or Hebrew)</option>
+        <option value="deathLocation">By location of death</option>
+        <option value="residence">By place of residence</option>
+      </select>
 
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
-    <!-- SEARCH MODE -->
-    <select id="searchType">
-      <option value="name">Name (English or Hebrew)</option>
-      <option value="birth_en">Birth date (English – MM/DD)</option>
-      <option value="death_en">Death date (English – MM/DD)</option>
-      <option value="birth_he">Birth date (Hebrew)</option>
-      <option value="death_he">Death date (Hebrew)</option>
-      <option value="death_location">City / location of death</option>
-      <option value="residence">City / place of residence</option>
-    </select>
+      <select onChange={e => setCategory(e.target.value)}>
+        <option value="All">All categories</option>
+        <option value="IDF Soldier">IDF Soldier</option>
+        <option value="Civilian">Civilian</option>
+        <option value="Hostage">Hostage</option>
+        <option value="Police / Border Patrol">Police / Border Patrol</option>
+      </select>
+    </div>
 
-    <!-- CATEGORY FILTER -->
-    <select id="category">
-      <option value="">All categories</option>
-      <option value="Civilian">Civilian</option>
-      <option value="Hostage">Hostage</option>
-      <option value="IDF Soldier">IDF Soldier</option>
-      <option value="Police / Border Patrol">Police / Border Patrol</option>
-    </select>
+    <input
+      type={mode === "englishDate" ? "date" : "text"}
+      placeholder="Enter search value"
+      onChange={e => runSearch(e.target.value)}
+    />
+
+    {hebrewDate && (
+      <div className="hebrew-date">
+        Hebrew date: <strong>{hebrewDate}</strong>
+      </div>
+    )}
+
+    <div className="results">
+      {results.map((v, i) => (
+        <div key={i} className="result-card">
+          <div className="result-name">
+            {v.name_en} ({v.name_he})
+          </div>
+          <div className="result-meta">
+            {v.category} · Lived in {v.residence} · Killed in {v.death_location}
+          </div>
+        </div>
+      ))}
+    </div>
   </div>
-
-  <!-- SEARCH INPUT -->
-  <input
-    id="searchInput"
-    placeholder="Enter search value"
-    style="width:100%;padding:14px;border:1px solid #cbd5f5;margin-bottom:24px;"
-    oninput="runSearch()"
-  />
-
-  <!-- RESULTS -->
-  <div id="results"></div>
 </section>
-
-<script>
-  /* TEMP DATA – will be replaced by file */
-  const victims = [
-    {
-      name_en: "Yonatan Steinberg",
-      name_he: "יונתן שטיינברג",
-      birth_en: "03/12",
-      death_en: "10/07",
-      birth_he: "י״ט אדר",
-      death_he: "כ״ב תשרי",
-      residence: "Kibbutz Shomria",
-      death_location: "Southern Israel",
-      category: "IDF Soldier"
-    },
-    {
-      name_en: "Shani Louk",
-      name_he: "שני לוק",
-      birth_en: "04/07",
-      death_en: "10/07",
-      birth_he: "ט״ז ניסן",
-      death_he: "כ״ב תשרי",
-      residence: "Tel Aviv",
-      death_location: "Nova Festival",
-      category: "Civilian"
-    }
-  ];
-
-  function runSearch() {
-    const type = document.getElementById("searchType").value;
-    const category = document.getElementById("category").value;
-    const input = document.getElementById("searchInput").value.trim();
-    const resultsDiv = document.getElementById("results");
-
-    resultsDiv.innerHTML = "";
-    if (!input) return;
-
-    const matches = victims.filter(v => {
-      if (type === "name") {
-        if (
-          !v.name_en.toLowerCase().includes(input.toLowerCase()) &&
-          !v.name_he.includes(input)
-        ) return false;
-      } else {
-        if (!v[type]) return false;
-        if (v[type].toLowerCase().indexOf(input.toLowerCase()) === -1)
-          return false;
-      }
-
-      if (category && v.category !== category) return false;
-      return true;
-    });
-
-    if (matches.length === 0) {
-      resultsDiv.innerHTML =
-        '<div style="color:#64748b;font-style:italic;">No results found.</div>';
-      return;
-    }
-
-    matches.forEach(v => {
-      const div = document.createElement("div");
-      div.style.border = "1px solid #e5e7eb";
-      div.style.padding = "16px";
-      div.style.marginBottom = "12px";
-
-      div.innerHTML = `
-        <strong>${v.name_en} (${v.name_he})</strong><br>
-        ${v.category} · ${v.residence} · ${v.death_location}<br>
-        Birth: ${v.birth_en} (${v.birth_he}) · Death: ${v.death_en} (${v.death_he})
-      `;
-      resultsDiv.appendChild(div);
-    });
-  }
-</script>
