@@ -184,96 +184,29 @@ nav a {
 </body>
 </html>
 
-<section className="search-section">
-  <h3 className="search-title">SEARCH THE DATABASE</h3>
+<h3 className="search-title">SEARCH THE DATABASE</h3>
 
-  <div className="search-quote">
-    זֵכֶר צַדִּיק לִבְרָכָה — The memory of the righteous is a blessing
-  </div>
+.search-title {
+  font-family: "Noto Sans", sans-serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #6b8e23; /* olive green */
+  margin-bottom: 24px;
+}
 
-  {/* SEARCH MODE */}
-  <select
-    value={mode}
-    onChange={e => {
-      setMode(e.target.value);
-      setInput("");
-      setResults([]);
-      setHebrewDate("");
-    }}
-  >
-    <option value="" disabled>
-      Search by
-    </option>
-    <option value="name_he">Name (HE)</option>
-    <option value="name_en">Name (ENG)</option>
-    <option value="birth_he">Birthday (HE)</option>
-    <option value="birth_en">Birthday (ENG)</option>
-    <option value="death_he">Death date (HE)</option>
-    <option value="death_en">Death date (ENG)</option>
-    <option value="death_location">Location of death</option>
-    <option value="residence">Location of residence</option>
-  </select>
+<select onChange={e => setMode(e.target.value)}>
+  <option value="">Search by</option>
 
-  {/* CATEGORY FILTER */}
-  <select
-    value={category}
-    onChange={e => setCategory(e.target.value)}
-  >
-    <option value="All">All categories</option>
-    <option value="IDF Soldier">IDF Soldier</option>
-    <option value="Civilian">Civilian</option>
-    <option value="Hostage">Hostage</option>
-    <option value="Police / Border Patrol">Police / Border Patrol</option>
-  </select>
+  <option value="name_he">Name (HE)</option>
+  <option value="name_en">Name (ENG)</option>
 
-  {/* DYNAMIC INPUT */}
-  {mode === "birth_he" || mode === "death_he" ? (
-    <div className="hebrew-date-input">
-      <select onChange={e => setHebrewMonth(e.target.value)}>
-        <option value="">Hebrew month</option>
-        {[
-          "Tishrei","Cheshvan","Kislev","Tevet","Shevat",
-          "Adar","Nisan","Iyar","Sivan","Tammuz","Av","Elul"
-        ].map(m => (
-          <option key={m} value={m}>{m}</option>
-        ))}
-      </select>
+  <option value="birth_he">Birthday (HE)</option>
+  <option value="birth_en">Birthday (ENG)</option>
 
-      <select onChange={e => setHebrewDay(e.target.value)}>
-        <option value="">Day</option>
-        {Array.from({ length: 30 }, (_, i) => i + 1).map(d => (
-          <option key={d} value={d}>{d}</option>
-        ))}
-      </select>
-    </div>
-  ) : (
-    <input
-      type="text"
-      placeholder={
-        mode === "birth_en" || mode === "death_en"
-          ? "MM/DD"
-          : "Enter search value"
-      }
-      value={input}
-      onChange={e => runSearch(e.target.value)}
-    />
-  )}
+  <option value="death_he">Death date (HE)</option>
+  <option value="death_en">Death date (ENG)</option>
 
-  {/* RESULTS */}
-  <div className="results">
-    {results.length === 0 && input && (
-      <div className="no-results">No results found.</div>
-    )}
-
-    {results.map((v, i) => (
-      <div key={i} className="result-card">
-        <div className="result-name">
-          {v.name_en} ({v.name_he})
-        </div>
-        <div className="result-meta">
-          {v.category} · Lived in {v.residence} · Killed in {v.death_location}
-        </div>
-      </div>
-    ))}
-  </div>
-</section>
+  <option value="deathLocation">Location of death</option>
+  <option value="residence">Location of residence</option>
+</select>
