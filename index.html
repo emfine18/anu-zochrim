@@ -268,7 +268,6 @@
 </section>
 
 <!-- ================= SEARCH SECTION ================= -->
-<!-- ================= SEARCH SECTION ================= -->
 
 <style>
   #search {
@@ -331,29 +330,23 @@
     padding: 14px 0;
   }
 
-  @media (max-width: 768px) {
-    select,
-    input {
-      width: 100%;
-    }
+  #search-output {
+    max-width: 900px;
+    margin: 32px auto;
+    padding: 0 24px;
   }
 </style>
 
 <section id="search">
   <h3 class="search-title">Search the Database</h3>
 
-  <!-- FILTER ROW -->
   <div class="filters">
     <select id="searchMode">
       <option value="">Search by</option>
-      <option value="name">Name (English)</option>
-      <option value="name">Name (Hebrew)</option>
-      <option value="birth_en">Birthday (English)</option>
-      <option value="birth_he">Birthday (Hebrew)</option>
-      <option value="death_en">Death date (English)</option>
-      <option value="death_he">Death date (Hebrew)</option>
+      <option value="name">Name</option>
       <option value="death_location">Location of death</option>
       <option value="residence">Location of residence</option>
+      <option value="death_en">Death date</option>
     </select>
 
     <select id="category">
@@ -365,13 +358,11 @@
     </select>
   </div>
 
-  <!-- TEXT SEARCH -->
   <div id="textSearch" class="filters hidden">
     <input id="textValue" placeholder="Enter name or location" />
     <button onclick="runTextSearch()">Search</button>
   </div>
 
-  <!-- ENGLISH DATE SEARCH -->
   <div id="englishDate" class="filters hidden">
     <select id="month">
       <option value="">Month</option>
@@ -400,39 +391,9 @@
 
     <button onclick="runEnglishDateSearch()">Search</button>
   </div>
-
-  <!-- HEBREW DATE SEARCH -->
-  <div id="hebrewDate" class="filters hidden">
-    <select id="hebMonth">
-      <option value="">Hebrew month</option>
-      <option>Nisan</option>
-      <option>Iyar</option>
-      <option>Sivan</option>
-      <option>Tammuz</option>
-      <option>Av</option>
-      <option>Elul</option>
-      <option>Tishrei</option>
-      <option>Cheshvan</option>
-      <option>Kislev</option>
-      <option>Tevet</option>
-      <option>Shevat</option>
-      <option>Adar</option>
-    </select>
-
-    <select id="hebDay">
-      <option value="">Day</option>
-      <script>
-        for (let i = 1; i <= 30; i++) {
-          document.write(`<option value="${i}">${i}</option>`);
-        }
-      </script>
-    </select>
-
-    <button onclick="runHebrewDateSearch()">Search</button>
-  </div>
 </section>
 
-<!-- ================= SEARCH OUTPUT (PLACEHOLDER) ================= -->
+<!-- ================= SEARCH OUTPUT ================= -->
 
 <section id="search-output">
   <h3 class="search-title">Search Results</h3>
@@ -445,7 +406,12 @@
 
 <script>
   let victims = [];
+  let dataReady = false;
+
   const resultsDiv = document.getElementById("results");
+  const searchMode = document.getElementById("searchMode");
+  const textSearch = document.getElementById("textSearch");
+  const englishDate = document.getElementById("englishDate");
 
   Papa.parse("/anu-zochrim/data/example.csv", {
     download: true,
@@ -461,6 +427,8 @@
           category: mapCategory(r),
           death: r.death_date || r.event_date || ""
         }));
+
+      dataReady = true;
     }
   });
 
@@ -471,36 +439,29 @@
     return "Civilian";
   }
 
-  const searchMode = document.getElementById("searchMode");
-  const textSearch = document.getElementById("textSearch");
-  const englishDate = document.getElementById("englishDate");
-  const hebrewDate = document.getElementById("hebrewDate");
-
   searchMode.onchange = () => {
     textSearch.classList.add("hidden");
     englishDate.classList.add("hidden");
-    hebrewDate.classList.add("hidden");
     resultsDiv.innerHTML = "";
 
     if (["name", "death_location", "residence"].includes(searchMode.value)) {
       textSearch.classList.remove("hidden");
     }
 
-    if (["birth_en", "death_en"].includes(searchMode.value)) {
+    if (searchMode.value === "death_en") {
       englishDate.classList.remove("hidden");
-    }
-
-    if (["birth_he", "death_he"].includes(searchMode.value)) {
-      hebrewDate.classList.remove("hidden");
     }
   };
 
   function runTextSearch() {
+    if (!dataReady) return alert("Data still loading.");
+
     const q = document.getElementById("textValue").value.toLowerCase();
     const cat = document.getElementById("category").value;
 
     const matches = victims.filter(v => {
       if (cat && v.category !== cat) return false;
+
       return (
         v.name_en.toLowerCase().includes(q) ||
         v.name_he.includes(q) ||
@@ -513,6 +474,8 @@
   }
 
   function runEnglishDateSearch() {
+    if (!dataReady) return alert("Data still loading.");
+
     const m = document.getElementById("month").value;
     const d = document.getElementById("day").value;
     const cat = document.getElementById("category").value;
@@ -528,17 +491,15 @@
     render(matches);
   }
 
-  function runHebrewDateSearch() {
-    alert("Hebrew date matching will be wired next.");
-  }
-
   function render(list) {
-    resultsDiv.innerHTML = list.map(v =>
-      `<div class="card">
-        <strong>${v.name_en} (${v.name_he})</strong><br>
-        ${v.category} · Lived in ${v.residence} · Killed in ${v.death_location}
-      </div>`
-    ).join("");
+    resultsDiv.innerHTML = list.length
+      ? list.map(v =>
+          `<div class="card">
+            <strong>${v.name_en}${v.name_he ? ` (${v.name_he})` : ""}</strong><br>
+            ${v.category} · Lived in ${v.residence} · Killed in ${v.death_location}
+          </div>`
+        ).join("")
+      : "<p>No results found.</p>";
   }
 </script>
   
