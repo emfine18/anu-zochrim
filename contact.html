@@ -11,29 +11,36 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html, body {
+      height: 100%;
       margin: 0;
-      padding: 0;
     }
 
     body {
-      font-family: "Noto Serif", serif;
+      font-family: "Poppins", sans-serif;
       background: #ffffff;
       color: #334155;
     }
 
-    /* HEADER */
+    /* ===== PAGE WRAPPER (FOOTER FIX) ===== */
+    .page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content {
+      flex: 1;
+    }
+
+    /* ===== HEADER ===== */
     header {
       width: 100%;
       padding: 24px 32px;
       background: #ffffff;
       border-bottom: 1px solid #e5e7eb;
-      position: relative;
-      z-index: 10;
     }
 
     .header-inner {
@@ -46,7 +53,6 @@
 
     .logo img {
       height: 44px;
-      width: auto;
       display: block;
     }
 
@@ -60,88 +66,90 @@
       text-decoration: none;
       font-family: "Noto Serif", serif;
       font-weight: 500;
-      color: #556b2f; /* olive green */
       text-transform: uppercase;
       letter-spacing: 0.08em;
       font-size: 0.85rem;
-    }
-
-    /* HAMBURGER */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-    }
-
-    .hamburger span {
-      height: 2px;
-      width: 22px;
-      background: #556b2f;
-      margin: 4px 0;
-    }
-
-    /* PAGE CONTENT */
-    .content {
-      max-width: 900px;
-      margin: 64px auto;
-      padding: 0 24px;
-    }
-
-    .content h1 {
-      font-size: 1.6rem;
-      font-weight: 600;
       color: #556b2f;
-      margin-bottom: 24px;
-      text-transform: uppercase;
-      letter-spacing: 0;
     }
 
-    .content p {
-      font-size: 1.05rem;
-      line-height: 1.7;
-      margin-bottom: 20px;
+    nav a:hover {
+      text-decoration: underline;
     }
 
-    .email {
+    /* ===== PAGE CONTENT ===== */
+    .contact-section {
+      max-width: 900px;
+      margin: 56px auto;
+      padding: 0 24px;
+      font-family: "Noto Serif", serif;
+    }
+
+    .page-title {
       font-weight: 600;
-      font-size: 1.1rem;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      color: #556b2f;
+      margin: 0 0 24px 0;
+    }
+
+    .contact-section p {
+      font-size: 1.06rem;
+      line-height: 1.7;
+      margin-bottom: 18px;
+    }
+
+    .contact-section strong {
       color: #0f172a;
     }
 
-    /* MOBILE */
+    /* ===== FOOTER ===== */
+    footer {
+      background: #252d4c;
+      color: #ffffff;
+      width: 100%;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .footer-inner img {
+      height: 42px;
+      margin-bottom: 16px;
+    }
+
+    .footer-links {
+      margin-bottom: 12px;
+    }
+
+    .footer-links a {
+      color: #ffffff;
+      text-decoration: none;
+      margin: 0 12px;
+      font-family: "Noto Serif", serif;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      opacity: 0.85;
+    }
+
     @media (max-width: 768px) {
-
-      header {
-        padding: 20px 20px;
-      }
-
-      /* move logo slightly left */
-      .logo {
-        margin-left: -8px;
-      }
-
-      nav {
-        position: absolute;
-        top: 100%;
-        right: 20px;
-        background: #ffffff;
-        border: 1px solid #e5e7eb;
-        flex-direction: column;
-        padding: 16px;
-        display: none;
-      }
-
       nav a {
-        margin: 12px 0;
-        color: #556b2f;
-      }
-
-      nav.open {
-        display: flex;
-      }
-
-      .hamburger {
-        display: flex;
+        margin-left: 18px;
       }
     }
   </style>
@@ -149,69 +157,65 @@
 
 <body>
 
-<header>
-  <div class="header-inner">
-    <div class="logo">
-      <a href="index.html">
-        <img src="images/AZlogo2Artboard 3.png" alt="Anu Zochrim logo">
-      </a>
+<div class="page-wrapper">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <a href="index.html">
+          <img src="images/AZlogo2Artboard 3.png" alt="Anu Zochrim logo">
+        </a>
+      </div>
+
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="resources.html">Resources</a>
+        <a href="contact.html">Contact</a>
+        <a href="donate.html">Donate</a>
+      </nav>
     </div>
+  </header>
 
-    <div class="hamburger" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
+  <!-- CONTENT -->
+  <main class="content">
+    <section class="contact-section">
+      <h2 class="page-title">Contact</h2>
+
+      <p>
+        We welcome inquiries, corrections, and messages related to this
+        memorial initiative. If you have information to share or would like
+        to get involved, please reach out.
+      </p>
+
+      <p>
+        <strong>Email:</strong><br>
+        contact@anuzochrim.org
+      </p>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <img src="images/Logo.png" alt="Anu Zochrim logo">
+
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="resources.html">Resources</a>
+        <a href="contact.html">Contact</a>
+        <a href="donate.html">Donate</a>
+      </div>
+
+      <div class="footer-copy">
+        © 2025 Anu Zochrim · אנו זוכרים · All rights reserved
+      </div>
     </div>
+  </footer>
 
-    <nav id="nav">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="resources.html">Resources</a>
-      <a href="contact.html">Contact</a>
-      <a href="donate.html">Donate</a>
-    </nav>
-  </div>
-</header>
-
-<section class="content">
-  <h1>Contact</h1>
-
-  <p>
-    We welcome inquiries, corrections, and messages related to this memorial initiative.
-    If you have information to share or would like to get involved, please reach out.
-  </p>
-
-  <p class="email">
-    Email: contact@anuzochrim.org
-  </p>
-</section>
-
-<script>
-  function toggleMenu() {
-    document.getElementById("nav").classList.toggle("open");
-  }
-</script>
+</div>
 
 </body>
 </html>
-
-html, body {
-  height: 100%;
-  margin: 0;
-}
-
-.page-wrapper {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.content {
-  flex: 1; /* pushes footer to bottom */
-}
-
-.site-footer {
-  background: #252d4c; /* your blue */
-  color: white;
-  width: 100%;
-}
