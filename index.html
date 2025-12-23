@@ -8,153 +8,69 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
-    body {
+    /* RESET */
+    html, body {
       margin: 0;
+      padding: 0;
+    }
+
+    body {
       font-family: "Poppins", sans-serif;
       color: #0f172a;
       background: #ffffff;
     }
 
-    h1, h2 {
-      font-family: "Noto Serif", serif;
+    /* HEADER (ABOVE HERO, NO BAR) */
+    header {
+      width: 100%;
+      padding: 24px 32px;
     }
 
-    /* HEADER */
-   header {
-  width: 100%;
-  padding: 24px 28px;
-  background: transparent; /* no bar */
-}
-
-.header-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.logo img {
-  height: 42px;
-  width: auto;
-}
-
-nav a {
-  margin-left: 28px;
-  text-decoration: none;
-  font-family: "Noto Serif", serif;
-  font-weight: 600;
-  color: #0f172a;
-}
-
-<section class="hero"></section>
-
-    nav a {
-  margin-left: 28px;
-  text-decoration: none;
-  font-family: "Noto Serif", serif; /* THIS LINE */
-  font-weight: 600;
-  color: white;
-  letter-spacing: 0.02em;
-}
-
-    nav a {
-  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
-}
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
     .logo img {
-  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.4));
-}
-
-    .hero {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  background-image: url("images/beeri-oct7.jpg");
-  background-size: cover;
-  background-position: center bottom;
-}
-
-    <header>
-  <div class="header-inner">
-    <div class="logo">
-      <a href="/">
-        <img src="images/Logo.png" alt="Anu Zochrim logo">
-      </a>
-    </div>
-
-    <nav>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-      <a href="donate.html">Donate</a>
-    </nav>
-  </div>
-</header>
-
-<section class="hero"></section>
-    
-    .logo img {
-      height: 42px;
+      height: 44px;
       width: auto;
       display: block;
     }
 
-    .nav-desktop {
-      display: flex;
-    }
-
-    .nav-desktop a {
-      margin-left: 24px;
+    nav a {
+      margin-left: 28px;
       text-decoration: none;
-      color: white;
-      font-weight: 500;
+      font-family: "Noto Serif", serif;
+      font-weight: 400;
+      color: #ffffff;
     }
 
-    /* HAMBURGER */
-    .hamburger {
-      display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 8px;
+    /* HERO IMAGE */
+    .hero {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background-image: url("images/beeri-oct7.jpg");
+      background-size: cover;
+      background-position: center bottom;
     }
 
-    .hamburger span {
-      display: block;
-      width: 26px;
-      height: 2px;
-      background: white;
-      margin: 6px 0;
-    }
+    /* MOBILE HERO */
+    @media (max-width: 768px) {
+      nav a {
+        margin-left: 16px;
+        font-size: 0.9rem;
+      }
 
-    /* MOBILE MENU */
-    .mobile-menu {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: white;
-      padding: 80px 32px;
-      z-index: 2000;
-    }
-
-    .mobile-menu a {
-      display: block;
-      font-size: 1.6rem;
-      margin-bottom: 28px;
-      text-decoration: none;
-      color: #0f172a;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 20px;
-      right: 24px;
-      background: none;
-      border: none;
-      font-size: 2.2rem;
-      cursor: pointer;
+      .hero {
+        aspect-ratio: 4 / 5;
+        background-position: center 30%;
+      }
     }
 
     /* DESCRIPTION */
@@ -170,228 +86,44 @@ nav a {
       color: #334155;
       margin-bottom: 20px;
     }
-
-    /* SEARCH */
-    .search {
-      max-width: 900px;
-      margin: 72px auto;
-      padding: 0 24px;
-    }
-
-    .search-controls {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-
-    select, input {
-      width: 100%;
-      padding: 12px;
-      font-size: 0.95rem;
-      border: 1px solid #cbd5f5;
-    }
-
-    .card {
-      border: 1px solid #e5e7eb;
-      padding: 16px;
-      margin-bottom: 12px;
-    }
-
-    .name {
-      font-weight: 600;
-    }
-
-    .meta {
-      font-size: 0.95rem;
-      color: #475569;
-    }
-
-    .no-results {
-      color: #64748b;
-      font-style: italic;
-    }
-
-    footer {
-      margin-top: 80px;
-      padding: 32px 24px;
-      background: #0f172a;
-      color: #e5e7eb;
-      text-align: center;
-      font-size: 0.9rem;
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 900px) {
-      .nav-desktop {
-        display: none;
-      }
-
-      .hamburger {
-        display: block;
-      }
-
-      .search-controls {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        height: 420px;
-      }
-
-      .hero-content {
-        padding-top: 170px;
-      }
-    }
   </style>
 </head>
 
 <body>
 
-<header>
-  <div class="header-inner">
-    <div class="logo">
-      <a href="/">
-        <img src="images/logo.png" alt="Anu Zochrim logo">
-      </a>
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <a href="/">
+          <img src="images/Logo.png" alt="Anu Zochrim logo">
+        </a>
+      </div>
+
+      <nav>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="donate.html">Donate</a>
+      </nav>
     </div>
+  </header>
 
-    <nav>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-      <a href="donate.html">Donate</a>
-    </nav>
-  </div>
-</header>
+  <!-- HERO IMAGE -->
+  <section class="hero"></section>
 
-<section class="hero"></section>
+  <!-- DESCRIPTION -->
+  <section class="description">
+    <p>
+      Anu Zochrim is a public memorial initiative dedicated to honoring the memory
+      of Israelis and Jews murdered on October 7 and in the war that followed.
+    </p>
 
-<section class="hero">
-  <div class="hero-content">
-    <h1>We Remember</h1>
-  </div>
-</section>
-
-<section class="description">
-  <p>
-    Anu Zochrim is a public memorial initiative dedicated to honoring the memory
-    of Israelis and Jews murdered on October 7 and in the war that followed.
-  </p>
-  <p>
-    The project exists to preserve names with dignity, accuracy, and permanence,
-    and to enable learning, prayer, and moments of life to be intentionally
-    dedicated in their memory.
-  </p>
-</section>
-
-<section class="search">
-  <h2>Search the Memorial</h2>
-  <p>Select how you would like to search, then optionally refine by category.</p>
-
-  <div class="search-controls">
-    <select id="searchType">
-      <option value="name">Name (English or Hebrew)</option>
-      <option value="birth_en">Birth date (English – MM/DD)</option>
-      <option value="death_en">Death date (English – MM/DD)</option>
-      <option value="birth_he">Birth date (Hebrew)</option>
-      <option value="death_he">Death date (Hebrew)</option>
-      <option value="death_location">City / location of death</option>
-      <option value="residence">City / place of residence</option>
-    </select>
-
-    <select id="category">
-      <option value="">All categories</option>
-      <option value="Civilian">Civilian</option>
-      <option value="Hostage">Hostage</option>
-      <option value="IDF Soldier">IDF Soldier</option>
-      <option value="Police / Border Patrol">Police / Border Patrol</option>
-    </select>
-  </div>
-
-  <input id="searchInput" placeholder="Enter search value" oninput="runSearch()">
-  <div id="results"></div>
-</section>
-
-<footer>
-  Anu Zochrim · אנו זוכרים · A public memorial initiative
-</footer>
-
-<script>
-  function toggleMenu() {
-    const menu = document.getElementById("mobileMenu");
-    if (!menu) return;
-    menu.style.display =
-      menu.style.display === "block" ? "none" : "block";
-  }
-
-  const victims = [
-    {
-      name_en: "Yonatan Steinberg",
-      name_he: "יונתן שטיינברג",
-      birth_en: "03/12",
-      death_en: "10/07",
-      birth_he: "י״ט אדר",
-      death_he: "כ״ב תשרי",
-      residence: "Kibbutz Shomria",
-      death_location: "Southern Israel",
-      category: "IDF Soldier"
-    },
-    {
-      name_en: "Shani Louk",
-      name_he: "שני לוק",
-      birth_en: "04/07",
-      death_en: "10/07",
-      birth_he: "ט״ז ניסן",
-      death_he: "כ״ב תשרי",
-      residence: "Tel Aviv",
-      death_location: "Nova Festival",
-      category: "Civilian"
-    }
-  ];
-
-  function runSearch() {
-    const type = document.getElementById("searchType").value;
-    const category = document.getElementById("category").value;
-    const input = document.getElementById("searchInput").value.trim();
-    const resultsDiv = document.getElementById("results");
-
-    resultsDiv.innerHTML = "";
-    if (!input) return;
-
-    const matches = victims.filter(v => {
-      if (type === "name") {
-        if (
-          !v.name_en.toLowerCase().includes(input.toLowerCase()) &&
-          !v.name_he.includes(input)
-        ) return false;
-      } else {
-        if (!v[type] || !v[type].toLowerCase().includes(input.toLowerCase()))
-          return false;
-      }
-
-      if (category && v.category !== category) return false;
-      return true;
-    });
-
-    if (matches.length === 0) {
-      resultsDiv.innerHTML = '<div class="no-results">No results found.</div>';
-      return;
-    }
-
-    matches.forEach(v => {
-      const div = document.createElement("div");
-      div.className = "card";
-      div.innerHTML = `
-        <div class="name">${v.name_en} (${v.name_he})</div>
-        <div class="meta">
-          ${v.category} · ${v.residence} · ${v.death_location}<br>
-          Birth: ${v.birth_en} (${v.birth_he}) · Death: ${v.death_en} (${v.death_he})
-        </div>
-      `;
-      resultsDiv.appendChild(div);
-    });
-  }
-</script>
+    <p>
+      The project exists to ensure that names are preserved with dignity,
+      accuracy, and permanence — and to enable learning, prayer, and moments of
+      life to be intentionally dedicated in their memory.
+    </p>
+  </section>
 
 </body>
 </html>
