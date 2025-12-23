@@ -183,65 +183,78 @@ nav a {
 
   <style>
 
- <!-- LOAD NOTO SANS -->
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 <style>
 <!-- LOAD NOTO SERIF -->
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- LOAD NOTO SERIF -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
-  /* SEARCH CONTAINER */
   #search {
     max-width: 900px;
-    margin: 64px auto;
-    padding: 0 24px;
+    margin: 72px auto;
+    padding: 0 32px;
     font-family: "Noto Serif", serif;
   }
 
-  /* TITLE */
   .search-title {
     font-family: "Noto Serif", serif;
     font-weight: 600;
-    font-size: 1.1rem;
-    color: #556b2f; /* olive green */
-    margin-bottom: 20px;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #556b2f;
+    margin-bottom: 28px;
   }
 
-  /* FILTER ROWS */
   #search .filters {
     display: flex;
-    gap: 12px;
-    margin-bottom: 16px;
+    gap: 16px;
+    margin-bottom: 20px;
     flex-wrap: wrap;
   }
 
-  /* INPUTS */
-  #search select,
+  /* DROPDOWNS */
+  #search select {
+    font-family: "Noto Serif", serif;
+    font-size: 0.95rem;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    background: #ffffff;
+    color: #1f2937;
+    min-width: 220px;
+  }
+
+  /* TEXT SEARCH INPUT (OLIVE GREEN) */
   #search input {
     font-family: "Noto Serif", serif;
     font-size: 0.95rem;
-    padding: 10px 12px;
-    border: 1px solid #cbd5e1;
+    padding: 12px 14px;
+    border: 1px solid #556b2f;
     border-radius: 4px;
-    background: #f7f9f4; /* very subtle green */
-    color: #1f2937;
-    min-width: 200px;
+    background: #556b2f;
+    color: #ffffff;
+    width: 100%;
+    max-width: 460px;
   }
 
-  #search select:focus,
+  #search input::placeholder {
+    color: #e6efe0;
+  }
+
   #search input:focus {
     outline: none;
-    border-color: #556b2f;
-    background: #f1f5ec;
+    border-color: #3f5222;
+    background: #3f5222;
   }
 
-  /* BUTTONS */
+  /* BUTTON */
   #search button {
     font-family: "Noto Serif", serif;
     font-size: 0.9rem;
-    padding: 10px 18px;
-    background: #556b2f;
+    padding: 12px 20px;
+    background: #1f2937;
     color: #ffffff;
     border: none;
     border-radius: 4px;
@@ -249,28 +262,31 @@ nav a {
   }
 
   #search button:hover {
-    background: #3f5222;
+    background: #111827;
   }
 
   /* RESULTS */
   .card {
     border-bottom: 1px solid #e5e7eb;
     padding: 14px 0;
-    font-family: "Noto Serif", serif;
   }
 
-  /* MOBILE */
   @media (max-width: 768px) {
+    #search {
+      padding: 0 20px;
+    }
+
     #search select,
     #search input {
       width: 100%;
+      max-width: 100%;
     }
   }
 </style>
 
 <section id="search">
 
-  <h3 class="search-title">Search the Database</h3>
+  <h3 class="search-title">SEARCH THE DATABASE</h3>
 
   <div class="filters">
     <select id="searchMode">
@@ -294,7 +310,7 @@ nav a {
     </select>
   </div>
 
-  <div id="textInput" style="display:none;">
+  <div id="textInput">
     <input id="textValue" placeholder="Enter search value" />
   </div>
 
