@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Resources – Anu Zochrim</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #ffffff;
+      color: #334155;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      width: 100%;
+      padding: 24px 32px;
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo img {
+      height: 44px;
+      display: block;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+    }
+
+    nav a {
+      margin-left: 28px;
+      text-decoration: none;
+      font-family: "Noto Serif", serif;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.85rem;
+      color: #556b2f;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== CONTENT ===== */
+    .content {
+      max-width: 900px;
+      margin: 48px auto;
+      padding: 0 24px;
+      font-family: "Noto Serif", serif;
+    }
+
+    .page-title {
+      font-weight: 600;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      color: #556b2f;
+      margin: 0 0 24px 0;
+    }
+
+    .content p {
+      font-size: 1.06rem;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .resource-list {
+      margin-top: 24px;
+    }
+
+    .resource-item {
+      margin-bottom: 18px;
+    }
+
+    .resource-item a {
+      font-weight: 600;
+      color: #0f172a;
+      text-decoration: none;
+    }
+
+    .resource-item a:hover {
+      text-decoration: underline;
+    }
+
+    .resource-item span {
+      display: block;
+      font-size: 0.95rem;
+      margin-top: 4px;
+      color: #475569;
+    }
+
+    @media (max-width: 768px) {
+      nav a {
+        margin-left: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <a href="index.html">
+        <img src="images/AZlogo2Artboard 3.png" alt="Anu Zochrim logo">
+      </a>
+    </div>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="resources.html">Resources</a>
+      <a href="contact.html">Contact</a>
+      <a href="donate.html">Donate</a>
+    </nav>
+  </div>
+</header>
+
+<section class="content">
+  <h2 class="page-title">Resources</h2>
+
+  <p>
+    This page provides trusted resources for learning, remembrance, and support
+    in the aftermath of October 7 and the war to defend the State of Israel.
+  </p>
+
+  <div class="resource-list">
+
+    <div class="resource-item">
+      <a href="https://www.idf.il/en/" target="_blank">Israel Defense Forces</a>
+      <span>Official updates, statements, and information from the IDF.</span>
+    </div>
+
+    <div class="resource-item">
+      <a href="https://www.aipac.org/" target="_blank">AIPAC</a>
+      <span>Policy, advocacy, and educational resources supporting the U.S.–Israel relationship.</span>
+    </div>
+
+    <div class="resource-item">
+      <a href="https://www.jewishvirtuallibrary.org/" target="_blank">Jewish Virtual Library</a>
+      <span>Historical background, biographies, and documentation.</span>
+    </div>
+
+    <div class="resource-item">
+      <a href="https://simchattorahchallenge.com/" target="_blank">Simchat Torah Challenge</a>
+      <span>Initiatives dedicating learning and mitzvot in memory of October 7 victims.</span>
+    </div>
+
+  </div>
+</section>
+
+</body>
+</html>
