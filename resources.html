@@ -16,20 +16,25 @@
     html, body {
       margin: 0;
       padding: 0;
+      height: 100%;
     }
 
     body {
       font-family: "Poppins", sans-serif;
       background: #ffffff;
       color: #334155;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* ===== HEADER (MATCHES DONATE PAGE EXACTLY) ===== */
+    /* ===== HEADER ===== */
     header {
       width: 100%;
       padding: 24px 32px;
       background: #ffffff;
       border-bottom: 1px solid #e5e7eb;
+      position: relative;
+      z-index: 10;
     }
 
     .header-inner {
@@ -51,6 +56,7 @@
     }
 
     nav a {
+      position: relative;
       margin-left: 28px;
       text-decoration: none;
       font-family: "Noto Serif", serif;
@@ -61,14 +67,74 @@
       color: #556b2f;
     }
 
-    nav a:hover {
-      text-decoration: underline;
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 100%;
+      height: 2px;
+      background: #556b2f;
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
     }
 
-    /* ===== CONTENT ===== */
+    nav a:hover::after {
+      transform: scaleX(1);
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      height: 2px;
+      width: 22px;
+      background: #556b2f;
+      margin: 4px 0;
+    }
+
+    /* Mobile Menu */
+    @media (max-width: 768px) {
+      nav {
+        position: absolute;
+        top: 100%;
+        right: 24px;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        flex-direction: column;
+        padding: 16px;
+        display: none;
+      }
+
+      nav a {
+        margin: 12px 0;
+      }
+
+      nav.open {
+        display: flex;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .logo {
+        margin-left: -6px;
+      }
+    }
+
+    /* ===== PAGE CONTENT ===== */
+    main {
+      flex: 1;
+    }
+
     .content {
-      max-width: 1000px;
-      margin: 48px auto 80px;
+      max-width: 1100px;
+      margin: 48px auto;
       padding: 0 24px;
       font-family: "Noto Serif", serif;
     }
@@ -78,17 +144,11 @@
       font-size: 1.4rem;
       text-transform: uppercase;
       color: #556b2f;
-      margin: 0 0 24px 0;
-    }
-
-    .content p {
-      font-size: 1.06rem;
-      line-height: 1.7;
       margin-bottom: 32px;
     }
 
     /* ===== RESOURCE GRID ===== */
-    .resources-grid {
+    .resource-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 24px;
@@ -105,39 +165,75 @@
     }
 
     .resource-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.08);
     }
 
     .resource-card img {
       width: 100%;
       height: 160px;
       object-fit: cover;
-      display: block;
     }
 
-    .resource-card .card-content {
+    .resource-card-content {
       padding: 16px;
     }
 
     .resource-card h3 {
-      font-family: "Noto Serif", serif;
-      font-size: 1rem;
       margin: 0 0 8px 0;
+      font-size: 1.05rem;
       color: #0f172a;
     }
 
     .resource-card p {
+      margin: 0;
       font-size: 0.95rem;
       line-height: 1.5;
-      margin: 0;
       color: #475569;
     }
 
-    @media (max-width: 768px) {
-      nav a {
-        margin-left: 18px;
-      }
+    /* ===== FOOTER (NORMAL, NO HAMBURGER) ===== */
+    footer {
+      background: #252d4c;
+      color: #ffffff;
+      padding: 32px 24px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      text-align: center;
+    }
+
+    .footer-logo img {
+      height: 40px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer-links a {
+      color: #ffffff;
+      text-decoration: none;
+      font-family: "Noto Serif", serif;
+      font-size: 0.85rem;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      opacity: 0.85;
     }
   </style>
 </head>
@@ -152,7 +248,13 @@
       </a>
     </div>
 
-    <nav>
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <nav id="nav">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="resources.html">Resources</a>
@@ -162,43 +264,67 @@
   </div>
 </header>
 
-<section class="content">
-  <h2 class="page-title">Resources</h2>
+<main>
+  <section class="content">
+    <h2 class="page-title">Resources</h2>
 
-  <p>
-    The following resources provide information, support, and opportunities for
-    learning, remembrance, and engagement related to the events of October 7
-    and the ongoing effort to strengthen Jewish life and the State of Israel.
-  </p>
+    <div class="resource-grid">
 
-  <div class="resources-grid">
+      <a href="https://www.yadvashem.org" target="_blank" class="resource-card">
+        <img src="images/resource-placeholder.jpg" alt="">
+        <div class="resource-card-content">
+          <h3>Yad Vashem</h3>
+          <p>The World Holocaust Remembrance Center, preserving memory through education and documentation.</p>
+        </div>
+      </a>
 
-    <a href="https://www.idf.il" target="_blank" class="resource-card">
-      <img src="images/resource-placeholder.jpg" alt="IDF">
-      <div class="card-content">
-        <h3>Israel Defense Forces</h3>
-        <p>Official updates and information from the IDF.</p>
-      </div>
-    </a>
+      <a href="https://www.idf.il" target="_blank" class="resource-card">
+        <img src="images/resource-placeholder.jpg" alt="">
+        <div class="resource-card-content">
+          <h3>IDF Memorials</h3>
+          <p>Official Israeli Defense Forces memorial and remembrance resources.</p>
+        </div>
+      </a>
 
-    <a href="https://www.jewishfederations.org" target="_blank" class="resource-card">
-      <img src="images/resource-placeholder.jpg" alt="Jewish Federations">
-      <div class="card-content">
-        <h3>Jewish Federations</h3>
-        <p>Community support, relief efforts, and resources.</p>
-      </div>
-    </a>
+      <a href="https://www.jewishvirtuallibrary.org" target="_blank" class="resource-card">
+        <img src="images/resource-placeholder.jpg" alt="">
+        <div class="resource-card-content">
+          <h3>Jewish Virtual Library</h3>
+          <p>A comprehensive source for Jewish history, culture, and remembrance.</p>
+        </div>
+      </a>
 
-    <a href="https://www.aipac.org" target="_blank" class="resource-card">
-      <img src="images/resource-placeholder.jpg" alt="AIPAC">
-      <div class="card-content">
-        <h3>AIPAC</h3>
-        <p>Policy, advocacy, and educational resources.</p>
-      </div>
-    </a>
+    </div>
+  </section>
+</main>
 
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <a href="index.html">
+        <img src="images/AZlogo2Artboard 3.png" alt="Anu Zochrim logo">
+      </a>
+    </div>
+
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="resources.html">Resources</a>
+      <a href="contact.html">Contact</a>
+      <a href="donate.html">Donate</a>
+    </div>
+
+    <div class="footer-copy">
+      © 2025 Anu Zochrim · We Remember · All rights reserved
+    </div>
   </div>
-</section>
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("nav").classList.toggle("open");
+  }
+</script>
 
 </body>
 </html>
