@@ -1,27 +1,91 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>פלוני אלמוני</title>
-  <style>
-    body {
-      font-family: "Noto Serif", serif;
-      max-width: 700px;
-      margin: 40px auto;
-      line-height: 1.6;
-    }
-    h1 { margin-bottom: 0; }
-    .label { font-weight: bold; }
-  </style>
+<meta charset="UTF-8">
+<title>Full Name</title>
+
+<style>
+body {
+  font-family: "Noto Serif", serif;
+  background: #ffffff;
+}
+
+.page {
+  max-width: 1100px;
+  margin: 60px auto;
+  display: grid;
+  grid-template-columns: 260px 1fr 2fr;
+  column-gap: 40px;
+  align-items: start;
+}
+
+/* IMAGE */
+.photo img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* NAME BLOCK */
+.identity h2 {
+  font-size: 14px;
+  letter-spacing: 1px;
+  margin: 0 0 10px;
+  color: #1f2a44;
+}
+
+.identity h1 {
+  font-size: 34px;
+  margin: 0 0 25px;
+  color: #1f2a44;
+}
+
+.meta {
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* BIO */
+.bio {
+  border-left: 3px solid #1f2a44;
+  padding-left: 30px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #333;
+}
+</style>
 </head>
+
 <body>
 
-<h1>פלוני אלמוני</h1>
-<p><em>John Doe</em></p>
+<div class="page">
 
-<p><span class="label">Birth:</span> 1980</p>
-<p><span class="label">Death:</span> 2023</p>
-<p><span class="label">Gender:</span> Male</p>
+  <!-- PHOTO -->
+  <div class="photo">
+    <img src="photo.jpg" alt="Portrait">
+  </div>
+
+  <!-- NAME + DETAILS -->
+  <div class="identity">
+    <h2>POSITION</h2>
+    <h1>FULL NAME <small>ז״ל</small></h1>
+
+    <div class="meta">
+      <div><strong>Category:</strong> Civilian</div>
+      <div><strong>Date of birth:</strong> 1995</div>
+      <div><strong>Date of death:</strong> 2023</div>
+    </div>
+  </div>
+
+  <!-- BIOGRAPHY -->
+  <div class="bio">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy
+    nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+    Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper
+    suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+  </div>
+
+</div>
 
 </body>
 </html>
