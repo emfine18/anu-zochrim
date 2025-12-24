@@ -5,19 +5,18 @@
   <title>Anu Zochrim – We Remember</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- SOCIAL -->
+  <!-- Social -->
   <meta property="og:title" content="Anu Zochrim – We Remember">
-  <meta property="og:description" content="A public memorial honoring those murdered on October 7, 2023.">
-  <meta property="og:type" content="website">
+  <meta property="og:description" content="A public memorial honoring the Israelis murdered on October 7, 2023.">
 
-  <!-- FONTS -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
-    /* ================= RESET ================= */
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: "Poppins", sans-serif;
@@ -28,7 +27,6 @@
     /* ================= HEADER ================= */
     header {
       position: absolute;
-      top: 0;
       width: 100%;
       padding: 24px 32px;
       z-index: 1000;
@@ -42,11 +40,8 @@
       align-items: center;
     }
 
-    .logo {
-      font-family: "Noto Serif", serif;
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: #ffffff;
+    .logo img {
+      height: 44px;
     }
 
     nav a {
@@ -71,7 +66,7 @@
     .about-home {
       background: #556b2f;
       color: #ffffff;
-      padding: 56px 24px;
+      padding: 48px 24px;
     }
 
     .about-home-inner {
@@ -79,13 +74,12 @@
       margin: 0 auto;
       font-family: "Noto Serif", serif;
       line-height: 1.7;
-      font-size: 1.05rem;
     }
 
     /* ================= SEARCH ================= */
-    #search {
+    #search, #search-output {
       max-width: 1200px;
-      margin: 64px auto;
+      margin: 56px auto;
       padding: 0 24px;
       font-family: "Noto Serif", serif;
     }
@@ -95,14 +89,14 @@
       font-weight: 600;
       text-transform: uppercase;
       color: #556b2f;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
     .filters {
       display: flex;
-      flex-wrap: wrap;
       gap: 16px;
-      margin-bottom: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
     }
 
     select, input {
@@ -111,11 +105,10 @@
       border-radius: 4px;
       min-width: 220px;
       font-family: "Noto Serif", serif;
-      font-size: 0.95rem;
     }
 
     button {
-      padding: 12px 28px;
+      padding: 12px 26px;
       background: #556b2f;
       color: #ffffff;
       border: none;
@@ -126,29 +119,21 @@
 
     .hidden { display: none; }
 
-    /* ================= OUTPUT ================= */
-    #search-output {
-      max-width: 1200px;
-      margin: 64px auto;
-      padding: 0 24px;
-      font-family: "Noto Serif", serif;
-    }
-
+    /* ================= RESULTS ================= */
     .result {
       border-bottom: 1px solid #e5e7eb;
-      padding: 18px 0;
+      padding: 16px 0;
     }
 
     .result-name {
-      font-size: 1.05rem;
       font-weight: 600;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .result-meta {
       font-size: 0.9rem;
-      line-height: 1.5;
       color: #374151;
+      line-height: 1.45;
     }
 
     /* ================= FOOTER ================= */
@@ -156,14 +141,14 @@
       background: #252d4c;
       color: #ffffff;
       text-align: center;
-      padding: 40px 24px;
-      margin-top: 80px;
+      padding: 36px 24px;
+      margin-top: 64px;
     }
 
     footer a {
       color: #ffffff;
       text-decoration: none;
-      margin: 0 14px;
+      margin: 0 12px;
       font-family: "Noto Serif", serif;
       font-size: 0.85rem;
       text-transform: uppercase;
@@ -173,10 +158,12 @@
 
 <body>
 
-<!-- ================= HEADER ================= -->
+<!-- HEADER -->
 <header>
   <div class="header-inner">
-    <div class="logo">Anu Zochrim</div>
+    <div class="logo">
+      <img src="images/Logo.png" alt="Anu Zochrim">
+    </div>
     <nav>
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
@@ -187,37 +174,33 @@
   </div>
 </header>
 
-<!-- ================= HERO ================= -->
+<!-- HERO -->
 <section class="hero"></section>
 
-<!-- ================= INTRO ================= -->
+<!-- INTRO -->
 <section class="about-home">
   <div class="about-home-inner">
-    <p>
-      <strong>Anu Zochrim</strong> is a public memorial dedicated to those murdered on October 7, 2023,
-      and to those who fell defending the Jewish people and the State of Israel.
-    </p>
+    <p><strong>Anu Zochrim</strong> is a public memorial dedicated to the Israelis murdered on October 7, 2023, and to those who fell defending the Jewish people and the State of Israel.</p>
   </div>
 </section>
 
-<!-- ================= SEARCH ================= -->
+<!-- SEARCH -->
 <section id="search">
   <h3 class="search-title">Search the Database</h3>
 
   <div class="filters">
     <select id="searchMode">
       <option value="">Search by</option>
-      <option value="name">Name (English / Hebrew)</option>
+      <option value="name">Name</option>
       <option value="residence">Place of residence</option>
       <option value="death_location">Place of death</option>
-      <option value="death_date">Date of death</option>
     </select>
 
     <select id="category">
       <option value="">All categories</option>
       <option value="Civilian">Civilian</option>
-      <option value="IDF Soldier">IDF Soldier</option>
-      <option value="Police / Border Patrol">Police / Border Patrol</option>
+      <option value="Soldier">Soldier</option>
+      <option value="Police">Police</option>
       <option value="Emergency Squad">Emergency Squad</option>
     </select>
   </div>
@@ -226,41 +209,15 @@
     <input id="textValue" placeholder="Enter name or location">
     <button onclick="runTextSearch()">Search</button>
   </div>
-
-  <div id="dateSearch" class="filters hidden">
-    <select id="month">
-      <option value="">Month</option>
-      <option value="01">January</option>
-      <option value="02">February</option>
-      <option value="03">March</option>
-      <option value="04">April</option>
-      <option value="05">May</option>
-      <option value="06">June</option>
-      <option value="07">July</option>
-      <option value="08">August</option>
-      <option value="09">September</option>
-      <option value="10">October</option>
-      <option value="11">November</option>
-      <option value="12">December</option>
-    </select>
-
-    <select id="day">
-      <option value="">Day</option>
-      <!-- 1–31 -->
-      ${Array.from({length:31},(_,i)=>`<option value="${String(i+1).padStart(2,'0')}">${i+1}</option>`).join("")}
-    </select>
-
-    <button onclick="runDateSearch()">Search</button>
-  </div>
 </section>
 
-<!-- ================= OUTPUT ================= -->
+<!-- OUTPUT -->
 <section id="search-output">
   <h3 class="search-title">Search Results</h3>
   <div id="results"></div>
 </section>
 
-<!-- ================= FOOTER ================= -->
+<!-- FOOTER -->
 <footer>
   <a href="index.html">Home</a>
   <a href="about.html">About</a>
@@ -270,7 +227,7 @@
   <p>© 2025 Anu Zochrim</p>
 </footer>
 
-<!-- ================= SCRIPTS ================= -->
+<!-- SCRIPTS -->
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
 <script>
@@ -278,60 +235,37 @@
 
   const searchMode = document.getElementById("searchMode");
   const textSearch = document.getElementById("textSearch");
-  const dateSearch = document.getElementById("dateSearch");
   const resultsDiv = document.getElementById("results");
 
-  /* ---------- LOAD CSV ---------- */
-  Papa.parse("/data/example.csv", {
+  Papa.parse("data/example.csv", {
     download: true,
     header: true,
     complete: function (res) {
       victims = res.data
         .filter(r => r.pid)
         .map(r => ({
-          id: r.pid,
-
           name_en: r.Full_Name_English || "",
-          nickname_en: r.Nickname_English || "",
           name_he: r.Full_Name_Hebrew || "",
-          nickname_he: r.Nickname_Hebrew || "",
-
-          category:
-            r.Role === "Soldier"
-              ? "IDF Soldier"
-              : r.Role === "Police"
-              ? "Police / Border Patrol"
-              : r.Role === "Emergency Squad"
-              ? "Emergency Squad"
-              : "Civilian",
-
           residence: r.Residence || "",
-          death_location: r["Death location"] || r["מקום המוות"] || "",
-          death_date: r["Death date"] || ""
+          death_location: r["Death location"] || "",
+          category: r.Role || ""
         }));
 
-      console.log("CSV loaded:", victims.length);
+      console.log("Loaded victims:", victims.length);
     }
   });
 
-  /* ---------- SEARCH MODE UI ---------- */
   searchMode.onchange = () => {
     textSearch.classList.add("hidden");
-    dateSearch.classList.add("hidden");
     resultsDiv.innerHTML = "";
 
-    if (["name","residence","death_location"].includes(searchMode.value)) {
+    if (searchMode.value) {
       textSearch.classList.remove("hidden");
-    }
-
-    if (searchMode.value === "death_date") {
-      dateSearch.classList.remove("hidden");
     }
   };
 
-  /* ---------- TEXT SEARCH ---------- */
   function runTextSearch() {
-    const q = document.getElementById("textValue").value.trim().toLowerCase();
+    const q = document.getElementById("textValue").value.toLowerCase();
     const cat = document.getElementById("category").value;
 
     const matches = victims.filter(v => {
@@ -339,9 +273,7 @@
 
       return (
         v.name_en.toLowerCase().includes(q) ||
-        v.nickname_en.toLowerCase().includes(q) ||
         v.name_he.includes(q) ||
-        v.nickname_he.includes(q) ||
         v.residence.toLowerCase().includes(q) ||
         v.death_location.toLowerCase().includes(q)
       );
@@ -350,36 +282,13 @@
     render(matches);
   }
 
-  /* ---------- DATE SEARCH ---------- */
-  function runDateSearch() {
-    const m = document.getElementById("month").value;
-    const d = document.getElementById("day").value;
-    const cat = document.getElementById("category").value;
-
-    const matches = victims.filter(v => {
-      if (!v.death_date) return false;
-      const dt = new Date(v.death_date);
-      if (String(dt.getMonth()+1).padStart(2,"0") !== m) return false;
-      if (String(dt.getDate()).padStart(2,"0") !== d) return false;
-      if (cat && v.category !== cat) return false;
-      return true;
-    });
-
-    render(matches);
-  }
-
-  /* ---------- RENDER ---------- */
   function render(list) {
     resultsDiv.innerHTML = list.length
       ? list.map(v => `
           <div class="result">
-            <div class="result-name">
-              ${v.name_en}${v.name_he ? ` (${v.name_he})` : ""}
-            </div>
+            <div class="result-name">${v.name_en}${v.name_he ? ` (${v.name_he})` : ""}</div>
             <div class="result-meta">
-              ${v.category}<br>
-              Residence: ${v.residence || "—"}<br>
-              Place of death: ${v.death_location || "—"}
+              ${v.category} · ${v.residence} · ${v.death_location}
             </div>
           </div>
         `).join("")
