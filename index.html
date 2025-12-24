@@ -66,7 +66,7 @@ button.reset {
       <option value="name">Name</option>
       <option value="age">Age</option>
       <option value="country">Country</option>
-      <option value="deathdate">Death Date (MM/DD)</option>
+      <option value="deathdate">Death date</option>
     </select>
 
     <select id="role">
@@ -78,28 +78,30 @@ button.reset {
     </select>
 
     <select id="gender">
-      <option value="">All genders</option>
+      <option value="">Gender</option>
       <option value="M">Male</option>
       <option value="F">Female</option>
     </select>
   </div>
 
-  <!-- NAME SEARCH -->
+  <!-- NAME -->
   <div id="nameField" class="row hidden">
-    <input id="nameQuery" placeholder="Search name (Hebrew or English)">
+    <input id="firstName" placeholder="First name">
+    <input id="middleName" placeholder="Middle name">
+    <input id="lastName" placeholder="Last name">
   </div>
 
-  <!-- AGE SEARCH -->
+  <!-- AGE -->
   <div id="ageField" class="row hidden">
     <input id="age" type="number" placeholder="Age">
   </div>
 
-  <!-- COUNTRY SEARCH -->
+  <!-- COUNTRY -->
   <div id="countryField" class="row hidden">
     <input id="country" placeholder="Country (English)">
   </div>
 
-  <!-- DATE SEARCH -->
+  <!-- DATE -->
   <div id="dateField" class="row hidden">
     <input id="mmdd" placeholder="MM/DD">
   </div>
@@ -110,29 +112,28 @@ button.reset {
     <button class="reset" onclick="resetSearch()">Reset</button>
   </div>
 
-  <!-- RESULTS -->
   <div id="results"></div>
 </section>
 
 <script>
 let DATA = [];
-let dataLoaded = false;
+let loaded = false;
 
-/* ================= LOAD CSV ================= */
+/* LOAD CSV */
 Papa.parse(
   "https://raw.githubusercontent.com/yuval-harpaz/alarms/refs/heads/master/data/oct7database.csv",
   {
     download: true,
     header: true,
     complete: res => {
-      DATA = res.data.filter(r => r && Object.keys(r).length);
-      dataLoaded = true;
+      DATA = res.data.filter(r => r && r["שם פרטי"]);
+      loaded = true;
       document.getElementById("searchBtn").disabled = false;
     }
   }
 );
 
-/* ================= TOGGLE INPUTS ================= */
+/* TOGGLE INPUTS */
 document.getElementById("searchBy").addEventListener("change", () => {
   ["nameField","ageField","countryField","dateField"]
     .forEach(id => document.getElementById(id).classList.add("hidden"));
@@ -151,52 +152,44 @@ document.getElementById("searchBy").addEventListener("change", () => {
   results.innerHTML = "";
 });
 
-/* ================= DATE MATCHER ================= */
+/* MM/DD MATCH */
 function matchMMDD(dateStr, mmdd) {
   if (!dateStr || !mmdd) return false;
   const d = new Date(dateStr);
   if (isNaN(d)) return false;
-
-  const formatted =
+  const f =
     String(d.getMonth()+1).padStart(2,"0") + "/" +
     String(d.getDate()).padStart(2,"0");
-
-  return formatted === mmdd;
+  return f === mmdd;
 }
 
-/* ================= SEARCH ================= */
+/* SEARCH */
 document.getElementById("searchBtn").onclick = () => {
-  if (!dataLoaded) return;
+  if (!loaded) return;
 
   const type = searchBy.value;
   const roleVal = role.value;
   const genderVal = gender.value;
-
-  const q = nameQuery?.value?.toLowerCase() || "";
 
   const res = DATA.filter(r => {
     if (roleVal && r.Role !== roleVal) return false;
     if (genderVal && r.Gender !== genderVal) return false;
 
     if (type === "name") {
-      const text = `
-        ${r["Full name English"] || ""}
-        ${r["Full name Hebrew"] || ""}
-      `.toLowerCase();
-      return text.includes(q);
+      const fn = firstName.value || "";
+      const mn = middleName.value || "";
+      const ln = lastName.value || "";
+
+      if (fn && !r["שם פרטי"]?.includes(fn)) return false;
+      if (mn && !r["שם נוסף"]?.includes(mn)) return false;
+      if (ln && !r["שם משפחה"]?.includes(ln)) return false;
+
+      return true;
     }
 
-    if (type === "age") {
-      return String(r.Age) === age.value;
-    }
-
-    if (type === "country") {
-      return r.Country?.toLowerCase().includes(country.value.toLowerCase());
-    }
-
-    if (type === "deathdate") {
-      return matchMMDD(r["Death date"], mmdd.value);
-    }
+    if (type === "age") return String(r.Age) === age.value;
+    if (type === "country") return r.Country?.toLowerCase().includes(country.value.toLowerCase());
+    if (type === "deathdate") return matchMMDD(r["Death date"], mmdd.value);
 
     return false;
   });
@@ -204,21 +197,19 @@ document.getElementById("searchBtn").onclick = () => {
   results.innerHTML = res.length
     ? res.map(r => `
       <div class="result">
-        <strong>${r["Full name English"] || ""}</strong>
-        ${r["Full name Hebrew"] ? `(${r["Full name Hebrew"]})` : ""}<br>
+        <strong>${r["שם פרטי"]} ${r["שם משפחה"]}</strong><br>
         ${r.Role || ""} · ${r.Country || ""} · ${r["Death date"] || ""}
       </div>
     `).join("")
     : "<p>No results found.</p>";
 };
 
-/* ================= RESET ================= */
+/* RESET */
 function resetSearch() {
-  document.querySelectorAll("input, select").forEach(el => el.value = "");
+  document.querySelectorAll("input,select").forEach(e => e.value = "");
   ["nameField","ageField","countryField","dateField"]
     .forEach(id => document.getElementById(id).classList.add("hidden"));
   results.innerHTML = "";
 }
 </script>
 <!-- ================= END SEARCH ================= -->
-
