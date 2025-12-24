@@ -1,141 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Anu Zochrim – Search the Database</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="logo.png">
+  <meta charset="UTF-8" />
+  <title>Anu Zochrim – We Remember</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!-- NOTO SERIF -->
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 
-<!-- LIBS -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <!-- Libraries -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
 <style>
-:root {
-  --olive: #556b2f;
-  --olive-dark: #3f5222;
-  --bg: #f8f7f4;
-  --border: #e5e7eb;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: "Noto Serif", serif;
-  background: var(--bg);
-  color: #1f2937;
+  font-family: "Poppins", sans-serif;
+  background: #ffffff;
+  color: #334155;
 }
 
-/* HEADER */
+/* ================= HEADER (UNCHANGED) ================= */
 header {
-  background: white;
-  border-bottom: 1px solid var(--border);
+  padding: 24px 32px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
 }
-nav {
+
+.header-inner {
   max-width: 1200px;
-  margin: auto;
-  padding: 16px 24px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
-}
-nav a {
-  margin-left: 18px;
-  color: var(--olive);
-  text-decoration: none;
-  font-weight: 500;
+  align-items: center;
 }
 
-/* HERO */
+.logo img { height: 44px; }
+
+nav a {
+  margin-left: 28px;
+  text-decoration: none;
+  font-family: "Noto Serif", serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.85rem;
+  color: #556b2f;
+}
+
+/* ================= HERO ================= */
 .hero {
+  background: #f5f1e9;
+  padding: 64px 24px;
+}
+
+.hero-inner {
   max-width: 1200px;
   margin: auto;
-  padding: 40px 24px 28px;
-}
-.hero h1 {
-  font-size: 2.4rem;
-  margin-bottom: 6px;
-}
-.hero h2 {
-  font-size: 1.15rem;
-  font-weight: 400;
-  color: var(--olive);
 }
 
-/* SEARCH */
-#search {
-  max-width: 900px;
-  margin: 20px auto 40px;
-  padding: 0 24px;
+.hero h1 {
+  font-family: "Noto Serif", serif;
+  font-size: 2.4rem;
+  margin: 0 0 12px;
 }
+
+.hero p {
+  font-family: "Noto Serif", serif;
+  font-size: 1.1rem;
+  max-width: 760px;
+  line-height: 1.7;
+}
+
+/* ================= SEARCH ================= */
+#search {
+  max-width: 1200px;
+  margin: 56px auto;
+  padding: 0 24px;
+  font-family: "Noto Serif", serif;
+}
+
 .search-title {
   font-weight: 600;
   font-size: 1.4rem;
   text-transform: uppercase;
-  color: var(--olive);
-  margin-bottom: 18px;
+  color: #556b2f;
+  margin-bottom: 24px;
 }
 
 .filters {
   display: flex;
-  gap: 16px;
   flex-wrap: wrap;
+  gap: 14px;
   margin-bottom: 18px;
 }
 
-select,
-input {
-  font-family: "Noto Serif", serif;
-  font-size: 0.95rem;
+.filters input,
+.filters select {
   padding: 12px 14px;
   border: 1px solid #cbd5e1;
-  border-radius: 6px;
+  border-radius: 4px;
+  font-family: "Noto Serif", serif;
   min-width: 220px;
 }
 
-button {
-  font-family: "Noto Serif", serif;
+.filters button {
   padding: 12px 26px;
-  background: var(--olive);
-  color: white;
+  background: #556b2f;
+  color: #ffffff;
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
   cursor: pointer;
 }
-button:hover {
-  background: var(--olive-dark);
+
+.filters button:hover {
+  background: #3f5222;
 }
 
-/* TABLE */
+/* ================= TABLE ================= */
 #tableSection {
   display: none;
   max-width: 1200px;
-  margin: auto;
-  padding: 0 24px 60px;
+  margin: 40px auto 80px;
+  padding: 0 24px;
 }
+
 .table-wrap {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
   padding: 12px;
+}
+
+table.dataTable {
+  font-family: "Noto Serif", serif;
+  font-size: 0.85rem;
 }
 
 table.dataTable thead th {
   background: #f3f4f1;
-  color: var(--olive);
+  color: #556b2f;
   font-weight: 600;
 }
 
+/* ================= FOOTER ================= */
 footer {
-  border-top: 1px solid var(--border);
-  padding: 30px;
+  background: #252d4c;
+  color: #ffffff;
   text-align: center;
-  font-size: 0.85rem;
-  background: white;
+  padding: 32px 20px;
 }
 </style>
 </head>
@@ -143,27 +162,36 @@ footer {
 <body>
 
 <header>
-  <nav>
-    <strong>Anu Zochrim</strong>
-    <div>
-      <a href="#">Home</a>
-      <a href="#">Database</a>
-      <a href="#">About</a>
-      <a href="#">עברית</a>
+  <div class="header-inner">
+    <div class="logo">
+      <img src="images/AZlogo2Artboard 3.png" alt="Anu Zochrim">
     </div>
-  </nav>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="resources.html">Resources</a>
+      <a href="contact.html">Contact</a>
+      <a href="donate.html">Donate</a>
+    </nav>
+  </div>
 </header>
 
 <section class="hero">
-  <h1>October 7 Database</h1>
-  <h2>Search and remember those murdered, fallen, and kidnapped</h2>
+  <div class="hero-inner">
+    <h1>Anu Zochrim</h1>
+    <p>
+      A public memorial dedicated to preserving the names and stories of those
+      murdered on October 7, 2023, and those who fell defending the Jewish people
+      and the State of Israel.
+    </p>
+  </div>
 </section>
 
 <section id="search">
   <h3 class="search-title">Search the Database</h3>
 
   <div class="filters">
-    <input id="globalSearch" placeholder="Search names, places, roles…" />
+    <input id="globalSearch" placeholder="Search all names, places, roles…" />
     <button id="searchBtn">Search</button>
     <button id="resetBtn">Reset</button>
   </div>
@@ -179,42 +207,48 @@ footer {
 </section>
 
 <footer>
-  Anu Zochrim is a volunteer memorial project.
+  © 2025 Anu Zochrim. All rights reserved.
 </footer>
 
 <script>
 let table;
 
-Papa.parse("https://raw.githubusercontent.com/yuval-harpaz/alarms/refs/heads/master/data/oct7database.csv", {
-  download: true,
-  header: true,
-  complete: function(results) {
-    const data = results.data;
-    const cols = Object.keys(data[0]).map(c => ({ title: c, data: c }));
+Papa.parse(
+  "https://raw.githubusercontent.com/yuval-harpaz/alarms/refs/heads/master/data/oct7database.csv",
+  {
+    download: true,
+    header: true,
+    complete: function(results) {
+      const data = results.data;
+      const cols = Object.keys(data[0]).map(c => ({ title: c, data: c }));
 
-    $("#oct7table thead").html("<tr>" + cols.map(c => `<th>${c.title}</th>`).join("") + "</tr>");
-    data.forEach(r => {
-      $("#oct7table tbody").append(
-        "<tr>" + cols.map(c => `<td>${r[c.data] || ""}</td>`).join("") + "</tr>"
+      $("#oct7table thead").html(
+        "<tr>" + cols.map(c => `<th>${c.title}</th>`).join("") + "</tr>"
       );
-    });
 
-    table = $("#oct7table").DataTable({
-      paging: false,
-      order: [],
-      dom: "lrt"
-    });
+      data.forEach(row => {
+        $("#oct7table tbody").append(
+          "<tr>" + cols.map(c => `<td>${row[c.data] || ""}</td>`).join("") + "</tr>"
+        );
+      });
+
+      table = $("#oct7table").DataTable({
+        paging: false,
+        dom: "lrt",
+        order: []
+      });
+    }
   }
-});
+);
 
-$("#searchBtn").on("click", function() {
-  const val = $("#globalSearch").val();
-  if (!val) return;
+$("#searchBtn").on("click", () => {
+  const q = $("#globalSearch").val();
+  if (!q) return;
   $("#tableSection").show();
-  table.search(val).draw();
+  table.search(q).draw();
 });
 
-$("#resetBtn").on("click", function() {
+$("#resetBtn").on("click", () => {
   $("#globalSearch").val("");
   $("#tableSection").hide();
   table.search("").draw();
