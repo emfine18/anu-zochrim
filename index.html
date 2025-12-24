@@ -1,422 +1,169 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Anu Zochrim – We Remember</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- =====================================================
+     DATABASE SEARCH SECTION — CSV BASED
+===================================================== -->
 
-  <!-- ================= SOCIAL PREVIEW ================= -->
-  <meta property="og:title" content="Anu Zochrim – We Remember">
-  <meta property="og:description" content="A public memorial honoring the Israelis murdered by Hamas on October 7, 2023.">
-  <meta property="og:image" content="https://emfine18.github.io/anu-zochrim/preview.jpg">
-  <meta property="og:url" content="https://emfine18.github.io/anu-zochrim/">
-  <meta property="og:type" content="website">
+<!-- PapaParse -->
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
-  <!-- ================= FONTS ================= -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+<section id="anu-search">
 
-  <style>
-    * { box-sizing: border-box; }
+  <h2 class="anu-search-title">Search the Database</h2>
 
-    body {
-      margin: 0;
-      font-family: "Poppins", sans-serif;
-      background: #ffffff;
-      color: #334155;
-    }
+  <div class="anu-search-controls">
+    <input
+      id="anuSearchInput"
+      type="text"
+      placeholder="Search by name (English / Hebrew), residence, role, or location"
+    />
+    <button onclick="anuRunSearch()">Search</button>
+    <button class="reset" onclick="anuResetSearch()">Reset</button>
+  </div>
 
-    /* ====================================================
-       HEADER (OVER HERO, NO WHITE BAR)
-    ==================================================== */
-    header {
-      position: absolute;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-      padding: 24px 32px;
-    }
+  <div id="anuSearchResults"></div>
 
-    .header-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+</section>
 
-    .logo img {
-      height: 44px;
-      display: block;
-    }
-
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 28px;
-    }
-
-    nav a {
-      font-family: "Noto Serif", serif;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #ffffff;
-      text-decoration: none;
-      position: relative;
-    }
-
-    nav a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -4px;
-      width: 0;
-      height: 1px;
-      background: #ffffff;
-      transition: width 0.2s ease;
-    }
-
-    nav a:hover::after {
-      width: 100%;
-    }
-
-    /* ================= HAMBURGER ================= */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-    }
-
-    .hamburger span {
-      width: 22px;
-      height: 2px;
-      background: #ffffff;
-      margin: 4px 0;
-    }
-
-    /* ================= MOBILE NAV ================= */
-    @media (max-width: 768px) {
-      nav {
-        position: absolute;
-        top: 100%;
-        right: 24px;
-        background: #ffffff;
-        border: 1px solid #e5e7eb;
-        flex-direction: column;
-        padding: 12px 16px;
-        display: none;
-      }
-
-      nav.open {
-        display: flex;
-      }
-
-      nav a {
-        color: #556b2f;
-        margin: 8px 0;
-      }
-
-      nav a::after {
-        background: #556b2f;
-      }
-
-      .hamburger {
-        display: flex;
-      }
-    }
-
-    /* ====================================================
-       HERO IMAGE
-    ==================================================== */
-    .hero {
-      height: 520px;
-      background-image: url("images/beeri-107 copy.jpeg");
-      background-size: cover;
-      background-position: center 45%;
-      position: relative;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.35);
-    }
-
-    /* ====================================================
-       GREEN INTRO SECTION
-    ==================================================== */
-    .about-home {
-      background: #556b2f;
-      color: #ffffff;
-      padding: 48px 24px;
-    }
-
-    .about-home-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      font-family: "Noto Serif", serif;
-    }
-
-    .about-home p {
-      font-size: 1.08rem;
-      line-height: 1.7;
-      margin-bottom: 16px;
-    }
-
-    /* ====================================================
-       SEARCH SECTION (IFRAME – ORIGINAL DATABASE)
-    ==================================================== */
-
-<!-- ================= SEARCH SECTION ================= -->
 <style>
-  #search {
-    max-width: 1200px;
-    margin: 64px auto 48px;
-    padding: 0 24px;
-    font-family: "Noto Serif", serif;
-  }
+/* ================= SEARCH STYLES ================= */
 
-  .search-title {
-    font-weight: 600;
-    font-size: 1.4rem;
-    text-transform: uppercase;
-    color: #556b2f;
-    margin: 0 0 24px 0;
-    letter-spacing: 0.02em;
-  }
+#anu-search {
+  max-width: 1200px;
+  margin: 64px auto;
+  padding: 0 24px;
+  font-family: "Noto Serif", serif;
+}
 
-  .search-controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    align-items: center;
-  }
+.anu-search-title {
+  font-weight: 600;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  color: #556b2f;
+  margin-bottom: 24px;
+}
 
-  .search-controls input {
-    flex: 1;
-    min-width: 260px;
-    padding: 14px 16px;
-    font-family: "Noto Serif", serif;
-    font-size: 0.95rem;
-    border: 1px solid #cbd5e1;
-    border-radius: 4px;
-    color: #334155;
-  }
+.anu-search-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 32px;
+}
 
-  .search-controls input::placeholder {
-    color: #94a3b8;
-  }
+.anu-search-controls input {
+  flex: 1;
+  min-width: 260px;
+  padding: 14px 16px;
+  font-family: "Noto Serif", serif;
+  font-size: 0.95rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+}
 
-  .search-controls button {
-    padding: 14px 28px;
-    font-family: "Noto Serif", serif;
-    font-size: 0.9rem;
-    border-radius: 4px;
-    border: none;
-    cursor: pointer;
-    background: #556b2f;
-    color: #ffffff;
-    transition: background 0.2s ease;
-  }
+.anu-search-controls button {
+  padding: 14px 28px;
+  font-family: "Noto Serif", serif;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  background: #556b2f;
+  color: #ffffff;
+}
 
-  .search-controls button:hover {
-    background: #3f5222;
-  }
+.anu-search-controls button.reset {
+  background: #e5e7eb;
+  color: #334155;
+}
 
-  .search-controls button.reset {
-    background: #e5e7eb;
-    color: #334155;
-  }
+.anu-search-controls button:hover {
+  background: #3f5222;
+}
 
-  .search-controls button.reset:hover {
-    background: #d1d5db;
-  }
+/* ================= RESULTS ================= */
 
-  @media (max-width: 768px) {
-    .search-controls {
-      flex-direction: column;
-      align-items: stretch;
-    }
+#anuSearchResults {
+  display: none;
+}
 
-    .search-controls button {
-      width: 100%;
-    }
-  }
+.anu-result-card {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 16px 0;
+}
+
+.anu-result-card strong {
+  font-size: 1.05rem;
+}
+
+.anu-result-meta {
+  font-size: 0.95rem;
+  margin-top: 6px;
+  color: #475569;
+}
 </style>
 
-<section id="search">
-  <h3 class="search-title">Search the Database</h3>
-
-  <div class="search-controls">
-    <input
-      id="globalSearch"
-      type="text"
-      placeholder="Search by name, location, role, or keyword"
-    />
-
-    <button id="searchBtn">Search</button>
-    <button id="resetBtn" class="reset">Reset</button>
-  </div>
-</section>
-
 <script>
-  (function () {
-    const searchInput = document.getElementById("globalSearch");
-    const searchBtn = document.getElementById("searchBtn");
-    const resetBtn = document.getElementById("resetBtn");
-    const tableSection = document.getElementById("tableSection");
+/* ================= CSV SEARCH LOGIC ================= */
 
-    searchBtn.addEventListener("click", function () {
-      const query = searchInput.value.trim();
-      if (!query || typeof table === "undefined") return;
+let anuVictims = [];
 
-      tableSection.style.display = "block";
-      table.search(query).draw();
-    });
-
-    resetBtn.addEventListener("click", function () {
-      if (typeof table === "undefined") return;
-
-      searchInput.value = "";
-      table.search("").draw();
-      tableSection.style.display = "none";
-    });
-
-    searchInput.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") {
-        searchBtn.click();
-      }
-    });
-  })();
-</script>
-<!-- ================= END SEARCH SECTION ================= -->
-    
-    /* ====================================================
-       FOOTER
-    ==================================================== */
-    footer {
-      background: #252d4c;
-      color: #ffffff;
-      text-align: center;
-      padding: 36px 24px;
+// Load CSV once
+Papa.parse(
+  "https://raw.githubusercontent.com/yuval-harpaz/alarms/refs/heads/master/data/oct7database.csv",
+  {
+    download: true,
+    header: true,
+    complete: function (results) {
+      anuVictims = results.data.filter(v => v.pid);
+      console.log("Anu Zochrim records loaded:", anuVictims.length);
     }
-
-    footer img {
-      height: 42px;
-      margin-bottom: 16px;
-    }
-
-    .footer-nav {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
-    }
-
-    .footer-nav a {
-      color: #ffffff;
-      text-decoration: none;
-      font-family: "Noto Serif", serif;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .footer-nav a:hover {
-      text-decoration: underline;
-    }
-
-    footer p {
-      font-size: 0.8rem;
-      opacity: 0.85;
-      margin: 0;
-    }
-  </style>
-</head>
-
-<body>
-
-<!-- ================= HEADER ================= -->
-<header>
-  <div class="header-inner">
-    <div class="logo">
-      <a href="index.html">
-        <img src="images/AZlogo2Artboard 3.png" alt="Anu Zochrim logo">
-      </a>
-    </div>
-
-    <div class="hamburger" onclick="toggleMenu()">
-      <span></span><span></span><span></span>
-    </div>
-
-    <nav id="nav">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="resources.html">Resources</a>
-      <a href="contact.html">Contact</a>
-      <a href="donate.html">Donate</a>
-    </nav>
-  </div>
-</header>
-
-<!-- ================= HERO ================= -->
-<section class="hero"></section>
-
-<!-- ================= GREEN INTRO ================= -->
-<section class="about-home">
-  <div class="about-home-inner">
-    <p>
-      <strong>Anu Zochrim</strong> is a public memorial dedicated to the Israelis
-      murdered by Hamas on October 7, 2023, and to those who fell defending the
-      Jewish people and the State of Israel.
-    </p>
-
-    <p>
-      This initiative preserves their memory with dignity and purpose, providing
-      a meaningful way to dedicate learning, prayer, and moments of joy in their
-      honor.
-    </p>
-  </div>
-</section>
-
-<!-- ================= DATABASE SEARCH ================= -->
-<section class="database-section">
-  <h2 class="database-title">Search the Database</h2>
-
-  <!-- ORIGINAL DATABASE EMBED -->
-  <iframe
-    class="google-sheet"
-    src="table_en.html"
-    loading="lazy">
-  </iframe>
-</section>
-
-<!-- ================= FOOTER ================= -->
-<footer>
-  <a href="index.html">
-    <img src="images/Logo.png" alt="Anu Zochrim logo">
-  </a>
-
-  <div class="footer-nav">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="resources.html">Resources</a>
-    <a href="contact.html">Contact</a>
-    <a href="donate.html">Donate</a>
-  </div>
-
-  <p>© 2025 Anu Zochrim. All rights reserved.</p>
-</footer>
-
-<script>
-  function toggleMenu() {
-    document.getElementById("nav").classList.toggle("open");
   }
+);
+
+function anuRunSearch() {
+  const q = document.getElementById("anuSearchInput").value.trim().toLowerCase();
+  if (!q) return;
+
+  const matches = anuVictims.filter(v =>
+    [
+      v["Full name English"],
+      v["Full name Hebrew"],
+      v["Residence"],
+      v["Event location"],
+      v["Role"]
+    ].some(field =>
+      field && field.toLowerCase().includes(q)
+    )
+  );
+
+  anuRenderResults(matches);
+}
+
+function anuResetSearch() {
+  document.getElementById("anuSearchInput").value = "";
+  document.getElementById("anuSearchResults").style.display = "none";
+  document.getElementById("anuSearchResults").innerHTML = "";
+}
+
+function anuRenderResults(list) {
+  const container = document.getElementById("anuSearchResults");
+  container.style.display = "block";
+
+  if (list.length === 0) {
+    container.innerHTML = "<p>No results found.</p>";
+    return;
+  }
+
+  container.innerHTML = list.map(v => `
+    <div class="anu-result-card">
+      <strong>${v["Full name English"] || ""} (${v["Full name Hebrew"] || ""})</strong>
+      <div class="anu-result-meta">
+        ${v["Role"] || ""} · ${v["Residence"] || ""}<br>
+        ${v["Event location"] || ""} · ${v["Death date"] || ""}
+      </div>
+    </div>
+  `).join("");
+}
 </script>
 
-</body>
-</html>
+<!-- =====================================================
+     END DATABASE SEARCH SECTION
+===================================================== -->
