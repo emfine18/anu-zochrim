@@ -1,111 +1,7 @@
-<!-- =====================================================
-     DATABASE SEARCH SECTION — CSV BASED
-===================================================== -->
-
-<!-- PapaParse -->
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-
-<section id="anu-search">
-
-  <h2 class="anu-search-title">Search the Database</h2>
-
-  <div class="anu-search-controls">
-    <input
-      id="anuSearchInput"
-      type="text"
-      placeholder="Search by name (English / Hebrew), residence, role, or location"
-    />
-    <button onclick="anuRunSearch()">Search</button>
-    <button class="reset" onclick="anuResetSearch()">Reset</button>
-  </div>
-
-  <div id="anuSearchResults"></div>
-
-</section>
-
-<style>
-/* ================= SEARCH STYLES ================= */
-
-#anu-search {
-  max-width: 1200px;
-  margin: 64px auto;
-  padding: 0 24px;
-  font-family: "Noto Serif", serif;
-}
-
-.anu-search-title {
-  font-weight: 600;
-  font-size: 1.4rem;
-  text-transform: uppercase;
-  color: #556b2f;
-  margin-bottom: 24px;
-}
-
-.anu-search-controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin-bottom: 32px;
-}
-
-.anu-search-controls input {
-  flex: 1;
-  min-width: 260px;
-  padding: 14px 16px;
-  font-family: "Noto Serif", serif;
-  font-size: 0.95rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 4px;
-}
-
-.anu-search-controls button {
-  padding: 14px 28px;
-  font-family: "Noto Serif", serif;
-  font-size: 0.9rem;
-  border-radius: 4px;
-  border: none;
-  cursor: pointer;
-  background: #556b2f;
-  color: #ffffff;
-}
-
-.anu-search-controls button.reset {
-  background: #e5e7eb;
-  color: #334155;
-}
-
-.anu-search-controls button:hover {
-  background: #3f5222;
-}
-
-/* ================= RESULTS ================= */
-
-#anuSearchResults {
-  display: none;
-}
-
-.anu-result-card {
-  border-bottom: 1px solid #e5e7eb;
-  padding: 16px 0;
-}
-
-.anu-result-card strong {
-  font-size: 1.05rem;
-}
-
-.anu-result-meta {
-  font-size: 0.95rem;
-  margin-top: 6px;
-  color: #475569;
-}
-</style>
-
 <script>
-/* ================= CSV SEARCH LOGIC ================= */
-
 let anuVictims = [];
 
-// Load CSV once
+// Load CSV
 Papa.parse(
   "https://raw.githubusercontent.com/yuval-harpaz/alarms/refs/heads/master/data/oct7database.csv",
   {
@@ -113,7 +9,7 @@ Papa.parse(
     header: true,
     complete: function (results) {
       anuVictims = results.data.filter(v => v.pid);
-      console.log("Anu Zochrim records loaded:", anuVictims.length);
+      console.log("Loaded records:", anuVictims.length);
     }
   }
 );
@@ -124,46 +20,18 @@ function anuRunSearch() {
 
   const matches = anuVictims.filter(v =>
     [
-      v["Full name English"],
-      v["Full name Hebrew"],
+      v["שם פרטי"],
+      v["שם משפחה"],
+      v["שם נוסף"],
+      v["כינוי"],
       v["Residence"],
-      v["Event location"],
+      v["מקום האירוע"],
       v["Role"]
     ].some(field =>
-      field && field.toLowerCase().includes(q)
+      field && field.toString().toLowerCase().includes(q)
     )
   );
 
   anuRenderResults(matches);
 }
-
-function anuResetSearch() {
-  document.getElementById("anuSearchInput").value = "";
-  document.getElementById("anuSearchResults").style.display = "none";
-  document.getElementById("anuSearchResults").innerHTML = "";
-}
-
-function anuRenderResults(list) {
-  const container = document.getElementById("anuSearchResults");
-  container.style.display = "block";
-
-  if (list.length === 0) {
-    container.innerHTML = "<p>No results found.</p>";
-    return;
-  }
-
-  container.innerHTML = list.map(v => `
-    <div class="anu-result-card">
-      <strong>${v["Full name English"] || ""} (${v["Full name Hebrew"] || ""})</strong>
-      <div class="anu-result-meta">
-        ${v["Role"] || ""} · ${v["Residence"] || ""}<br>
-        ${v["Event location"] || ""} · ${v["Death date"] || ""}
-      </div>
-    </div>
-  `).join("");
-}
 </script>
-
-<!-- =====================================================
-     END DATABASE SEARCH SECTION
-===================================================== -->
