@@ -1,37 +1,56 @@
-<script>
-let anuVictims = [];
-
-// Load CSV
-Papa.parse(
-  "https://raw.githubusercontent.com/yuval-harpaz/alarms/refs/heads/master/data/oct7database.csv",
-  {
-    download: true,
-    header: true,
-    complete: function (results) {
-      anuVictims = results.data.filter(v => v.pid);
-      console.log("Loaded records:", anuVictims.length);
-    }
-  }
-);
-
-function anuRunSearch() {
-  const q = document.getElementById("anuSearchInput").value.trim().toLowerCase();
-  if (!q) return;
-
-  const matches = anuVictims.filter(v =>
-    [
-      v["שם פרטי"],
-      v["שם משפחה"],
-      v["שם נוסף"],
-      v["כינוי"],
-      v["Residence"],
-      v["מקום האירוע"],
-      v["Role"]
-    ].some(field =>
-      field && field.toString().toLowerCase().includes(q)
-    )
-  );
-
-  anuRenderResults(matches);
+/* ====================================================
+   SEARCH SECTION
+==================================================== */
+#search {
+  max-width: 1200px;
+  margin: 64px auto 48px;
+  padding: 0 24px;
+  font-family: "Noto Serif", serif;
 }
-</script>
+
+.search-title {
+  font-weight: 600;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  color: #556b2f;
+  margin: 0 0 24px 0;
+  letter-spacing: 0.02em;
+}
+
+.search-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+
+.search-controls input {
+  flex: 1;
+  min-width: 260px;
+  padding: 14px 16px;
+  font-family: "Noto Serif", serif;
+  font-size: 0.95rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  color: #334155;
+}
+
+.search-controls button {
+  padding: 14px 28px;
+  font-family: "Noto Serif", serif;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  background: #556b2f;
+  color: #ffffff;
+}
+
+.search-controls button.reset {
+  background: #e5e7eb;
+  color: #334155;
+}
+
+.search-controls button:hover {
+  background: #3f5222;
+}
