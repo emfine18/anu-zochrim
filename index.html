@@ -17,7 +17,7 @@
   margin-bottom: 24px;
 }
 
-.search-row {
+.row {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
@@ -37,7 +37,7 @@ button {
   padding: 14px 28px;
   font-family: "Noto Serif", serif;
   background: #556b2f;
-  color: white;
+  color: #ffffff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -60,59 +60,53 @@ button.reset {
   <h2>Search the Database</h2>
 
   <!-- TOP CONTROLS -->
-  <div class="search-row">
+  <div class="row">
     <select id="searchBy">
       <option value="">Search by</option>
       <option value="name">Name</option>
-      <option value="gender">Gender</option>
-      <option value="country">Country</option>
       <option value="age">Age</option>
+      <option value="country">Country</option>
       <option value="deathdate">Death Date (MM/DD)</option>
     </select>
 
     <select id="role">
       <option value="">All roles</option>
-      <option>Soldier</option>
       <option>Civilian</option>
+      <option>Soldier</option>
       <option>Police</option>
       <option>Hostage</option>
     </select>
-  </div>
 
-  <!-- NAME -->
-  <div id="nameFields" class="search-row hidden">
-    <input id="firstName" placeholder="First name">
-    <input id="middleName" placeholder="Middle name">
-    <input id="lastName" placeholder="Last name">
-  </div>
-
-  <!-- GENDER -->
-  <div id="genderField" class="search-row hidden">
     <select id="gender">
-      <option value="">Select gender</option>
-      <option value="Male">Male</option>
-      <option value="Female">Female</option>
+      <option value="">All genders</option>
+      <option value="M">Male</option>
+      <option value="F">Female</option>
     </select>
   </div>
 
-  <!-- COUNTRY -->
-  <div id="countryField" class="search-row hidden">
-    <input id="country" placeholder="Country (English)">
+  <!-- NAME SEARCH -->
+  <div id="nameField" class="row hidden">
+    <input id="nameQuery" placeholder="Search name (Hebrew or English)">
   </div>
 
-  <!-- AGE -->
-  <div id="ageField" class="search-row hidden">
+  <!-- AGE SEARCH -->
+  <div id="ageField" class="row hidden">
     <input id="age" type="number" placeholder="Age">
   </div>
 
-  <!-- DATE -->
-  <div id="dateField" class="search-row hidden">
+  <!-- COUNTRY SEARCH -->
+  <div id="countryField" class="row hidden">
+    <input id="country" placeholder="Country (English)">
+  </div>
+
+  <!-- DATE SEARCH -->
+  <div id="dateField" class="row hidden">
     <input id="mmdd" placeholder="MM/DD">
   </div>
 
   <!-- BUTTONS -->
-  <div class="search-row">
-    <button onclick="runSearch()">Search</button>
+  <div class="row">
+    <button id="searchBtn" disabled>Search</button>
     <button class="reset" onclick="resetSearch()">Reset</button>
   </div>
 
@@ -122,61 +116,87 @@ button.reset {
 
 <script>
 let DATA = [];
+let dataLoaded = false;
 
+/* ================= LOAD CSV ================= */
 Papa.parse(
   "https://raw.githubusercontent.com/yuval-harpaz/alarms/refs/heads/master/data/oct7database.csv",
   {
     download: true,
     header: true,
-    complete: res => DATA = res.data
+    complete: res => {
+      DATA = res.data.filter(r => r && Object.keys(r).length);
+      dataLoaded = true;
+      document.getElementById("searchBtn").disabled = false;
+    }
   }
 );
 
-// toggle fields
+/* ================= TOGGLE INPUTS ================= */
 document.getElementById("searchBy").addEventListener("change", () => {
-  document.querySelectorAll(".search-row.hidden").forEach(e => e.classList.add("hidden"));
-  document.getElementById("results").innerHTML = "";
+  ["nameField","ageField","countryField","dateField"]
+    .forEach(id => document.getElementById(id).classList.add("hidden"));
 
   const map = {
-    name: "nameFields",
-    gender: "genderField",
-    country: "countryField",
+    name: "nameField",
     age: "ageField",
+    country: "countryField",
     deathdate: "dateField"
   };
-  const v = searchBy.value;
-  if (map[v]) document.getElementById(map[v]).classList.remove("hidden");
+
+  if (map[searchBy.value]) {
+    document.getElementById(map[searchBy.value]).classList.remove("hidden");
+  }
+
+  results.innerHTML = "";
 });
 
-function mmddMatch(dateStr, mmdd) {
-  if (!dateStr) return false;
+/* ================= DATE MATCHER ================= */
+function matchMMDD(dateStr, mmdd) {
+  if (!dateStr || !mmdd) return false;
   const d = new Date(dateStr);
   if (isNaN(d)) return false;
-  const f =
+
+  const formatted =
     String(d.getMonth()+1).padStart(2,"0") + "/" +
     String(d.getDate()).padStart(2,"0");
-  return f === mmdd;
+
+  return formatted === mmdd;
 }
 
-function runSearch() {
+/* ================= SEARCH ================= */
+document.getElementById("searchBtn").onclick = () => {
+  if (!dataLoaded) return;
+
   const type = searchBy.value;
-  const role = document.getElementById("role").value;
+  const roleVal = role.value;
+  const genderVal = gender.value;
+
+  const q = nameQuery?.value?.toLowerCase() || "";
 
   const res = DATA.filter(r => {
-    if (role && r.Role !== role) return false;
+    if (roleVal && r.Role !== roleVal) return false;
+    if (genderVal && r.Gender !== genderVal) return false;
 
     if (type === "name") {
-      return (
-        (!firstName.value || r["שם פרטי"]?.includes(firstName.value)) &&
-        (!middleName.value || r["שם נוסף"]?.includes(middleName.value)) &&
-        (!lastName.value || r["שם משפחה"]?.includes(lastName.value))
-      );
+      const text = `
+        ${r["Full name English"] || ""}
+        ${r["Full name Hebrew"] || ""}
+      `.toLowerCase();
+      return text.includes(q);
     }
 
-    if (type === "gender") return r.Gender === gender.value;
-    if (type === "country") return r.Country?.toLowerCase().includes(country.value.toLowerCase());
-    if (type === "age") return String(r.Age) === age.value;
-    if (type === "deathdate") return mmddMatch(r["Death date"], mmdd.value);
+    if (type === "age") {
+      return String(r.Age) === age.value;
+    }
+
+    if (type === "country") {
+      return r.Country?.toLowerCase().includes(country.value.toLowerCase());
+    }
+
+    if (type === "deathdate") {
+      return matchMMDD(r["Death date"], mmdd.value);
+    }
 
     return false;
   });
@@ -184,15 +204,19 @@ function runSearch() {
   results.innerHTML = res.length
     ? res.map(r => `
       <div class="result">
-        <strong>${r["שם פרטי"] || ""} ${r["שם משפחה"] || ""}</strong><br>
+        <strong>${r["Full name English"] || ""}</strong>
+        ${r["Full name Hebrew"] ? `(${r["Full name Hebrew"]})` : ""}<br>
         ${r.Role || ""} · ${r.Country || ""} · ${r["Death date"] || ""}
-      </div>`).join("")
+      </div>
+    `).join("")
     : "<p>No results found.</p>";
-}
+};
 
+/* ================= RESET ================= */
 function resetSearch() {
-  document.querySelectorAll("input, select").forEach(e => e.value = "");
-  document.querySelectorAll(".search-row.hidden").forEach(e => e.classList.add("hidden"));
+  document.querySelectorAll("input, select").forEach(el => el.value = "");
+  ["nameField","ageField","countryField","dateField"]
+    .forEach(id => document.getElementById(id).classList.add("hidden"));
   results.innerHTML = "";
 }
 </script>
