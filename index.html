@@ -5,19 +5,19 @@
   <title>Anu Zochrim – We Remember</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Social -->
+  <!-- SOCIAL -->
   <meta property="og:title" content="Anu Zochrim – We Remember">
-  <meta property="og:description" content="A public memorial honoring the Israelis murdered on October 7, 2023.">
+  <meta property="og:description" content="A public memorial honoring those murdered on October 7, 2023.">
   <meta property="og:type" content="website">
 
-  <!-- Fonts -->
+  <!-- FONTS -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
+    /* ================= RESET ================= */
     * { box-sizing: border-box; }
-
     body {
       margin: 0;
       font-family: "Poppins", sans-serif;
@@ -28,6 +28,7 @@
     /* ================= HEADER ================= */
     header {
       position: absolute;
+      top: 0;
       width: 100%;
       padding: 24px 32px;
       z-index: 1000;
@@ -41,11 +42,19 @@
       align-items: center;
     }
 
+    .logo {
+      font-family: "Noto Serif", serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
     nav a {
       margin-left: 28px;
       font-family: "Noto Serif", serif;
       font-size: 0.85rem;
       text-transform: uppercase;
+      letter-spacing: 0.08em;
       color: #ffffff;
       text-decoration: none;
     }
@@ -62,7 +71,7 @@
     .about-home {
       background: #556b2f;
       color: #ffffff;
-      padding: 48px 24px;
+      padding: 56px 24px;
     }
 
     .about-home-inner {
@@ -70,12 +79,13 @@
       margin: 0 auto;
       font-family: "Noto Serif", serif;
       line-height: 1.7;
+      font-size: 1.05rem;
     }
 
     /* ================= SEARCH ================= */
-    #search, #search-output {
+    #search {
       max-width: 1200px;
-      margin: 48px auto;
+      margin: 64px auto;
       padding: 0 24px;
       font-family: "Noto Serif", serif;
     }
@@ -85,14 +95,14 @@
       font-weight: 600;
       text-transform: uppercase;
       color: #556b2f;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
 
     .filters {
       display: flex;
-      gap: 16px;
       flex-wrap: wrap;
-      margin-bottom: 20px;
+      gap: 16px;
+      margin-bottom: 24px;
     }
 
     select, input {
@@ -101,6 +111,7 @@
       border-radius: 4px;
       min-width: 220px;
       font-family: "Noto Serif", serif;
+      font-size: 0.95rem;
     }
 
     button {
@@ -115,15 +126,29 @@
 
     .hidden { display: none; }
 
-    /* ================= RESULTS ================= */
+    /* ================= OUTPUT ================= */
+    #search-output {
+      max-width: 1200px;
+      margin: 64px auto;
+      padding: 0 24px;
+      font-family: "Noto Serif", serif;
+    }
+
     .result {
       border-bottom: 1px solid #e5e7eb;
-      padding: 16px 0;
+      padding: 18px 0;
     }
 
     .result-name {
+      font-size: 1.05rem;
       font-weight: 600;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
+    }
+
+    .result-meta {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #374151;
     }
 
     /* ================= FOOTER ================= */
@@ -131,14 +156,14 @@
       background: #252d4c;
       color: #ffffff;
       text-align: center;
-      padding: 36px 24px;
-      margin-top: 64px;
+      padding: 40px 24px;
+      margin-top: 80px;
     }
 
     footer a {
       color: #ffffff;
       text-decoration: none;
-      margin: 0 12px;
+      margin: 0 14px;
       font-family: "Noto Serif", serif;
       font-size: 0.85rem;
       text-transform: uppercase;
@@ -148,10 +173,10 @@
 
 <body>
 
-<!-- HEADER -->
+<!-- ================= HEADER ================= -->
 <header>
   <div class="header-inner">
-    <div>Anu Zochrim</div>
+    <div class="logo">Anu Zochrim</div>
     <nav>
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
@@ -162,35 +187,38 @@
   </div>
 </header>
 
-<!-- HERO -->
+<!-- ================= HERO ================= -->
 <section class="hero"></section>
 
-<!-- INTRO -->
+<!-- ================= INTRO ================= -->
 <section class="about-home">
   <div class="about-home-inner">
-    <p><strong>Anu Zochrim</strong> is a public memorial dedicated to those murdered on October 7, 2023, and those who fell defending the State of Israel.</p>
+    <p>
+      <strong>Anu Zochrim</strong> is a public memorial dedicated to those murdered on October 7, 2023,
+      and to those who fell defending the Jewish people and the State of Israel.
+    </p>
   </div>
 </section>
 
-<!-- SEARCH -->
+<!-- ================= SEARCH ================= -->
 <section id="search">
   <h3 class="search-title">Search the Database</h3>
 
   <div class="filters">
     <select id="searchMode">
       <option value="">Search by</option>
-      <option value="name">Name</option>
-      <option value="death_location">Location of death</option>
-      <option value="residence">Location of residence</option>
-      <option value="death_en">Death date</option>
+      <option value="name">Name (English / Hebrew)</option>
+      <option value="residence">Place of residence</option>
+      <option value="death_location">Place of death</option>
+      <option value="death_date">Date of death</option>
     </select>
 
     <select id="category">
       <option value="">All categories</option>
       <option value="Civilian">Civilian</option>
       <option value="IDF Soldier">IDF Soldier</option>
-      <option value="Hostage">Hostage</option>
       <option value="Police / Border Patrol">Police / Border Patrol</option>
+      <option value="Emergency Squad">Emergency Squad</option>
     </select>
   </div>
 
@@ -199,7 +227,7 @@
     <button onclick="runTextSearch()">Search</button>
   </div>
 
-  <div id="englishDate" class="filters hidden">
+  <div id="dateSearch" class="filters hidden">
     <select id="month">
       <option value="">Month</option>
       <option value="01">January</option>
@@ -219,30 +247,20 @@
     <select id="day">
       <option value="">Day</option>
       <!-- 1–31 -->
-      <option value="01">1</option><option value="02">2</option><option value="03">3</option>
-      <option value="04">4</option><option value="05">5</option><option value="06">6</option>
-      <option value="07">7</option><option value="08">8</option><option value="09">9</option>
-      <option value="10">10</option><option value="11">11</option><option value="12">12</option>
-      <option value="13">13</option><option value="14">14</option><option value="15">15</option>
-      <option value="16">16</option><option value="17">17</option><option value="18">18</option>
-      <option value="19">19</option><option value="20">20</option><option value="21">21</option>
-      <option value="22">22</option><option value="23">23</option><option value="24">24</option>
-      <option value="25">25</option><option value="26">26</option><option value="27">27</option>
-      <option value="28">28</option><option value="29">29</option><option value="30">30</option>
-      <option value="31">31</option>
+      ${Array.from({length:31},(_,i)=>`<option value="${String(i+1).padStart(2,'0')}">${i+1}</option>`).join("")}
     </select>
 
-    <button onclick="runEnglishDateSearch()">Search</button>
+    <button onclick="runDateSearch()">Search</button>
   </div>
 </section>
 
-<!-- OUTPUT -->
+<!-- ================= OUTPUT ================= -->
 <section id="search-output">
   <h3 class="search-title">Search Results</h3>
   <div id="results"></div>
 </section>
 
-<!-- FOOTER -->
+<!-- ================= FOOTER ================= -->
 <footer>
   <a href="index.html">Home</a>
   <a href="about.html">About</a>
@@ -252,7 +270,7 @@
   <p>© 2025 Anu Zochrim</p>
 </footer>
 
-<!-- CSV + SEARCH LOGIC -->
+<!-- ================= SCRIPTS ================= -->
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
 <script>
@@ -260,101 +278,114 @@
 
   const searchMode = document.getElementById("searchMode");
   const textSearch = document.getElementById("textSearch");
-  const englishDate = document.getElementById("englishDate");
+  const dateSearch = document.getElementById("dateSearch");
   const resultsDiv = document.getElementById("results");
 
+  /* ---------- LOAD CSV ---------- */
   Papa.parse("/data/example.csv", {
     download: true,
     header: true,
-    complete: res => {
+    complete: function (res) {
       victims = res.data
-        .filter(r => r.name_en)
+        .filter(r => r.pid)
         .map(r => ({
-          name_en: r.name_en,
-          name_he: r.name_he || "",
-          category: r.role || "Civilian",
-          residence: r.city || "",
-          death_location: r.death_location || r.event_location || "",
-          death: r.death_date || r.event_date || ""
+          id: r.pid,
+
+          name_en: r.Full_Name_English || "",
+          nickname_en: r.Nickname_English || "",
+          name_he: r.Full_Name_Hebrew || "",
+          nickname_he: r.Nickname_Hebrew || "",
+
+          category:
+            r.Role === "Soldier"
+              ? "IDF Soldier"
+              : r.Role === "Police"
+              ? "Police / Border Patrol"
+              : r.Role === "Emergency Squad"
+              ? "Emergency Squad"
+              : "Civilian",
+
+          residence: r.Residence || "",
+          death_location: r["Death location"] || r["מקום המוות"] || "",
+          death_date: r["Death date"] || ""
         }));
+
+      console.log("CSV loaded:", victims.length);
     }
   });
 
+  /* ---------- SEARCH MODE UI ---------- */
   searchMode.onchange = () => {
     textSearch.classList.add("hidden");
-    englishDate.classList.add("hidden");
+    dateSearch.classList.add("hidden");
+    resultsDiv.innerHTML = "";
 
-    if (["name","death_location","residence"].includes(searchMode.value)) {
+    if (["name","residence","death_location"].includes(searchMode.value)) {
       textSearch.classList.remove("hidden");
     }
-    if (searchMode.value === "death_en") {
-      englishDate.classList.remove("hidden");
+
+    if (searchMode.value === "death_date") {
+      dateSearch.classList.remove("hidden");
     }
   };
 
+  /* ---------- TEXT SEARCH ---------- */
   function runTextSearch() {
-    const q = document.getElementById("textValue").value.toLowerCase();
+    const q = document.getElementById("textValue").value.trim().toLowerCase();
     const cat = document.getElementById("category").value;
 
-    render(victims.filter(v =>
-      (!cat || v.category === cat) &&
-      (v.name_en.toLowerCase().includes(q) ||
-       v.name_he.includes(q) ||
-       v.residence.toLowerCase().includes(q) ||
-       v.death_location.toLowerCase().includes(q))
-    ));
+    const matches = victims.filter(v => {
+      if (cat && v.category !== cat) return false;
+
+      return (
+        v.name_en.toLowerCase().includes(q) ||
+        v.nickname_en.toLowerCase().includes(q) ||
+        v.name_he.includes(q) ||
+        v.nickname_he.includes(q) ||
+        v.residence.toLowerCase().includes(q) ||
+        v.death_location.toLowerCase().includes(q)
+      );
+    });
+
+    render(matches);
   }
 
-  function runEnglishDateSearch() {
+  /* ---------- DATE SEARCH ---------- */
+  function runDateSearch() {
     const m = document.getElementById("month").value;
     const d = document.getElementById("day").value;
     const cat = document.getElementById("category").value;
 
-    render(victims.filter(v => {
-      if (!v.death) return false;
-      const dt = new Date(v.death);
-      return (
-        String(dt.getMonth()+1).padStart(2,"0") === m &&
-        String(dt.getDate()).padStart(2,"0") === d &&
-        (!cat || v.category === cat)
-      );
-    }));
+    const matches = victims.filter(v => {
+      if (!v.death_date) return false;
+      const dt = new Date(v.death_date);
+      if (String(dt.getMonth()+1).padStart(2,"0") !== m) return false;
+      if (String(dt.getDate()).padStart(2,"0") !== d) return false;
+      if (cat && v.category !== cat) return false;
+      return true;
+    });
+
+    render(matches);
   }
 
+  /* ---------- RENDER ---------- */
   function render(list) {
     resultsDiv.innerHTML = list.length
       ? list.map(v => `
           <div class="result">
-            <div class="result-name">${v.name_en}${v.name_he ? ` (${v.name_he})` : ""}</div>
-            ${v.category} · ${v.residence} · ${v.death_location}
+            <div class="result-name">
+              ${v.name_en}${v.name_he ? ` (${v.name_he})` : ""}
+            </div>
+            <div class="result-meta">
+              ${v.category}<br>
+              Residence: ${v.residence || "—"}<br>
+              Place of death: ${v.death_location || "—"}
+            </div>
           </div>
         `).join("")
       : "<p>No results found.</p>";
   }
 </script>
 
-<footer>
-  <a href="index.html">
-    <img src="images/Logo.png" alt="Anu Zochrim logo">
-  </a>
-
-  <div class="footer-nav">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="resources.html">Resources</a>
-    <a href="contact.html">Contact</a>
-    <a href="donate.html">Donate</a>
-  </div>
-
-  <p>© 2025 Anu Zochrim. All rights reserved.</p>
-</footer>
-
-<script>
-  function toggleMenu() {
-    document.getElementById("nav").classList.toggle("open");
-  }
-</script>
-
-  
 </body>
 </html>
