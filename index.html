@@ -1,147 +1,201 @@
+<!-- =====================================================
+     OCT 7 DATABASE — FULL SEARCH & FILTER SECTION
+===================================================== -->
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- DataTables -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<!-- PapaParse -->
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+<style>
+#oct7-wrapper {
+  max-width: 1200px;
+  margin: 64px auto;
+  padding: 0 24px;
+  font-family: "Noto Serif", serif;
+}
+
+#oct7-wrapper h2 {
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  color: #556b2f;
+  margin-bottom: 20px;
+}
+
+#oct7-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+#oct7-filters input,
+#oct7-filters select,
+#oct7-filters button {
+  padding: 10px 12px;
+  font-family: "Noto Serif", serif;
+  font-size: 0.9rem;
+}
+
+#oct7-filters button {
+  background: #556b2f;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+#oct7-filters button.reset {
+  background: #e5e7eb;
+  color: #334155;
+}
+
+#oct7table {
+  width: 100%;
+}
+</style>
+
+<section id="oct7-wrapper" style="display:none;">
+
+  <h2>Search the Database</h2>
+
+  <div id="oct7-filters">
+    <input id="globalSearch" placeholder="Search all columns">
+
+    <select id="filterGender"><option value="">Gender</option></select>
+    <select id="filterCountry"><option value="">Country</option></select>
+    <select id="filterRole"><option value="">Role</option></select>
+    <select id="filterFront"><option value="">Front</option></select>
+    <select id="filterCause"><option value="">Cause of Death</option></select>
+
+    <label>Event MM/DD <input type="text" id="eventMin" placeholder="MM/DD"></label>
+    <label>to <input type="text" id="eventMax" placeholder="MM/DD"></label>
+
+    <label>Death MM/DD <input type="text" id="deathMin" placeholder="MM/DD"></label>
+    <label>to <input type="text" id="deathMax" placeholder="MM/DD"></label>
+
+    <button class="reset" id="resetTable">Reset</button>
+  </div>
+
+  <table id="oct7table" class="display">
+    <thead></thead>
+    <tbody></tbody>
+  </table>
+
+</section>
+
 <script>
 let table;
 let rawData = [];
 
-/* ================= TRANSLATIONS ================= */
-const translations = {
-  // Gender
-  "M": "Male",
-  "F": "Female",
-
-  // Roles
-  "אזרח": "Civilian",
-  "חייל": "Soldier",
-  "שוטר": "Police",
-  "כבאי": "Firefighter",
-  "כיתת כוננות": "Emergency Squad",
-  "צוות רפואי": "Medical Team",
-  "שב\"כ": "Shin Bet",
-
-  // Countries
-  "ישראל": "Israel",
-  "ארה\"ב": "USA",
-  "בריטניה": "UK",
-  "גרמניה": "Germany",
-  "צרפת": "France",
-  "קנדה": "Canada",
-  "אוקראינה": "Ukraine",
-  "רוסיה": "Russia",
-  "תאילנד": "Thailand",
-  "נפאל": "Nepal",
-  "הפיליפינים": "Philippines",
-
-  // Cause of death
-  "ירי": "Gunfire",
-  "רקטה": "Rocket",
-  "פצמ\"ר": "Mortar",
-  "נ.ט.": "Anti-Tank",
-  "פיגוע": "Terror Attack",
-  "פיגוע ירי": "Shooting Attack",
-  "פיגוע דקירה": "Stabbing Attack",
-  "פיגוע דריסה": "Ramming Attack",
-  "מטען": "Explosive",
-  "צלף": "Sniper",
-  "תאונה": "Accident"
+/* ===== TRANSLATIONS ===== */
+const T = {
+  "M":"Male","F":"Female",
+  "אזרח":"Civilian","חייל":"Soldier","שוטר":"Police","כבאי":"Firefighter",
+  "כיתת כוננות":"Emergency Squad","צוות רפואי":"Medical Team",
+  "ישראל":"Israel","ארה\"ב":"USA","בריטניה":"UK","גרמניה":"Germany",
+  "קנדה":"Canada","תאילנד":"Thailand","נפאל":"Nepal",
+  "ירי":"Gunfire","רקטה":"Rocket","פצמ\"ר":"Mortar","נ.ט.":"Anti-Tank",
+  "פיגוע":"Terror Attack","פיגוע ירי":"Shooting Attack",
+  "פיגוע דקירה":"Stabbing Attack","פיגוע דריסה":"Ramming Attack",
+  "מטען":"Explosive","צלף":"Sniper","תאונה":"Accident"
 };
 
-/* ================= CSV LOAD ================= */
+/* ===== LOAD CSV ===== */
 Papa.parse(
   "https://raw.githubusercontent.com/yuval-harpaz/alarms/refs/heads/master/data/oct7database.csv",
   {
-    download: true,
-    header: true,
-    complete: function(results) {
-      rawData = results.data.filter(r => r.pid);
+    download:true,
+    header:true,
+    complete:r=>{
+      rawData=r.data.filter(x=>x.pid);
       initTable();
-      document.getElementById("oct7-wrapper").style.display = "block";
+      document.getElementById("oct7-wrapper").style.display="block";
     }
   }
 );
 
-/* ================= TABLE INIT ================= */
-function initTable() {
-  const columns = Object.keys(rawData[0]).map(k => ({
-    title: k,
-    data: k,
-    render: function(data) {
-      return translations[data] || data || "";
-    }
+function initTable(){
+  const cols=Object.keys(rawData[0]).map(k=>({
+    title:k,data:k,
+    render:d=>T[d]||d||""
   }));
 
-  $('#oct7table thead').html(
-    '<tr>' + columns.map(c => `<th>${c.title}</th>`).join('') + '</tr>'
+  $("#oct7table thead").html(
+    "<tr>"+cols.map(c=>`<th>${c.title}</th>`).join("")+"</tr>"
   );
 
-  table = $('#oct7table').DataTable({
-    data: rawData,
-    columns: columns,
-    paging: false,
-    autoWidth: false
+  table=$("#oct7table").DataTable({
+    data:rawData,columns:cols,paging:false,autoWidth:false
   });
 
-  populateDropdown("filterGender", "Gender");
-  populateDropdown("filterCountry", "Country");
-  populateDropdown("filterRole", "Role");
-  populateDropdown("filterFront", "front");
-  populateDropdown("filterCause", "סיבת המוות");
+  populate("filterGender","Gender");
+  populate("filterCountry","Country");
+  populate("filterRole","Role");
+  populate("filterFront","front");
+  populate("filterCause","סיבת המוות");
 
-  hookFilter("filterGender", "Gender");
-  hookFilter("filterCountry", "Country");
-  hookFilter("filterRole", "Role");
-  hookFilter("filterFront", "front");
-  hookFilter("filterCause", "סיבת המוות");
+  hook("filterGender","Gender");
+  hook("filterCountry","Country");
+  hook("filterRole","Role");
+  hook("filterFront","front");
+  hook("filterCause","סיבת המוות");
 
-  dateFilter("Event date", "eventMin", "eventMax");
-  dateFilter("Death date", "deathMin", "deathMax");
+  mmddFilter("Event date","eventMin","eventMax");
+  mmddFilter("Death date","deathMin","deathMax");
 
-  $('#globalSearch').on('input', e =>
-    table.search(e.target.value).draw()
-  );
+  $("#globalSearch").on("input",e=>table.search(e.target.value).draw());
 
-  $('#resetTable').on('click', () => {
-    $('input, select').val('');
-    table.search('').columns().search('').draw();
+  $("#resetTable").on("click",()=>{
+    $("input,select").val("");
+    table.search("").columns().search("").draw();
+  });
+
+  ["eventMin","eventMax","deathMin","deathMax"].forEach(id=>{
+    document.getElementById(id).addEventListener("input",e=>{
+      e.target.value=e.target.value.replace(/[^0-9/]/g,"").slice(0,5);
+    });
   });
 }
 
-/* ================= HELPERS ================= */
-function populateDropdown(id, col) {
-  const idx = table.columns().indexes().toArray()
-    .find(i => table.column(i).header().innerText === col);
-
-  const values = [...new Set(rawData.map(r => r[col]).filter(Boolean))]
-    .map(v => translations[v] || v)
-    .sort();
-
-  const sel = document.getElementById(id);
-  sel.innerHTML = `<option value="">${sel.options[0].text}</option>`;
-  values.forEach(v => sel.innerHTML += `<option value="${v}">${v}</option>`);
+function populate(id,col){
+  const idx=table.columns().indexes().toArray()
+    .find(i=>table.column(i).header().innerText===col);
+  const vals=[...new Set(rawData.map(r=>r[col]).filter(Boolean))]
+    .map(v=>T[v]||v).sort();
+  const s=document.getElementById(id);
+  vals.forEach(v=>s.innerHTML+=`<option>${v}</option>`);
 }
 
-function hookFilter(selectId, colName) {
-  const idx = table.columns().indexes().toArray()
-    .find(i => table.column(i).header().innerText === colName);
-
-  $(`#${selectId}`).on('change', function() {
+function hook(id,col){
+  const idx=table.columns().indexes().toArray()
+    .find(i=>table.column(i).header().innerText===col);
+  $("#"+id).on("change",function(){
     table.column(idx).search(this.value).draw();
   });
 }
 
-function dateFilter(colName, minId, maxId) {
-  const idx = table.columns().indexes().toArray()
-    .find(i => table.column(i).header().innerText === colName);
-
-  $.fn.dataTable.ext.search.push(function(settings, data) {
-    const min = document.getElementById(minId).value;
-    const max = document.getElementById(maxId).value;
-    const d = data[idx];
-    if (!d) return true;
-    const dt = new Date(d);
-    if (min && dt < new Date(min)) return false;
-    if (max && dt > new Date(max)) return false;
+function mmddFilter(col,minId,maxId){
+  const idx=table.columns().indexes().toArray()
+    .find(i=>table.column(i).header().innerText===col);
+  $.fn.dataTable.ext.search.push((_,d)=>{
+    const min=document.getElementById(minId).value;
+    const max=document.getElementById(maxId).value;
+    const dt=new Date(d[idx]);
+    if(isNaN(dt))return true;
+    const m=String(dt.getMonth()+1).padStart(2,"0")+"/"+String(dt.getDate()).padStart(2,"0");
+    if(min&&m<min)return false;
+    if(max&&m>max)return false;
     return true;
   });
-
-  $(`#${minId}, #${maxId}`).on('change', () => table.draw());
+  $("#"+minId+",#"+maxId).on("input",()=>table.draw());
 }
 </script>
+
+<!-- =====================================================
+     END OCT 7 DATABASE — FULL SEARCH & FILTER SECTION
+===================================================== -->
