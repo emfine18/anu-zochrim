@@ -1,195 +1,200 @@
-<!-- =====================================================
-     OCT 7 DATABASE — SEARCH BY CONTROLLER
-===================================================== -->
-
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<!-- ================= SEARCH THE DATABASE ================= -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
 <style>
-#search-wrapper {
+#search-section {
   max-width: 1200px;
   margin: 64px auto;
   padding: 0 24px;
   font-family: "Noto Serif", serif;
 }
 
-#search-wrapper h2 {
-  font-size: 1.4rem;
-  text-transform: uppercase;
+#search-section h2 {
   color: #556b2f;
-  margin-bottom: 20px;
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  margin-bottom: 24px;
 }
 
 .search-row {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   flex-wrap: wrap;
   margin-bottom: 16px;
 }
 
-.search-row select,
-.search-row input,
-.search-row button {
-  padding: 10px 12px;
+select, input {
+  padding: 14px;
   font-family: "Noto Serif", serif;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  min-width: 220px;
 }
 
-.search-row button {
+button {
+  padding: 14px 28px;
+  font-family: "Noto Serif", serif;
   background: #556b2f;
-  color: #fff;
+  color: white;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
 }
 
-.search-row button.reset {
+button.reset {
   background: #e5e7eb;
   color: #334155;
 }
 
-.hidden { display:none; }
+.hidden { display: none; }
 
-#results-wrapper { display:none; margin-top:24px; }
+.result {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 12px 0;
+}
 </style>
 
-<section id="search-wrapper">
+<section id="search-section">
+  <h2>Search the Database</h2>
 
-<h2>Search the Database</h2>
+  <!-- TOP CONTROLS -->
+  <div class="search-row">
+    <select id="searchBy">
+      <option value="">Search by</option>
+      <option value="name">Name</option>
+      <option value="gender">Gender</option>
+      <option value="country">Country</option>
+      <option value="age">Age</option>
+      <option value="deathdate">Death Date (MM/DD)</option>
+    </select>
 
-<!-- SEARCH BY -->
-<div class="search-row">
-  <select id="searchType">
-    <option value="">Search by</option>
-    <option value="name">Name</option>
-    <option value="gender">Gender</option>
-    <option value="country">Country</option>
-    <option value="role">Role</option>
-    <option value="date">Death Date (MM/DD)</option>
-    <option value="age">Age</option>
-  </select>
-</div>
+    <select id="role">
+      <option value="">All roles</option>
+      <option>Soldier</option>
+      <option>Civilian</option>
+      <option>Police</option>
+      <option>Hostage</option>
+    </select>
+  </div>
 
-<!-- NAME SEARCH -->
-<div class="search-row hidden" id="search-name">
-  <input id="firstName" placeholder="First name">
-  <input id="middleName" placeholder="Middle name">
-  <input id="lastName" placeholder="Last name">
-</div>
+  <!-- NAME -->
+  <div id="nameFields" class="search-row hidden">
+    <input id="firstName" placeholder="First name">
+    <input id="middleName" placeholder="Middle name">
+    <input id="lastName" placeholder="Last name">
+  </div>
 
-<!-- GENDER -->
-<div class="search-row hidden" id="search-gender">
-  <select id="genderSelect">
-    <option value="">Gender</option>
-    <option>Male</option>
-    <option>Female</option>
-  </select>
-</div>
+  <!-- GENDER -->
+  <div id="genderField" class="search-row hidden">
+    <select id="gender">
+      <option value="">Select gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+    </select>
+  </div>
 
-<!-- COUNTRY -->
-<div class="search-row hidden" id="search-country">
-  <select id="countrySelect"></select>
-</div>
+  <!-- COUNTRY -->
+  <div id="countryField" class="search-row hidden">
+    <input id="country" placeholder="Country (English)">
+  </div>
 
-<!-- ROLE -->
-<div class="search-row hidden" id="search-role">
-  <select id="roleSelect"></select>
-</div>
+  <!-- AGE -->
+  <div id="ageField" class="search-row hidden">
+    <input id="age" type="number" placeholder="Age">
+  </div>
 
-<!-- DATE -->
-<div class="search-row hidden" id="search-date">
-  <input id="mmdd" placeholder="MM/DD">
-</div>
+  <!-- DATE -->
+  <div id="dateField" class="search-row hidden">
+    <input id="mmdd" placeholder="MM/DD">
+  </div>
 
-<!-- AGE -->
-<div class="search-row hidden" id="search-age">
-  <input id="ageInput" type="number" placeholder="Age">
-</div>
+  <!-- BUTTONS -->
+  <div class="search-row">
+    <button onclick="runSearch()">Search</button>
+    <button class="reset" onclick="resetSearch()">Reset</button>
+  </div>
 
-<!-- ACTIONS -->
-<div class="search-row">
-  <button onclick="runSearch()">Search</button>
-  <button class="reset" onclick="resetSearch()">Reset</button>
-</div>
-
-<!-- RESULTS -->
-<div id="results-wrapper">
-  <table id="resultsTable" class="display"></table>
-</div>
-
+  <!-- RESULTS -->
+  <div id="results"></div>
 </section>
 
 <script>
-let data=[], table;
-
-/* TRANSLATIONS */
-const T={
-  "M":"Male","F":"Female",
-  "אזרח":"Civilian","חייל":"Soldier","שוטר":"Police",
-  "ישראל":"Israel","ארה\"ב":"USA","בריטניה":"UK"
-};
+let DATA = [];
 
 Papa.parse(
   "https://raw.githubusercontent.com/yuval-harpaz/alarms/refs/heads/master/data/oct7database.csv",
-  {download:true,header:true,complete:r=>{
-    data=r.data.filter(x=>x.pid);
-    initTable();
-    populateDropdowns();
-  }}
+  {
+    download: true,
+    header: true,
+    complete: res => DATA = res.data
+  }
 );
 
-function initTable(){
-  const cols=Object.keys(data[0]).map(k=>({title:k,data:k,render:d=>T[d]||d||""}));
-  $("#resultsTable").DataTable({data:[],columns:cols,paging:false});
-  table=$("#resultsTable").DataTable();
-}
+// toggle fields
+document.getElementById("searchBy").addEventListener("change", () => {
+  document.querySelectorAll(".search-row.hidden").forEach(e => e.classList.add("hidden"));
+  document.getElementById("results").innerHTML = "";
 
-function populateDropdowns(){
-  const countries=[...new Set(data.map(d=>T[d.Country]||d.Country).filter(Boolean))].sort();
-  countries.forEach(c=>$("#countrySelect").append(`<option>${c}</option>`));
-
-  const roles=[...new Set(data.map(d=>T[d.Role]||d.Role).filter(Boolean))].sort();
-  roles.forEach(r=>$("#roleSelect").append(`<option>${r}</option>`));
-}
-
-$("#searchType").on("change",function(){
-  $(".hidden").addClass("hidden");
-  $("#search-"+this.value).removeClass("hidden");
+  const map = {
+    name: "nameFields",
+    gender: "genderField",
+    country: "countryField",
+    age: "ageField",
+    deathdate: "dateField"
+  };
+  const v = searchBy.value;
+  if (map[v]) document.getElementById(map[v]).classList.remove("hidden");
 });
 
-function runSearch(){
-  const type=$("#searchType").val();
-  if(!type)return;
+function mmddMatch(dateStr, mmdd) {
+  if (!dateStr) return false;
+  const d = new Date(dateStr);
+  if (isNaN(d)) return false;
+  const f =
+    String(d.getMonth()+1).padStart(2,"0") + "/" +
+    String(d.getDate()).padStart(2,"0");
+  return f === mmdd;
+}
 
-  let results=data.filter(d=>{
-    if(type==="name"){
-      return (!$("#firstName").val()||d["שם פרטי"]?.includes($("#firstName").val())) &&
-             (!$("#middleName").val()||d["שם נוסף"]?.includes($("#middleName").val())) &&
-             (!$("#lastName").val()||d["שם משפחה"]?.includes($("#lastName").val()));
+function runSearch() {
+  const type = searchBy.value;
+  const role = document.getElementById("role").value;
+
+  const res = DATA.filter(r => {
+    if (role && r.Role !== role) return false;
+
+    if (type === "name") {
+      return (
+        (!firstName.value || r["שם פרטי"]?.includes(firstName.value)) &&
+        (!middleName.value || r["שם נוסף"]?.includes(middleName.value)) &&
+        (!lastName.value || r["שם משפחה"]?.includes(lastName.value))
+      );
     }
-    if(type==="gender") return T[d.Gender]===$("#genderSelect").val();
-    if(type==="country") return (T[d.Country]||d.Country)===$("#countrySelect").val();
-    if(type==="role") return (T[d.Role]||d.Role)===$("#roleSelect").val();
-    if(type==="age") return String(d.Age)===$("#ageInput").val();
-    if(type==="date"){
-      const dt=new Date(d["Death date"]);
-      const m=String(dt.getMonth()+1).padStart(2,"0")+"/"+String(dt.getDate()).padStart(2,"0");
-      return m===$("#mmdd").val();
-    }
+
+    if (type === "gender") return r.Gender === gender.value;
+    if (type === "country") return r.Country?.toLowerCase().includes(country.value.toLowerCase());
+    if (type === "age") return String(r.Age) === age.value;
+    if (type === "deathdate") return mmddMatch(r["Death date"], mmdd.value);
+
+    return false;
   });
 
-  table.clear().rows.add(results).draw();
-  $("#results-wrapper").show();
+  results.innerHTML = res.length
+    ? res.map(r => `
+      <div class="result">
+        <strong>${r["שם פרטי"] || ""} ${r["שם משפחה"] || ""}</strong><br>
+        ${r.Role || ""} · ${r.Country || ""} · ${r["Death date"] || ""}
+      </div>`).join("")
+    : "<p>No results found.</p>";
 }
 
-function resetSearch(){
-  $("input,select").val("");
-  table.clear().draw();
-  $("#results-wrapper").hide();
+function resetSearch() {
+  document.querySelectorAll("input, select").forEach(e => e.value = "");
+  document.querySelectorAll(".search-row.hidden").forEach(e => e.classList.add("hidden"));
+  results.innerHTML = "";
 }
 </script>
+<!-- ================= END SEARCH ================= -->
 
-<!-- =====================================================
-     END SEARCH BY CONTROLLER
-===================================================== -->
