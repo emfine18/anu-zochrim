@@ -1,141 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Anu Zochrim – We Remember</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Anu Zochrim – October 7 Database</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Site Meta -->
-    <meta name="description" content="Anu Zochrim is a public memorial and database documenting those murdered, fallen, and kidnapped on October 7, 2023 and in the subsequent war.">
+  <!-- FAVICON -->
+  <link rel="icon" href="logo.png" />
 
-    <!-- Favicon -->
-    <link rel="icon" href="logo.png">
+  <!-- LOAD NOTO SERIF -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <!-- Fonts (match existing site) -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <!-- JQUERY + LIBS -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
-    <!-- Main Site CSS -->
-    <link rel="stylesheet" href="anu-zochrim.css">
+  <!-- ================= ANU ZOCHRIM STYLE ================= -->
+  <style>
+    body {
+      margin: 0;
+      background: #f8f7f4;
+      font-family: "Noto Serif", serif;
+      color: #1f2937;
+    }
+
+    /* HEADER */
+    header {
+      padding: 18px 24px;
+      border-bottom: 1px solid #e5e7eb;
+      background: #ffffff;
+    }
+
+    nav {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .menu-links a {
+      margin-left: 18px;
+      text-decoration: none;
+      color: #556b2f;
+      font-weight: 500;
+    }
+
+    /* PAGE */
+    .page {
+      max-width: 1200px;
+      margin: auto;
+      padding: 28px 24px 60px;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      color: #556b2f;
+      font-weight: 400;
+      margin-bottom: 28px;
+    }
+
+    /* FILTERS */
+    #filters {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      padding: 20px;
+      margin-bottom: 28px;
+    }
+
+    #filters input,
+    #filters select {
+      font-family: "Noto Serif", serif;
+      padding: 10px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      margin-right: 8px;
+    }
+
+    #filters button {
+      background: #556b2f;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 18px;
+      cursor: pointer;
+      font-family: "Noto Serif", serif;
+    }
+
+    #filters button:hover {
+      background: #3f5222;
+    }
+
+    /* TABLE */
+    .table-wrap {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      padding: 12px;
+      overflow-x: auto;
+    }
+
+    table.dataTable {
+      font-family: "Noto Serif", serif;
+      font-size: 0.85rem;
+    }
+
+    table.dataTable thead th {
+      background: #f3f4f1;
+      color: #556b2f;
+      font-weight: 600;
+    }
+
+    table.dataTable tbody tr:hover {
+      background: #f6f7f3;
+    }
+
+    table.dataTable a {
+      color: #556b2f;
+      text-decoration: underline;
+    }
+
+    /* MAP */
+    #map-container {
+      margin-top: 32px;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid #e5e7eb;
+      padding: 30px 24px;
+      background: #ffffff;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #4b5563;
+    }
+  </style>
 </head>
 
 <body>
 
 <!-- ================= HEADER ================= -->
-<header class="site-header">
-    <nav class="nav">
-        <button class="menu-toggle">☰</button>
-        <div class="menu-links">
-            <a href="index.html" class="active">Home</a>
-            <a href="database.html">Database</a>
-            <a href="about.html">About</a>
-            <a href="team.html">Team</a>
-            <a href="index_he.html">עברית</a>
-        </div>
-    </nav>
+<header>
+  <nav>
+    <strong>Anu Zochrim</strong>
+    <div class="menu-links">
+      <a href="#">Home</a>
+      <a href="#">Database</a>
+      <a href="#">About</a>
+      <a href="#">עברית</a>
+    </div>
+  </nav>
 </header>
 
-<!-- ================= HERO ================= -->
-<section class="hero">
-    <div class="hero-inner">
-        <h1>Anu Zochrim</h1>
-        <h2>We Remember</h2>
+<!-- ================= PAGE ================= -->
+<div class="page">
+  <h1>October 7 Database</h1>
+  <h2>Public memorial and documentation of those murdered, fallen, and kidnapped</h2>
 
-        <div class="hero-divider"></div>
+  <div id="filters"></div>
 
-        <p class="hero-text">
-            A public memorial documenting those murdered, fallen, and kidnapped on
-            October 7, 2023, and in the war that followed.
-        </p>
-    </div>
-</section>
+  <div class="table-wrap">
+    <table id="oct7table" class="display nowrap" style="width:100%">
+      <thead></thead>
+      <tbody></tbody>
+    </table>
+  </div>
 
-<!-- ================= MAIN CONTENT ================= -->
-<main class="content">
-
-    <section class="intro">
-        <p>
-            This database includes information about civilians, soldiers, police officers,
-            and foreign nationals who were killed or abducted on October 7, 2023,
-            and in the subsequent war.
-        </p>
-
-        <p>
-            It records names, ages, places of residence, dates of death,
-            and — where known — the location and nature of the incident.
-            In cases where death occurred at a later date or in a different location,
-            this is also documented.
-        </p>
-
-        <p>
-            The information was voluntarily collected and verified using open sources,
-            including media investigations, official memorial sites, and direct communication
-            with families who wished to share or correct information.
-        </p>
-    </section>
-
-    <section class="sources">
-        <h3>Sources & Methodology</h3>
-
-        <p>
-            The database is based on open and publicly available sources.
-            Names were cross-checked where possible against official memorial sites
-            (IDF, National Insurance Institute, Israel Police),
-            media reports, and additional documentation.
-        </p>
-
-        <p>
-            Authority records from the National Library of Israel are linked
-            when available, providing standardized name references and archival context.
-        </p>
-
-        <p>
-            This project is independent and non-governmental.
-            Its purpose is documentation, commemoration, and historical accuracy.
-        </p>
-    </section>
-
-    <section class="cta">
-        <a href="database.html" class="cta-button">
-            View the Database
-        </a>
-
-        <p class="cta-note">
-            The database allows searching and filtering by name, residence,
-            role, date, and location.
-        </p>
-    </section>
-
-</main>
+  <div id="map-container" style="display:none;">
+    <iframe id="map-iframe" width="100%" height="650" frameborder="0"></iframe>
+  </div>
+</div>
 
 <!-- ================= FOOTER ================= -->
-<footer class="site-footer">
-    <div class="footer-inner">
-        <img src="logo.png" alt="Anu Zochrim logo" class="footer-logo">
-
-        <div class="footer-links">
-            <a href="about.html">About</a>
-            <a href="materials.html">Materials & Sources</a>
-            <a href="team.html">Team</a>
-            <a href="mailto:info@anuzochrim.org">Contact</a>
-        </div>
-
-        <p class="footer-note">
-            Anu Zochrim is a volunteer-driven memorial project.
-            If you have information that can improve the accuracy of the database,
-            please contact us.
-        </p>
-    </div>
+<footer>
+  Anu Zochrim is a volunteer memorial project.  
+  If you have information that can improve accuracy, please contact us.
 </footer>
 
-<!-- ================= MENU SCRIPT ================= -->
+<!-- ================= SCRIPT ================= -->
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const toggle = document.querySelector(".menu-toggle");
-    const links = document.querySelector(".menu-links");
+Papa.parse("https://raw.githubusercontent.com/yuval-harpaz/alarms/refs/heads/master/data/oct7database.csv", {
+  download: true,
+  header: true,
+  complete: function(results) {
+    const data = results.data;
+    const columns = Object.keys(data[0]).map(k => ({ title: k, data: k }));
 
-    toggle.addEventListener("click", function () {
-        links.classList.toggle("open");
+    $("#oct7table thead").html(
+      "<tr>" + columns.map(c => `<th>${c.title}</th>`).join("") + "</tr>"
+    );
+
+    data.forEach(row => {
+      $("#oct7table tbody").append(
+        "<tr>" + columns.map(c => `<td>${row[c.data] || ""}</td>`).join("") + "</tr>"
+      );
     });
+
+    const table = $("#oct7table").DataTable({
+      paging: false,
+      order: [],
+      dom: "lrt"
+    });
+
+    $("#filters").html(`
+      <input id="search" placeholder="Search names, places, roles…" />
+      <button id="reset">Reset</button>
+    `);
+
+    $("#search").on("input", function() {
+      table.search(this.value).draw();
+    });
+
+    $("#reset").on("click", function() {
+      $("#search").val("");
+      table.search("").draw();
+    });
+  }
 });
 </script>
 
