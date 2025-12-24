@@ -26,35 +26,45 @@ body {
 }
 
 /* ================= HEADER ================= */
+<!-- ================= HEADER ================= -->
+<style>
+/* ===== HEADER ===== */
 header {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   padding: 24px 32px;
   z-index: 1000;
+  background: transparent;
 }
 
 .header-inner {
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 }
 
 .logo img {
   height: 44px;
+  display: block;
 }
 
+/* ===== DESKTOP NAV (WHITE) ===== */
 nav {
   display: flex;
+  align-items: center;
 }
 
 nav a {
   margin-left: 28px;
   font-family: "Noto Serif", serif;
+  font-size: 0.85rem;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-size: 0.85rem;
   color: #ffffff;
   text-decoration: none;
   position: relative;
@@ -75,7 +85,7 @@ nav a:hover::after {
   width: 100%;
 }
 
-/* HAMBURGER */
+/* ===== HAMBURGER ===== */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -89,110 +99,67 @@ nav a:hover::after {
   margin: 4px 0;
 }
 
-/* ================= HERO ================= */
-.hero {
-  height: 480px;
-  background-image: url("images/beeri-107 copy.jpeg");
-  background-size: cover;
-  background-position: center 45%;
-  position: relative;
-}
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  nav {
+    position: absolute;
+    top: 100%;
+    right: 24px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    flex-direction: column;
+    padding: 12px 16px;
+    display: none;
+  }
 
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.35);
-}
+  nav.open {
+    display: flex;
+  }
 
-.hero-content {
-  position: relative;
-  max-width: 1200px;
-  margin: 0 auto;
-  height: 100%;
-  padding: 0 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: #ffffff;
-}
+  nav a {
+    margin: 8px 0;
+    color: #556b2f;
+  }
 
-.hero-content h1 {
-  font-family: "Noto Serif", serif;
-  font-size: 2.6rem;
-  margin: 0 0 12px;
-}
+  nav a::after {
+    background: #556b2f;
+  }
 
-.hero-content p {
-  font-family: "Noto Serif", serif;
-  font-size: 1.15rem;
-  max-width: 760px;
-  line-height: 1.7;
+  .hamburger {
+    display: flex;
+  }
 }
+</style>
 
-/* ================= SEARCH ================= */
-#search {
-  max-width: 1200px;
-  margin: 64px auto 40px;
-  padding: 0 24px;
-  font-family: "Noto Serif", serif;
-}
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <a href="index.html">
+        <img src="images/AZlogo2Artboard 3.png" alt="Anu Zochrim logo">
+      </a>
+    </div>
 
-.search-title {
-  font-size: 1.4rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: #556b2f;
-  margin-bottom: 20px;
-}
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
 
-.filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin-bottom: 16px;
-}
+    <nav id="nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="resources.html">Resources</a>
+      <a href="contact.html">Contact</a>
+      <a href="donate.html">Donate</a>
+    </nav>
+  </div>
+</header>
 
-select,
-input {
-  padding: 12px 14px;
-  border: 1px solid #cbd5e1;
-  border-radius: 4px;
-  font-family: "Noto Serif", serif;
-  min-width: 220px;
+<script>
+function toggleMenu() {
+  document.getElementById("nav").classList.toggle("open");
 }
-
-button {
-  padding: 12px 26px;
-  background: #556b2f;
-  color: #ffffff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #3f5222;
-}
-
-/* ================= TABLE ================= */
-#tableSection {
-  display: none;
-  max-width: 1200px;
-  margin: 40px auto 80px;
-  padding: 0 24px;
-}
-
-table.dataTable {
-  font-family: "Noto Serif", serif;
-  font-size: 0.85rem;
-}
-
-table.dataTable thead th {
-  background: #f3f4f1;
-  color: #556b2f;
-  font-weight: 600;
-}
+</script>
 
 /* ================= FOOTER ================= */
 footer {
