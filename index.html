@@ -15,7 +15,6 @@
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
 <style>
 * { box-sizing: border-box; }
@@ -23,17 +22,14 @@
 body {
   margin: 0;
   font-family: "Poppins", sans-serif;
-  background: #ffffff;
   color: #334155;
 }
 
-/* ================= HEADER (FROM ABOUT PAGE) ================= */
+/* ================= HEADER ================= */
 header {
+  position: absolute;
   width: 100%;
   padding: 24px 32px;
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  position: relative;
   z-index: 1000;
 }
 
@@ -41,8 +37,8 @@ header {
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
 }
 
 .logo img {
@@ -51,18 +47,16 @@ header {
 
 nav {
   display: flex;
-  align-items: center;
 }
 
 nav a {
   margin-left: 28px;
-  text-decoration: none;
   font-family: "Noto Serif", serif;
-  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.85rem;
-  color: #556b2f;
+  color: #ffffff;
+  text-decoration: none;
   position: relative;
 }
 
@@ -73,7 +67,7 @@ nav a::after {
   bottom: -4px;
   width: 0;
   height: 1px;
-  background: #556b2f;
+  background: #ffffff;
   transition: width 0.2s ease;
 }
 
@@ -81,13 +75,26 @@ nav a:hover::after {
   width: 100%;
 }
 
-/* ================= HERO IMAGE (RESTORED) ================= */
+/* HAMBURGER */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.hamburger span {
+  width: 22px;
+  height: 2px;
+  background: #ffffff;
+  margin: 4px 0;
+}
+
+/* ================= HERO ================= */
 .hero {
-  width: 100%;
-  height: 420px;
-  background-image: url("images/beeri-107 copy.jpeg"); /* ← your original hero image */
+  height: 480px;
+  background-image: url("images/beeri-107 copy.jpeg");
   background-size: cover;
-  background-position: center;
+  background-position: center 45%;
   position: relative;
 }
 
@@ -103,10 +110,10 @@ nav a:hover::after {
   max-width: 1200px;
   margin: 0 auto;
   height: 100%;
+  padding: 0 24px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 24px;
   color: #ffffff;
 }
 
@@ -132,29 +139,30 @@ nav a:hover::after {
 }
 
 .search-title {
-  font-weight: 600;
   font-size: 1.4rem;
+  font-weight: 600;
   text-transform: uppercase;
   color: #556b2f;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .filters {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
-.filters input {
+select,
+input {
   padding: 12px 14px;
   border: 1px solid #cbd5e1;
   border-radius: 4px;
   font-family: "Noto Serif", serif;
-  min-width: 260px;
+  min-width: 220px;
 }
 
-.filters button {
+button {
   padding: 12px 26px;
   background: #556b2f;
   color: #ffffff;
@@ -163,7 +171,7 @@ nav a:hover::after {
   cursor: pointer;
 }
 
-.filters button:hover {
+button:hover {
   background: #3f5222;
 }
 
@@ -173,12 +181,6 @@ nav a:hover::after {
   max-width: 1200px;
   margin: 40px auto 80px;
   padding: 0 24px;
-}
-
-.table-wrap {
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  padding: 12px;
 }
 
 table.dataTable {
@@ -192,7 +194,7 @@ table.dataTable thead th {
   font-weight: 600;
 }
 
-/* ================= FOOTER (FROM ABOUT PAGE) ================= */
+/* ================= FOOTER ================= */
 footer {
   background: #252d4c;
   color: #ffffff;
@@ -215,21 +217,47 @@ footer img {
 
 .footer-nav a {
   color: #ffffff;
-  text-decoration: none;
   font-family: "Noto Serif", serif;
-  font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-}
-
-.footer-nav a:hover {
-  text-decoration: underline;
+  font-size: 0.85rem;
+  text-decoration: none;
 }
 
 footer p {
   font-size: 0.8rem;
-  margin: 0;
   opacity: 0.85;
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+  nav {
+    position: absolute;
+    top: 100%;
+    right: 24px;
+    background: #ffffff;
+    flex-direction: column;
+    padding: 12px 16px;
+    display: none;
+    border: 1px solid #e5e7eb;
+  }
+
+  nav.open {
+    display: flex;
+  }
+
+  nav a {
+    margin: 8px 0;
+    color: #556b2f;
+  }
+
+  nav a::after {
+    background: #556b2f;
+  }
+
+  .hamburger {
+    display: flex;
+  }
 }
 </style>
 </head>
@@ -243,7 +271,12 @@ footer p {
         <img src="images/AZlogo2Artboard 3.png" alt="Anu Zochrim logo">
       </a>
     </div>
-    <nav>
+
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+
+    <nav id="nav">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="resources.html">Resources</a>
@@ -257,28 +290,33 @@ footer p {
   <div class="hero-content">
     <h1>Anu Zochrim</h1>
     <p>
-      We remember the Israelis murdered on October 7, 2023, and those who fell
-      defending the Jewish people and the State of Israel.
+      A public memorial dedicated to the Israelis murdered on October 7, 2023,
+      and those who fell defending the Jewish people and the State of Israel.
     </p>
   </div>
 </section>
 
 <section id="search">
   <h3 class="search-title">Search the Database</h3>
+
   <div class="filters">
-    <input id="globalSearch" placeholder="Search all names, places, roles…" />
+    <select id="searchField">
+      <option value="">Search by</option>
+      <option value="Name_EN">Name (English)</option>
+      <option value="Name_HE">Name (Hebrew)</option>
+      <option value="Residence">Place of Residence</option>
+      <option value="Death_Location">Location of Death</option>
+    </select>
+
+    <input id="globalSearch" placeholder="Enter search value" />
+
     <button id="searchBtn">Search</button>
     <button id="resetBtn">Reset</button>
   </div>
 </section>
 
 <section id="tableSection">
-  <div class="table-wrap">
-    <table id="oct7table" class="display nowrap" style="width:100%">
-      <thead></thead>
-      <tbody></tbody>
-    </table>
-  </div>
+  <table id="oct7table" class="display" style="width:100%"></table>
 </section>
 
 <footer>
@@ -298,6 +336,10 @@ footer p {
 </footer>
 
 <script>
+function toggleMenu() {
+  document.getElementById("nav").classList.toggle("open");
+}
+
 let table;
 
 Papa.parse(
@@ -307,22 +349,11 @@ Papa.parse(
     header: true,
     complete: function(results) {
       const data = results.data;
-      const cols = Object.keys(data[0]).map(c => ({ title: c, data: c }));
-
-      $("#oct7table thead").html(
-        "<tr>" + cols.map(c => `<th>${c.title}</th>`).join("") + "</tr>"
-      );
-
-      data.forEach(row => {
-        $("#oct7table tbody").append(
-          "<tr>" + cols.map(c => `<td>${row[c.data] || ""}</td>`).join("") + "</tr>"
-        );
-      });
-
       table = $("#oct7table").DataTable({
+        data,
+        columns: Object.keys(data[0]).map(k => ({ title: k, data: k })),
         paging: false,
-        dom: "lrt",
-        order: []
+        dom: "lrt"
       });
     }
   }
@@ -330,7 +361,6 @@ Papa.parse(
 
 $("#searchBtn").on("click", function() {
   const q = $("#globalSearch").val();
-  if (!q) return;
   $("#tableSection").show();
   table.search(q).draw();
 });
