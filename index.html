@@ -1,3 +1,5 @@
+
+
 <!-- ================= SEARCH THE DATABASE ================= -->
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
@@ -72,15 +74,15 @@ button.reset {
     <select id="role">
       <option value="">All roles</option>
       <option>Civilian</option>
-      <option>Soldier</option>
+      <option>IDF Soldier</option>
       <option>Police</option>
       <option>Hostage</option>
     </select>
 
     <select id="gender">
       <option value="">Gender</option>
-      <option value="M">Male</option>
       <option value="F">Female</option>
+      <option value="M">Male</option>
     </select>
   </div>
 
@@ -119,7 +121,7 @@ button.reset {
 let DATA = [];
 let loaded = false;
 
-/* LOAD CSV */
+/* ================= LOAD CSV ================= */
 Papa.parse(
   "https://raw.githubusercontent.com/yuval-harpaz/alarms/refs/heads/master/data/oct7database.csv",
   {
@@ -133,7 +135,7 @@ Papa.parse(
   }
 );
 
-/* TOGGLE INPUTS */
+/* ================= TOGGLE INPUTS ================= */
 document.getElementById("searchBy").addEventListener("change", () => {
   ["nameField","ageField","countryField","dateField"]
     .forEach(id => document.getElementById(id).classList.add("hidden"));
@@ -152,18 +154,20 @@ document.getElementById("searchBy").addEventListener("change", () => {
   results.innerHTML = "";
 });
 
-/* MM/DD MATCH */
+/* ================= DATE MATCHER ================= */
 function matchMMDD(dateStr, mmdd) {
   if (!dateStr || !mmdd) return false;
   const d = new Date(dateStr);
   if (isNaN(d)) return false;
-  const f =
+
+  const formatted =
     String(d.getMonth()+1).padStart(2,"0") + "/" +
     String(d.getDate()).padStart(2,"0");
-  return f === mmdd;
+
+  return formatted === mmdd;
 }
 
-/* SEARCH */
+/* ================= SEARCH ================= */
 document.getElementById("searchBtn").onclick = () => {
   if (!loaded) return;
 
@@ -171,19 +175,27 @@ document.getElementById("searchBtn").onclick = () => {
   const roleVal = role.value;
   const genderVal = gender.value;
 
+  const fn = firstName.value.trim().toLowerCase();
+  const mn = middleName.value.trim().toLowerCase();
+  const ln = lastName.value.trim().toLowerCase();
+
   const res = DATA.filter(r => {
-    if (roleVal && r.Role !== roleVal) return false;
+    if (roleVal && !r.Role?.includes(roleVal)) return false;
     if (genderVal && r.Gender !== genderVal) return false;
 
     if (type === "name") {
-      const fn = firstName.value || "";
-      const mn = middleName.value || "";
-      const ln = lastName.value || "";
+      const combinedText = `
+        ${r["שם פרטי"] || ""}
+        ${r["שם נוסף"] || ""}
+        ${r["שם משפחה"] || ""}
+        ${r["הנצחה"] || ""}
+        ${r["הספריה הלאומית"] || ""}
+        ${r["Memorial"] || ""}
+      `.toLowerCase();
 
-      if (fn && !r["שם פרטי"]?.includes(fn)) return false;
-      if (mn && !r["שם נוסף"]?.includes(mn)) return false;
-      if (ln && !r["שם משפחה"]?.includes(ln)) return false;
-
+      if (fn && !combinedText.includes(fn)) return false;
+      if (mn && !combinedText.includes(mn)) return false;
+      if (ln && !combinedText.includes(ln)) return false;
       return true;
     }
 
@@ -204,9 +216,9 @@ document.getElementById("searchBtn").onclick = () => {
     : "<p>No results found.</p>";
 };
 
-/* RESET */
+/* ================= RESET ================= */
 function resetSearch() {
-  document.querySelectorAll("input,select").forEach(e => e.value = "");
+  document.querySelectorAll("input, select").forEach(el => el.value = "");
   ["nameField","ageField","countryField","dateField"]
     .forEach(id => document.getElementById(id).classList.add("hidden"));
   results.innerHTML = "";
